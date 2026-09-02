@@ -1,208 +1,77 @@
-"use client";
-
+import { Menu, X } from "lucide-react";
 import type { ReactNode } from "react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export type NavItem = {
-  id: string;
-  label: string;
-};
+export type NavItem = { id: string; label: string };
 
-function TopNav({
-  items,
-  visible,
-  atTop,
-  onNavigate,
-}: {
-  items: NavItem[];
-  visible: boolean;
-  atTop: boolean;
-  onNavigate: (id: string) => void;
-}) {
-  return (
-    <header
-      className={[
-        "fixed inset-x-0 top-0 z-50",
-        "transition-all duration-300 ease-out",
-        visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0",
-      ].join(" ")}
-    >
-      <div
-        className={[
-          "mx-auto max-w-6xl px-4 sm:px-6",
-          "pt-3",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center justify-between gap-3 rounded-2xl",
-            "border border-black/10",
-            "backdrop-blur-md",
-            atTop ? "bg-white/40" : "bg-white/75",
-          ].join(" ")}
-        >
-          <button
-            type="button"
-            onClick={() => onNavigate("giris")}
-            className={[
-              "px-4 py-3 text-sm font-semibold tracking-tight text-zinc-900",
-              "hover:bg-black/5 transition-colors rounded-2xl",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/30",
-            ].join(" ")}
-            aria-label="En üste git"
-          >
-            Bulki
-          </button>
-
-          <nav className="flex items-center gap-1 pr-2">
-            {items.map((it) => (
-              <button
-                key={it.id}
-                type="button"
-                onClick={() => onNavigate(it.id)}
-                className={[
-                  "px-3 py-2 text-sm text-zinc-700",
-                  "rounded-xl hover:bg-black/5 hover:text-zinc-900 transition-colors",
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/30",
-                ].join(" ")}
-              >
-                {it.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-export default function ScrollSnapShell({
-  navItems,
-  children,
-}: {
-  navItems: NavItem[];
-  children: ReactNode;
-}) {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const lastYRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
-
-  const [navVisible, setNavVisible] = useState(true);
-  const [atTop, setAtTop] = useState(true);
-
-  const items = useMemo(() => navItems, [navItems]);
-
-  const scrollToId = useCallback((id: string) => {
-    const root = scrollRef.current;
-    if (!root) return;
-
-    const target = root.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
-    if (!target) return;
-
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    try {
-      window.history.replaceState(null, "", `#${id}`);
-    } catch {
-      // no-op
-    }
-  }, []);
+export default function ScrollSnapShell({ navItems, children }: { navItems: NavItem[]; children: ReactNode }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState("");
+  const mainRef = useRef<HTMLElement>(null);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    const main = mainRef.current;
+    if (!main) return;
 
-    lastYRef.current = el.scrollTop;
+    const updateActiveSection = () => {
+      const viewportCenter = main.getBoundingClientRect().top + main.clientHeight / 2;
+      const sectionIds = ["giris", ...navItems.map((item) => item.id)];
+      let closestId = "";
+      let closestDistance = Number.POSITIVE_INFINITY;
 
-    const onScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = window.requestAnimationFrame(() => {
-        rafRef.current = null;
+      sectionIds.forEach((id) => {
+        const section = document.getElementById(id);
+        if (!section) return;
 
-        const y = el.scrollTop;
-        const delta = y - lastYRef.current;
-
-        const nowAtTop = y < 16;
-        setAtTop(nowAtTop);
-
-        if (nowAtTop) {
-          setNavVisible(true);
-        } else if (delta > 8) {
-          setNavVisible(false);
-        } else if (delta < -8) {
-          setNavVisible(true);
+        const bounds = section.getBoundingClientRect();
+        const distance = Math.abs(bounds.top + bounds.height / 2 - viewportCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestId = id;
         }
-
-        lastYRef.current = y;
       });
+
+      setActiveId(closestId === "giris" ? "" : closestId);
+      frameRef.current = null;
     };
 
-    el.addEventListener("scroll", onScroll, { passive: true });
+    const scheduleUpdate = () => {
+      if (frameRef.current === null) frameRef.current = requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+    main.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
     return () => {
-      el.removeEventListener("scroll", onScroll);
-      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+      main.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
-  }, []);
+  }, [navItems]);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+  const go = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setOpen(false);
+  };
 
-    const onClick = (e: MouseEvent) => {
-      const target = e.target as Element | null;
-      if (!target) return;
-
-      const a = target.closest("a");
-      if (!a) return;
-
-      const href = a.getAttribute("href");
-      if (!href || !href.startsWith("#")) return;
-
-      const raw = href.slice(1);
-      if (!raw) return;
-
-      e.preventDefault();
-      const id = decodeURIComponent(raw);
-      scrollToId(id);
-    };
-
-    el.addEventListener("click", onClick);
-    return () => el.removeEventListener("click", onClick);
-  }, [scrollToId]);
-
-  useEffect(() => {
-    const fromHash = () => {
-      const raw = window.location.hash?.slice(1);
-      if (!raw) return;
-      const id = decodeURIComponent(raw);
-      scrollToId(id);
-    };
-
-    fromHash();
-    window.addEventListener("hashchange", fromHash);
-    return () => window.removeEventListener("hashchange", fromHash);
-  }, [scrollToId]);
-
-  return (
-    <>
-      <TopNav
-        items={items}
-        visible={navVisible}
-        atTop={atTop}
-        onNavigate={scrollToId}
-      />
-
-      <main
-        ref={scrollRef}
-        className={[
-          "h-dvh w-full overflow-y-scroll scroll-smooth",
-          "snap-y snap-mandatory",
-          "no-scrollbar",
-        ].join(" ")}
-      >
-        {children}
-      </main>
-    </>
-  );
+  return <>
+    <header className={`fixed inset-x-0 top-0 z-50 text-white transition-all duration-500 ${scrolled ? "bg-[#181a18]/90 shadow-[0_1px_0_rgba(255,255,255,.10)] backdrop-blur-xl" : ""}`}>
+      <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-9 lg:px-14">
+        <button onClick={() => go("giris")} className="group flex items-center gap-3 text-left" aria-label="Ana sayfa">
+          <span className="grid size-9 place-items-center border border-white/50 text-sm font-bold tracking-[-.08em]">EP</span>
+          <span><span className="display-font block text-xl font-semibold leading-none tracking-wide">ELYS PRIME</span><span className="mt-1 block text-[8px] font-bold tracking-[.25em] opacity-60">BULKİ YAPI</span></span>
+        </button>
+        <nav className="hidden items-center gap-8 lg:flex">
+          {navItems.map((item) => <button key={item.id} onClick={() => go(item.id)} aria-current={activeId === item.id ? "page" : undefined} className={`relative py-2 text-[11px] font-bold uppercase tracking-[.17em] transition-opacity hover:opacity-100 ${activeId === item.id ? "opacity-100" : "opacity-75"}`}>{item.label}<span aria-hidden="true" className={`absolute inset-x-0 bottom-0 h-px origin-center bg-[#d8b792] transition-transform duration-500 ease-out ${activeId === item.id ? "scale-x-100" : "scale-x-0"}`}/></button>)}
+          <button onClick={() => go("iletisim")} className="border border-white/45 px-5 py-3 text-[10px] font-bold uppercase tracking-[.18em] transition-colors hover:bg-[#d8b792] hover:text-[#181a18]">Randevu Al</button>
+        </nav>
+        <button onClick={() => setOpen((value) => !value)} className="grid size-11 place-items-center lg:hidden" aria-label="Menüyü aç veya kapat">{open ? <X /> : <Menu />}</button>
+      </div>
+      {open && <div className="border-t border-white/10 bg-[#181a18] px-5 py-5 text-white lg:hidden">{navItems.map((item) => <button key={item.id} onClick={() => go(item.id)} aria-current={activeId === item.id ? "page" : undefined} className="relative block w-full border-b border-white/10 py-4 text-left text-xs font-bold uppercase tracking-[.16em]">{item.label}<span aria-hidden="true" className={`absolute bottom-0 left-1/2 h-px w-full origin-center -translate-x-1/2 bg-[#d8b792] transition-transform duration-500 ease-out ${activeId === item.id ? "scale-x-100" : "scale-x-0"}`}/></button>)}</div>}
+    </header>
+    <main ref={mainRef} onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 40)} className="h-dvh snap-y snap-mandatory overflow-y-auto overscroll-y-contain no-scrollbar">{children}</main>
+  </>;
 }
-
-

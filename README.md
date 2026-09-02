@@ -1,27 +1,34 @@
-🏗️ Bulki İnşaat Web Sitesi
-Bulki İnşaat için geliştirilmiş; firmanın projelerini, hizmetlerini ve kurumsal kimliğini modern bir arayüzle sunan web projesi.
+# Elys Prime — Bulki Yapı
 
-Bu proje, yüksek performans (SEO) ve modern web standartları gözetilerek Next.js 14 altyapısı ile hazırlanmıştır.
+Elys Prime projesini ve daire seçeneklerini sunan React tabanlı web sitesi.
 
-🌐 Canlı Demo (Live)
+## Teknolojiler
 
-⚡ Özellikler
-Modern Mimari: Next.js App Router yapısı.
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS 4
+- Firebase Hosting + Firestore
 
-Responsive Tasarım: Mobil, tablet ve masaüstü uyumlu arayüz.
+## Yerel geliştirme
 
-Performans: Server Side Rendering (SSR) ile hızlı açılış süreleri ve SEO optimizasyonu.
+```bash
+npm install
+npm run dev
+```
 
-Tip Güvenliği: Tamamen TypeScript ile geliştirildi.
+Yönetim paneli yerelde `/panel` adresindedir. Panel ortak giriş kodu ilk başarılı girişte
+Firestore'daki `projectData/panel-access` belgesine hash olarak kaydedilir. Site içeriği
+`projectData/website` belgesinde tutulur ve açık sayfalarda gerçek zamanlı güncellenir.
 
-Stil: (Tahminen TailwindCSS veya CSS Modules kullandıysan buraya yazabilirsin, yoksa boş bırak)
+## Derleme ve yayınlama
 
-🛠️ Teknoloji Yığını (Tech Stack)
-Framework: Next.js 14
+```bash
+npm run build
+firebase deploy --only hosting,firestore:rules
+```
 
-Dil: TypeScript
+Vite çıktısı `dist/` klasörüne oluşturulur. `firebase.json`, ana sayfa ve `/panel` dahil tüm istemci rotalarını `index.html` dosyasına yönlendirir.
 
-Deployment: Vercel
-
-👨‍💻 Geliştirici
-Hakan Dursun - Full-Stack Developer
+> Firebase Auth kullanılmadığı için panel giriş ekranı istemci taraflı bir erişim kapısıdır.
+> Firestore'a doğrudan yazma yetkisini kullanıcı bazında doğrulamaz. Gerçek yönetici
+> güvenliği gerektiğinde Firebase Auth ve kimliğe bağlı Firestore Rules kullanılmalıdır.

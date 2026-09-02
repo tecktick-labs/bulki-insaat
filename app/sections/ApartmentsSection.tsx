@@ -1,411 +1,60 @@
-"use client";
-
-import Image from "next/image";
+import Image, { type StaticImageData } from "@/app/components/ResponsiveImage";
+import { getFloorPlan } from "@/app/lib/mediaAssets";
+import { ArrowLeft, ArrowRight, Expand, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-export type ApartmentImage = {
-  label: string;
-  src: string;
-};
+type Plan = { block: string; floor: string; position: string; image: StaticImageData };
+const plans: Plan[] = [
+  { block: "A", floor: "Normal Kat", position: "Köşe Tip", image: getFloorPlan("a-blok-normal-kat-kose-tip") }, { block: "A", floor: "Normal Kat", position: "Orta Tip", image: getFloorPlan("a-blok-normal-kat-orta-tip") },
+  { block: "A", floor: "Çatı Katı", position: "Köşe Tip", image: getFloorPlan("a-blok-cati-kat-kose-tip") }, { block: "A", floor: "Çatı Katı", position: "Orta Tip", image: getFloorPlan("a-blok-cati-kat-orta-tip") },
+  { block: "B", floor: "Normal Kat", position: "Köşe Tip", image: getFloorPlan("b-blok-normal-kat-kose-tip") }, { block: "B", floor: "Normal Kat", position: "Orta Tip", image: getFloorPlan("b-blok-normal-kat-orta-tip") },
+  { block: "B", floor: "Dubleks", position: "Köşe Tip", image: getFloorPlan("b-blok-dubleks-kose-tip") }, { block: "B", floor: "Dubleks", position: "Orta Tip", image: getFloorPlan("b-blok-dubleks-orta-tip") },
+  { block: "C", floor: "Normal Kat", position: "Köşe Tip", image: getFloorPlan("c-blok-normal-kat-kose-tip") }, { block: "C", floor: "Normal Kat", position: "Orta Tip", image: getFloorPlan("c-blok-normal-kat-orta-tip") },
+  { block: "C", floor: "Çatı Katı", position: "Köşe Tip", image: getFloorPlan("c-blok-cati-kat-kose-tip") }, { block: "C", floor: "Çatı Katı", position: "Orta Tip", image: getFloorPlan("c-blok-cati-kat-orta-tip") },
+  { block: "D", floor: "Normal Kat", position: "Köşe Tip", image: getFloorPlan("d-blok-normal-kat-kose-tip") }, { block: "D", floor: "Normal Kat", position: "Orta Tip", image: getFloorPlan("d-blok-normal-kat-orta-tip") },
+  { block: "D", floor: "Dubleks", position: "Köşe Tip", image: getFloorPlan("d-blok-dubleks-kat-kose-tip") }, { block: "D", floor: "Dubleks", position: "Orta Tip", image: getFloorPlan("d-blok-dubleks-orta-tip") },
+];
 
-export type ApartmentType = {
-  type: "1+1" | "2+1" | "3+1" | string;
-  size: string;
-  remaining: number;
-  images: ApartmentImage[];
-};
-
-export default function ApartmentsSection({
-  apartmentTypes,
-}: {
-  apartmentTypes: ApartmentType[];
-}) {
-  const types = useMemo(() => apartmentTypes ?? [], [apartmentTypes]);
-  const [galleryType, setGalleryType] = useState<ApartmentType | null>(null);
-  const [galleryIndex, setGalleryIndex] = useState(0);
-
-  const galleryImages = galleryType?.images ?? [];
-  const galleryCurrent = galleryImages[galleryIndex];
+export default function ApartmentsSection() {
+  const [block, setBlock] = useState("A");
+  const filtered = useMemo(() => plans.filter((plan) => plan.block === block), [block]);
+  const [selected, setSelected] = useState<Plan | null>(null);
+  const selectedIndex = selected ? plans.indexOf(selected) : -1;
+  const move = (direction: number) => setSelected(plans[(selectedIndex + direction + plans.length) % plans.length]);
 
   useEffect(() => {
-    if (!galleryType) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
+    if (!selected) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelected(null);
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+        setSelected((current) => {
+          if (!current) return null;
+          const currentIndex = plans.indexOf(current);
+          return plans[(currentIndex + direction + plans.length) % plans.length];
+        });
+      }
     };
-  }, [galleryType]);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selected]);
 
-  const openGallery = (t: ApartmentType, idx = 0) => {
-    setGalleryType(t);
-    setGalleryIndex(Math.max(0, Math.min(idx, t.images.length - 1)));
-  };
-
-  const closeGallery = () => {
-    setGalleryType(null);
-    setGalleryIndex(0);
-  };
-
-  const goPrev = () => {
-    if (!galleryType) return;
-    setGalleryIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
-  };
-
-  const goNext = () => {
-    if (!galleryType) return;
-    setGalleryIndex((i) => (i + 1) % galleryImages.length);
-  };
-
-  return (
-    <section
-      id="daireler"
-      className="h-dvh w-full snap-start snap-always overflow-hidden bg-zinc-50"
-    >
-      <div className="h-full w-full overflow-y-auto no-scrollbar">
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-14">
-          <div className="flex flex-col gap-3">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-900">
-              Daire Tipleri
-            </h2>
-            <p className="text-zinc-600 max-w-2xl">
-              Her daire tipi için m² ve kalan adet bilgisini net görün. Karttan
-              galeriye girip oda görselleri arasında gezebilirsiniz.
-            </p>
-          </div>
-
-          <div className="mt-8">
-            {types.length === 0 ? (
-              <div className="mt-6 text-sm text-zinc-600">
-                Henüz daire tipi eklenmemiş.
-              </div>
-            ) : (
-              <>
-                {/* Mobile: yatay scroll */}
-                <div className="sm:hidden -mx-6 px-6">
-                  <div className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2">
-                    {types.map((t) => {
-                      const thumb = t.images?.[0];
-                      return (
-                        <article
-                          key={t.type}
-                          className="snap-start shrink-0 w-[86%] rounded-2xl border border-black/10 bg-white overflow-hidden"
-                        >
-                          <button
-                            type="button"
-                            onClick={() => openGallery(t, 0)}
-                            className="relative w-full h-56 bg-zinc-100 text-left"
-                            aria-label={`${t.type} galerisini aç`}
-                          >
-                            {thumb ? (
-                              <Image
-                                src={thumb.src}
-                                alt={`${t.type} ${thumb.label} görseli`}
-                                fill
-                                className="object-cover"
-                              />
-                            ) : (
-                              <div className="absolute inset-0 grid place-items-center text-sm text-zinc-500">
-                                Görsel yok
-                              </div>
-                            )}
-                            <div className="absolute inset-x-0 bottom-0 p-4">
-                              <div className="flex items-center justify-between gap-3">
-                                <div className="inline-flex items-center rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm font-semibold text-zinc-900 backdrop-blur">
-                                  {t.type}
-                                </div>
-                                <div className="inline-flex items-center rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-800 backdrop-blur">
-                                  Galeri ({t.images.length})
-                                </div>
-                              </div>
-                            </div>
-                          </button>
-
-                          <div className="p-5">
-                            <div className="flex items-start justify-between gap-3">
-                              <div>
-                                <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                                  Daire Tipi
-                                </div>
-                                <div className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
-                                  {t.type}
-                                </div>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => openGallery(t, 0)}
-                                className={[
-                                  "shrink-0 rounded-2xl px-4 py-2 text-sm font-semibold",
-                                  "border border-black/10 bg-zinc-900 text-white",
-                                  "hover:bg-zinc-800 transition-colors",
-                                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/25",
-                                ].join(" ")}
-                              >
-                                Galeri
-                              </button>
-                            </div>
-
-                            <div className="mt-4 grid grid-cols-2 gap-3">
-                              <div className="rounded-2xl border border-black/10 bg-zinc-50 px-4 py-3">
-                                <div className="text-xs text-zinc-500">m²</div>
-                                <div className="text-lg font-semibold text-zinc-900">
-                                  {t.size}
-                                </div>
-                              </div>
-                              <div className="rounded-2xl border border-black/10 bg-zinc-50 px-4 py-3">
-                                <div className="text-xs text-zinc-500">Kalan</div>
-                                <div className="text-lg font-semibold text-zinc-900">
-                                  {t.remaining} adet
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-4 flex flex-wrap gap-2">
-                              {t.images.slice(0, 4).map((img) => (
-                                <span
-                                  key={img.label}
-                                  className="text-xs rounded-full border border-black/10 bg-white px-3 py-1 text-zinc-700"
-                                >
-                                  {img.label}
-                                </span>
-                              ))}
-                              {t.images.length > 4 ? (
-                                <span className="text-xs rounded-full border border-black/10 bg-white px-3 py-1 text-zinc-500">
-                                  +{t.images.length - 4}
-                                </span>
-                              ) : null}
-                            </div>
-                          </div>
-                        </article>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Web/Tablet: grid */}
-                <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-5">
-                  {types.map((t) => {
-                    const thumb = t.images?.[0];
-                    return (
-                      <article
-                        key={t.type}
-                        className="rounded-2xl border border-black/10 bg-white overflow-hidden"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => openGallery(t, 0)}
-                          className="relative w-full h-56 bg-zinc-100 text-left"
-                          aria-label={`${t.type} galerisini aç`}
-                        >
-                          {thumb ? (
-                            <Image
-                              src={thumb.src}
-                              alt={`${t.type} ${thumb.label} görseli`}
-                              fill
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 grid place-items-center text-sm text-zinc-500">
-                              Görsel yok
-                            </div>
-                          )}
-                          <div className="absolute inset-x-0 bottom-0 p-4">
-                            <div className="flex items-center justify-between gap-3">
-                              <div className="inline-flex items-center rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm font-semibold text-zinc-900 backdrop-blur">
-                                {t.type}
-                              </div>
-                              <div className="inline-flex items-center rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-xs font-semibold text-zinc-800 backdrop-blur">
-                                Galeri ({t.images.length})
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-
-                        <div className="p-5">
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                                Daire Tipi
-                              </div>
-                              <div className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
-                                {t.type}
-                              </div>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => openGallery(t, 0)}
-                              className={[
-                                "shrink-0 rounded-2xl px-4 py-2 text-sm font-semibold",
-                                "border border-black/10 bg-zinc-900 text-white",
-                                "hover:bg-zinc-800 transition-colors",
-                                "focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/25",
-                              ].join(" ")}
-                            >
-                              Galeriyi Aç
-                            </button>
-                          </div>
-
-                          <div className="mt-4 grid grid-cols-2 gap-3">
-                            <div className="rounded-2xl border border-black/10 bg-zinc-50 px-4 py-3">
-                              <div className="text-xs text-zinc-500">m²</div>
-                              <div className="text-lg font-semibold text-zinc-900">
-                                {t.size}
-                              </div>
-                            </div>
-                            <div className="rounded-2xl border border-black/10 bg-zinc-50 px-4 py-3">
-                              <div className="text-xs text-zinc-500">Kalan</div>
-                              <div className="text-lg font-semibold text-zinc-900">
-                                {t.remaining} adet
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {t.images.slice(0, 4).map((img) => (
-                              <span
-                                key={img.label}
-                                className="text-xs rounded-full border border-black/10 bg-white px-3 py-1 text-zinc-700"
-                              >
-                                {img.label}
-                              </span>
-                            ))}
-                            {t.images.length > 4 ? (
-                              <span className="text-xs rounded-full border border-black/10 bg-white px-3 py-1 text-zinc-500">
-                                +{t.images.length - 4}
-                              </span>
-                            ) : null}
-                          </div>
-                        </div>
-                      </article>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+  return <section id="planlar" className="h-dvh snap-start snap-always overflow-hidden bg-[#1d201d] text-[#f6f1eb]">
+    <div className="mx-auto flex h-full max-w-[1440px] flex-col px-5 pb-5 pt-24 sm:px-9 sm:pb-8 lg:px-14 lg:pb-10 lg:pt-28">
+      <div className="grid shrink-0 gap-4 border-b border-white/10 pb-4 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div><p className="eyebrow text-[#d8b792]">Daire Planları</p><h2 className="mt-3 text-3xl font-medium leading-[.9] tracking-[-.045em] sm:text-5xl lg:text-6xl">Size uyan yaşamı <em>inceleyin.</em></h2></div>
+        <div className="flex flex-wrap gap-2">{["A","B","C","D"].map((item) => <button key={item} onClick={() => setBlock(item)} className={`min-w-14 border px-4 py-3 text-[10px] font-bold uppercase tracking-[.16em] transition-colors ${block === item ? "border-[#d8b792] bg-[#d8b792] text-[#181a18]" : "border-white/15 text-white/60 hover:border-white/45 hover:text-white"}`}>{item} Blok</button>)}</div>
       </div>
 
-      {/* Fullscreen Gallery Modal */}
-      {galleryType ? (
-        <div
-          className="fixed inset-0 z-[60]"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Daire görsel galerisi"
-        >
-          <button
-            type="button"
-            onClick={closeGallery}
-            className="absolute inset-0 bg-zinc-900/35 backdrop-blur-[2px]"
-            aria-label="Galeriyi kapat"
-          />
+      <div className="perspective-stage mt-4 flex h-[50vh] max-h-[455px] min-h-[310px] shrink-0 snap-x snap-mandatory gap-4 overflow-x-auto px-1 py-2 no-scrollbar sm:grid sm:h-[48vh] sm:grid-cols-2 sm:overflow-visible lg:h-[43vh] lg:max-h-[420px] lg:grid-cols-4 lg:gap-5">
+        {filtered.map((plan) => <button key={`${plan.block}-${plan.floor}-${plan.position}`} onClick={() => setSelected(plan)} className="plan-card group flex min-w-[72vw] snap-start flex-col overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#252825] text-left shadow-[0_18px_42px_rgba(0,0,0,.24)] transition-all duration-500 sm:min-w-0">
+          <div className="relative min-h-0 flex-1 overflow-hidden bg-[#eeece7]"><Image src={plan.image} alt={`${plan.block} Blok ${plan.floor} ${plan.position} planı`} fill sizes="(max-width: 640px) 72vw, 25vw" className="object-contain p-3 transition-transform duration-700 group-hover:scale-[1.025] sm:p-4"/><span className="absolute left-3 top-3 rounded-full bg-[#181a18] px-3 py-2 text-[7px] font-bold uppercase tracking-[.14em] text-[#d8b792]">{plan.block} Blok</span><span className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-[#181a18]/90 text-white shadow-md backdrop-blur transition-transform group-hover:scale-110"><Expand size={14}/></span></div>
+          <div className="flex shrink-0 items-end justify-between gap-3 border-t border-white/10 p-3 sm:p-4"><div><span className="text-[7px] font-bold uppercase tracking-[.18em] text-[#d8b792]">Daire Planı</span><h3 className="mt-0.5 text-lg font-semibold sm:text-xl">{plan.floor}</h3><p className="text-[9px] text-white/45">{plan.position}</p></div><span className="grid size-8 place-items-center rounded-full border border-white/15 transition-colors group-hover:bg-[#d8b792] group-hover:text-[#181a18]"><ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5"/></span></div>
+        </button>)}
+      </div>
+      <p className="mt-2 shrink-0 text-[9px] leading-4 text-white/35">Planlar bilgilendirme amaçlıdır. Teknik detaylar için satış ekibimizle iletişime geçebilirsiniz. <span className="sm:hidden">Planlar için yana kaydırın.</span></p>
+    </div>
 
-          <div className="absolute inset-0 p-4 sm:p-6 flex items-center justify-center">
-            <div className="w-full max-w-5xl rounded-2xl bg-white text-zinc-900 border border-black/10 overflow-hidden">
-              <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-4 border-b border-black/10">
-                <div>
-                  <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                    {galleryType.type} • {galleryType.size} • {galleryType.remaining} adet
-                  </div>
-                  <div className="mt-1 text-lg sm:text-xl font-semibold tracking-tight">
-                    {galleryCurrent?.label ?? "Görsel"}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <div className="text-sm text-zinc-600">
-                    {galleryImages.length === 0 ? "0/0" : `${galleryIndex + 1}/${galleryImages.length}`}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={closeGallery}
-                    className="rounded-xl px-3 py-2 text-sm font-semibold border border-black/10 bg-zinc-50 hover:bg-zinc-100 transition-colors"
-                  >
-                    Kapat
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-9 relative bg-zinc-50">
-                  <div className="relative w-full h-[60vh] lg:h-[560px]">
-                    {galleryCurrent ? (
-                      <Image
-                        src={galleryCurrent.src}
-                        alt={`${galleryType.type} ${galleryCurrent.label} görseli`}
-                        fill
-                        className="object-contain"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 grid place-items-center text-sm text-zinc-500">
-                        Görsel bulunamadı
-                      </div>
-                    )}
-                  </div>
-
-                  {galleryImages.length > 1 ? (
-                    <>
-                      <button
-                        type="button"
-                        onClick={goPrev}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-2xl border border-black/10 bg-white/85 px-3 py-2 text-sm font-semibold hover:bg-white transition-colors backdrop-blur"
-                        aria-label="Önceki görsel"
-                      >
-                        Önceki
-                      </button>
-                      <button
-                        type="button"
-                        onClick={goNext}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-2xl border border-black/10 bg-white/85 px-3 py-2 text-sm font-semibold hover:bg-white transition-colors backdrop-blur"
-                        aria-label="Sonraki görsel"
-                      >
-                        Sonraki
-                      </button>
-                    </>
-                  ) : null}
-                </div>
-
-                <div className="lg:col-span-3 border-t lg:border-t-0 lg:border-l border-black/10 bg-white">
-                  <div className="p-4 sm:p-5">
-                    <div className="text-sm font-semibold text-zinc-900">
-                      Oda Görselleri
-                    </div>
-                    <div className="mt-3 grid grid-cols-3 lg:grid-cols-1 gap-2">
-                      {galleryImages.map((img, idx) => (
-                        <button
-                          key={`${img.label}-${idx}`}
-                          type="button"
-                          onClick={() => setGalleryIndex(idx)}
-                          className={[
-                            "rounded-xl overflow-hidden border text-left transition-colors",
-                            idx === galleryIndex
-                              ? "border-zinc-900/20 bg-zinc-50"
-                              : "border-black/10 bg-white hover:bg-zinc-50",
-                          ].join(" ")}
-                        >
-                          <div className="relative w-full h-20 lg:h-24 bg-zinc-100">
-                            <Image
-                              src={img.src}
-                              alt={`${galleryType.type} ${img.label} küçük görsel`}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="px-3 py-2 text-xs text-zinc-800">
-                            {img.label}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </section>
-  );
+    {selected && <div className="fixed inset-0 z-[80] bg-[#111311] p-3 sm:p-7" role="dialog" aria-modal="true" aria-label="Daire planı tam ekran görünümü"><div className="relative h-full w-full"><Image src={selected.image} alt={`${selected.block} Blok ${selected.floor} ${selected.position} planı`} fill sizes="100vw" className="object-contain"/></div><div className="absolute left-5 top-5 bg-[#f2efe8] px-5 py-4 sm:left-8 sm:top-8"><span className="text-[9px] font-bold uppercase tracking-[.2em] text-[#8a5f3d]">{selected.block} Blok</span><p className="display-font mt-1 text-xl font-semibold">{selected.floor} · {selected.position}</p></div><button onClick={() => setSelected(null)} className="absolute right-5 top-5 grid size-12 place-items-center rounded-full bg-[#f2efe8] text-black sm:right-8 sm:top-8" aria-label="Planı kapat"><X/></button><button onClick={() => move(-1)} className="absolute bottom-5 left-5 grid size-12 place-items-center bg-[#f2efe8] text-black sm:bottom-8 sm:left-8" aria-label="Önceki plan"><ArrowLeft/></button><button onClick={() => move(1)} className="absolute bottom-5 right-5 grid size-12 place-items-center bg-[#f2efe8] text-black sm:bottom-8 sm:right-8" aria-label="Sonraki plan"><ArrowRight/></button></div>}
+  </section>;
 }
-
-

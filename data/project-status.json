@@ -1,75 +1,45 @@
 {
   "general": {
-    "projectName": "Vadi Konakları",
-    "completionRate": 47,
+    "projectName": "Elys Prime",
+    "companyName": "BULKİ YAPI LİMİTED ŞİRKETİ",
+    "completionRate": 10,
     "unitsSold": 21,
-    "constructionArea": 12500,
-    "whatsappLink": "https://wa.me/905550000000",
-    "phone": "+90 555 000 00 00"
+    "totalUnits": 192,
+    "constructionArea": 35000,
+    "whatsappLink": "https://wa.me/905522046712",
+    "email": "info@elysprime.com"
   },
   "hero": {
-    "title": "Hayallerinizdeki Yaşam Başlıyor",
-    "subtitle": "Şehrin merkezinde, doğayla iç içe."
+    "title": "Hayalinizdeki yaşam, ulaşılabilir ödeme seçenekleriyle."
   },
-  "apartmentTypes": [
-    {
-      "type": "1+1",
-      "size": "60 m²",
-      "remaining": 7,
-      "images": [
-        { "label": "Salon", "src": "/images/plan-2-1.jpg" },
-        { "label": "Mutfak", "src": "/images/plan-2-1.jpg" },
-        { "label": "Yatak Odası", "src": "/images/plan-2-1.jpg" }
-      ]
-    },
-    {
-      "type": "2+1",
-      "size": "95 m²",
-      "remaining": 4,
-      "images": [
-        { "label": "Salon", "src": "/images/plan-2-1.jpg" },
-        { "label": "Mutfak", "src": "/images/plan-2-1.jpg" },
-        { "label": "Yatak Odası", "src": "/images/plan-2-1.jpg" }
-      ]
-    },
-    {
-      "type": "3+1",
-      "size": "140 m²",
-      "remaining": 2,
-      "images": [
-        { "label": "Salon", "src": "/images/plan-2-1.jpg" },
-        { "label": "Mutfak", "src": "/images/plan-2-1.jpg" },
-        { "label": "Yatak Odası", "src": "/images/plan-2-1.jpg" }
-      ]
-    }
-  ],
   "location": {
-    "description": "Metroya 5 dk, AVM'ye 2 dk yürüme mesafesinde.",
-    "mapImage": "/images/konum.jpg",
+    "description": "Pendik'in gelişen yaşam bölgesinde, ulaşım bağlantılarına yakın konum.",
+    "latitude": 40.948906,
+    "longitude": 29.302832,
     "metrics": {
       "metro": { "label": "Metro", "walkMin": 5 },
       "bus": { "label": "Otobüs Durağı", "walkMin": 2 },
       "center": { "label": "Şehir Merkezi", "walkMin": 18, "driveMin": 6 }
     }
   },
+  "blocks": [
+    { "name": "A Blok", "total": 48, "sold": 4, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
+    { "name": "B Blok", "total": 48, "sold": 7, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
+    { "name": "C Blok", "total": 48, "sold": 5, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
+    { "name": "D Blok", "total": 48, "sold": 5, "normalCorner": 4, "normalMiddle": 2, "special": 6 }
+  ],
   "contacts": [
     {
-      "name": "Ahmet Yılmaz",
-      "role": "Satış Danışmanı",
-      "phone": "+90 555 111 11 11",
-      "whatsapp": "+90 555 111 11 11"
+      "name": "EMİN BÜLKİ",
+      "role": "GENEL MÜDÜR",
+      "phone": "+90 505 825 36 10",
+      "whatsapp": "+90 505 825 36 10"
     },
     {
-      "name": "Elif Demir",
-      "role": "Proje Uzmanı",
-      "phone": "+90 555 222 22 22",
-      "whatsapp": "+90 555 222 22 22"
-    },
-    {
-      "name": "Mert Kaya",
-      "role": "Satış Müdürü",
-      "phone": "+90 555 333 33 33",
-      "whatsapp": "+90 555 333 33 33"
+      "name": "MEHMET BAKİ BÜLKİ",
+      "role": "SATIŞ VE PAZARLAMA SORUMLUSU",
+      "phone": "+90 552 204 67 12",
+      "whatsapp": "+90 552 204 67 12"
     }
   ]
 }
