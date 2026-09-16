@@ -8,7 +8,7 @@ import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { campaignUrl } from "@/lib/campaigns";
 import { getSection } from "@/lib/sections.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
@@ -24,17 +24,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const campaign = campaigns.find((item) => item.slug === slug);
   if (!campaign) return {};
 
-  return {
+  return pageMetadata({
     title: campaign.seoTitle,
     description: campaign.seoDescription,
-    alternates: { canonical: campaignUrl(campaign) },
-    openGraph: {
-      url: campaignUrl(campaign),
-      title: campaign.seoTitle,
-      description: campaign.seoDescription,
-      images: [{ url: campaign.poster, alt: campaign.posterAlt }],
-    },
-  };
+    path: campaignUrl(campaign),
+    image: campaign.poster.startsWith("http") ? campaign.poster : absoluteUrl(campaign.poster),
+    imageAlt: campaign.posterAlt,
+  });
 }
 
 export default async function KampanyaPage({ params }: { params: Promise<{ slug: string }> }) {

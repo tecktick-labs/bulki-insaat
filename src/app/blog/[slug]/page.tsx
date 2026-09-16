@@ -4,7 +4,7 @@ import PageShell from "@/components/PageShell";
 import PostDetail from "@/components/PostDetail";
 import { getPost, getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 import { getProjectContent } from "@/lib/project-content.server";
 
@@ -23,20 +23,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
 
-  return {
+  return pageMetadata({
     title,
     description,
-    alternates: { canonical: postUrl(post) },
-    openGraph: {
-      type: "article",
-      url: postUrl(post),
-      title,
-      description,
-      publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt,
-      images: post.coverImage ? [{ url: post.coverImage, alt: post.coverAlt || post.title }] : undefined,
-    },
-  };
+    path: postUrl(post),
+    type: "article",
+    image: post.coverImage || undefined,
+    imageAlt: post.coverAlt || post.title,
+    publishedTime: post.publishedAt,
+    modifiedTime: post.updatedAt,
+  });
 }
 
 export default async function BlogDetayPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -5,19 +5,14 @@ import BlockRenderer from "@/components/BlockRenderer";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   const copy = await getPageCopy("konum");
-  return {
-    title: copy.seoTitle,
-    description: copy.seoDescription,
-    alternates: { canonical: "/konum" },
-    openGraph: { url: "/konum", title: copy.seoTitle, description: copy.seoDescription },
-  };
+  return pageMetadata({ title: copy.seoTitle, description: copy.seoDescription, path: "/konum" });
 }
 
 export default async function KonumPage() {

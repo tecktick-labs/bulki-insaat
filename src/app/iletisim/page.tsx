@@ -5,19 +5,14 @@ import BlockRenderer from "@/components/BlockRenderer";
 import { Container, PageHeader } from "@/components/Prose";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const copy = await getPageCopy("iletisim");
-  return {
-    title: copy.seoTitle,
-    description: copy.seoDescription,
-    alternates: { canonical: "/iletisim" },
-    openGraph: { url: "/iletisim", title: copy.seoTitle, description: copy.seoDescription },
-  };
+  return pageMetadata({ title: copy.seoTitle, description: copy.seoDescription, path: "/iletisim" });
 }
 
 function digits(phone: string) {

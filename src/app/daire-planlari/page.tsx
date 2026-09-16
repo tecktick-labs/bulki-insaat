@@ -8,19 +8,14 @@ import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { blockNames, planImage, planTitle, plans } from "@/lib/plans";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const copy = await getPageCopy("daire-planlari");
-  return {
-    title: copy.seoTitle,
-    description: copy.seoDescription,
-    alternates: { canonical: "/daire-planlari" },
-    openGraph: { url: "/daire-planlari", title: copy.seoTitle, description: copy.seoDescription },
-  };
+  return pageMetadata({ title: copy.seoTitle, description: copy.seoDescription, path: "/daire-planlari" });
 }
 
 export default async function DairePlanlariPage() {

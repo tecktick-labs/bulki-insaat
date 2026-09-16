@@ -5,45 +5,49 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { findPlan, planImage, planTitle, plans } from "@/lib/plans";
+import { planImage, planTitle } from "@/lib/plans";
+import { applyPlanRooms } from "@/lib/sections";
+import { getSection } from "@/lib/sections.server";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 86400;
 
-export function generateStaticParams() {
-  return plans.map((plan) => ({ slug: plan.slug }));
+export async function generateStaticParams() {
+  const planRooms = await getSection("plan-rooms");
+  return applyPlanRooms(planRooms).map((plan) => ({ slug: plan.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const plan = findPlan(slug);
+  const plan = applyPlanRooms(await getSection("plan-rooms")).find((item) => item.slug === slug);
   if (!plan) return {};
 
   const title = `${planTitle(plan)} Daire Planı`;
   const description = `Elys Prime ${plan.block} Blok ${plan.floor} ${plan.position} daire planı. Kat planını büyüterek inceleyin, teknik detaylar için satış ekibiyle iletişime geçin.`;
 
-  return {
+  return pageMetadata({
     title,
     description,
-    alternates: { canonical: `/daire-planlari/${plan.slug}` },
-    openGraph: {
-      url: `/daire-planlari/${plan.slug}`,
-      title,
-      description,
-      images: [{ url: planImage(plan), alt: `${planTitle(plan)} daire planı` }],
-    },
-  };
+    path: `/daire-planlari/${plan.slug}`,
+    image: planImage(plan),
+    imageAlt: `${planTitle(plan)} daire planı`,
+  });
 }
 
 export default async function PlanDetayPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const plan = findPlan(slug);
-  if (!plan) notFound();
+  const [content, copy, planRooms] = await Promise.all([
+    getProjectContent(),
+    getPageCopy("daire-planlari"),
+    getSection("plan-rooms"),
+  ]);
 
-  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("daire-planlari")]);
+  const plans = applyPlanRooms(planRooms);
+  const plan = plans.find((item) => item.slug === slug);
+  if (!plan) notFound();
   const paragraphs = copy.planTypes?.[`${plan.floor}|${plan.position}`] ?? [];
   const index = plans.indexOf(plan);
   const previous = plans[(index - 1 + plans.length) % plans.length];
@@ -79,11 +83,12 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
           </div>
 
           <div>
-            <dl className="grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
+            <dl className="grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-4">
               {[
                 { label: "Blok", value: `${plan.block} Blok` },
                 { label: "Kat", value: plan.floor },
                 { label: "Konum", value: plan.position },
+                { label: "Oda tipi", value: plan.rooms },
               ].map((item) => (
                 <div key={item.label} className="bg-[#1f221f] px-4 py-5">
                   <dt className="text-[9px] font-bold uppercase tracking-[.16em] text-white/40">{item.label}</dt>

@@ -6,18 +6,13 @@ import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { getBuildImage } from "@/lib/media";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
-import { JsonLd, breadcrumbSchema, residenceSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata, residenceSchema } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const copy = await getPageCopy("proje");
-  return {
-    title: copy.seoTitle,
-    description: copy.seoDescription,
-    alternates: { canonical: "/proje" },
-    openGraph: { url: "/proje", title: copy.seoTitle, description: copy.seoDescription },
-  };
+  return pageMetadata({ title: copy.seoTitle, description: copy.seoDescription, path: "/proje" });
 }
 
 const highlightImages = [3, 5, 6, 9];

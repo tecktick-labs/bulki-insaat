@@ -4,18 +4,17 @@ import PostList from "@/components/PostList";
 import { PageHeader } from "@/components/Prose";
 import { getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 import { getProjectContent } from "@/lib/project-content.server";
 
 export const revalidate = 600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Tanıtımlar",
   description: "Elys Prime tanıtım içerikleri ve dijital broşürleri. Proje detaylarını görsellerle inceleyin.",
-  alternates: { canonical: "/tanitimlar" },
-  openGraph: { url: "/tanitimlar", title: "Tanıtımlar | Elys Prime", description: "Elys Prime tanıtım içerikleri ve dijital broşürleri. Proje detaylarını görsellerle inceleyin." },
-};
+  path: "/tanitimlar",
+});
 
 export default async function TanitimlarPage() {
   const [content, posts] = await Promise.all([getProjectContent(), getPosts("tanitim")]);

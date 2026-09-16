@@ -4,18 +4,17 @@ import PostList from "@/components/PostList";
 import { PageHeader } from "@/components/Prose";
 import { getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
-import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 import { getProjectContent } from "@/lib/project-content.server";
 
 export const revalidate = 600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blog",
   description: "Elys Prime blogu: konut alım süreci, daire tipi seçimi, Pendik'te yaşam ve projeden güncel notlar.",
-  alternates: { canonical: "/blog" },
-  openGraph: { url: "/blog", title: "Blog | Elys Prime", description: "Elys Prime blogu: konut alım süreci, daire tipi seçimi, Pendik'te yaşam ve projeden güncel notlar." },
-};
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   const [content, posts] = await Promise.all([getProjectContent(), getPosts("blog")]);

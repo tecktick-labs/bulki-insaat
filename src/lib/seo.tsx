@@ -1,5 +1,53 @@
-import { absoluteUrl, companyName, siteName } from "./site";
+import type { Metadata } from "next";
+import { absoluteUrl, companyName, locale, siteName } from "./site";
 import type { ProjectContent } from "./project-content";
+
+/**
+ * Sayfa metadata'sını tek yerden kurar.
+ *
+ * Next'te bir sayfa `openGraph` döndürdüğünde üst katmandaki openGraph'ı
+ * TAMAMEN değiştirir: dosya tabanlı opengraph-image, site adı ve dil
+ * bilgisi sessizce kaybolur. Bu yüzden her sayfa bu yardımcıyı kullanır;
+ * paylaşım görseli ve twitter kartı hiçbir sayfada eksik kalmaz.
+ */
+export function pageMetadata({
+  title,
+  description,
+  path,
+  image,
+  imageAlt,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+}): Metadata {
+  const images = [{ url: image || absoluteUrl("/opengraph-image"), alt: imageAlt || title }];
+
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      type,
+      url: path,
+      title,
+      description,
+      siteName,
+      locale,
+      images,
+      ...(type === "article" ? { publishedTime, modifiedTime } : {}),
+    },
+    twitter: { card: "summary_large_image", title, description, images },
+  };
+}
 
 export function organizationSchema() {
   return {
