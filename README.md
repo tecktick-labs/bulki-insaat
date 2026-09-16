@@ -39,7 +39,7 @@ src/
   sections/       Ana sayfanın scroll-snap bölümleri
   lib/            Firestore erişimi, medya URL'leri, daire planı kataloğu, SEO şemaları
   data/           project-status.json (proje verileri) + copy.ts (varsayılan sayfa metinleri)
-  assets/         Storage'a yüklenen kaynak dosyalar — build'e dahil edilmez
+  assets/         Medya kaynakları — repoda TUTULMAZ, Storage'dan indirilir
 ```
 
 ## Sayfalar
@@ -83,15 +83,45 @@ GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json npm run seed-content
 
 Script mevcut dokümanlara dokunmaz; üzerine yazmak için `-- --force` ekleyin.
 
-## Medyayı Storage'a yükleme
+## Medya
 
-`src/assets` altındaki görseller ve video tek seferlik bir script ile yüklenir:
+Görseller ve videolar **repoda tutulmaz**; tek doğruluk kaynağı Firebase
+Storage'dır (`gs://elysprime.firebasestorage.app/media/`). Site bunları
+`next/image` ve `<video>` üzerinden doğrudan Storage'dan alır, dolayısıyla
+build'e dahil edilmelerinin bir faydası yoktu — yalnızca her deploy'u
+ağırlaştırıyorlardı.
+
+Medyayla çalışmanız gerekirse:
 
 ```bash
-GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json node scripts/upload-media.mjs
+GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json npm run fetch-media
 ```
 
-Ardından Storage kurallarını yayınlayın:
+Bu, Storage'daki dosyaları `src/assets/` altına indirir (aynı boyuttakileri
+atlar). Değişiklik yaptıktan sonra geri yüklemek için:
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json npm run upload-media
+```
+
+### Tanıtım videosu
+
+Kaynak `tanitim.webm` 1280x720, 82 saniye, ~15 MB ve **ses içermez**.
+Mobilde bu boyut LCP'yi bozduğu için küçük bir sürüm servis edilir:
+
+| Sürüm | Çözünürlük | Boyut |
+|---|---|---|
+| `tanitim.webm` / `.mp4` | 1280x720 | 15,5 / 14,6 MB |
+| `tanitim-mobile.webm` / `.mp4` | 640x360 | 3,3 / 2,6 MB |
+
+Her boyutta önce WebM, ardından WebM desteklemeyen Safari sürümleri için
+H.264 MP4 verilir. Türetilmiş sürümleri yeniden üretmek için:
+
+```bash
+npm run fetch-media && npm run transcode-video && npm run upload-media
+```
+
+Storage kurallarını yayınlamak için:
 
 ```bash
 firebase deploy --only storage

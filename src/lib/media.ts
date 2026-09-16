@@ -15,13 +15,22 @@ export function getFloorPlan(file: string) {
 }
 
 /**
- * Elimizde yalnızca WebM var. Safari'nin WebM desteklemediği sürümlerde
- * video sessizce atlanır ve poster görseli görünür — kayıp yok.
- * Kapsamı genişletmek için bir H.264 MP4 üretip Storage'a `videos/tanitim.mp4`
- * olarak yükleyin ve buraya ilk sıraya ekleyin.
+ * Tanıtım videosu iki boyutta servis edilir:
+ *   mobil     640x360, ~3 MB   — hücresel bağlantıda LCP'yi bozmaz
+ *   masaüstü  1280x720, ~15 MB — tam kalite
+ *
+ * Her boyutta önce WebM (daha küçük), ardından WebM desteklemeyen Safari
+ * sürümleri için H.264 MP4 verilir. Tarayıcı oynatabildiği ilk kaynağı seçer.
+ * Kaynak videoda ses akışı yoktur; tüm sürümler sessizdir.
+ *
+ * Yeni sürüm üretmek için: npm run transcode-video
  */
-export function getPromotionVideos() {
-  return [{ src: storageUrl("videos/tanitim.webm"), type: "video/webm" }];
+export function getPromotionVideos(variant: "mobile" | "desktop" = "desktop") {
+  const name = variant === "mobile" ? "tanitim-mobile" : "tanitim";
+  return [
+    { src: storageUrl(`videos/${name}.webm`), type: "video/webm" },
+    { src: storageUrl(`videos/${name}.mp4`), type: "video/mp4" },
+  ];
 }
 
 export const BUILD_IMAGE_COUNT = 10;

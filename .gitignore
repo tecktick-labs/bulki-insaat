@@ -48,3 +48,7 @@ next-env.d.ts
 *service-account*.json
 *serviceAccount*.json
 *-adminsdk-*.json
+
+# Medya kaynakları — tek doğruluk kaynağı Firebase Storage.
+# Geri getirmek için: npm run fetch-media
+/src/assets/

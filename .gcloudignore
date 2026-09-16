@@ -1,6 +1,6 @@
 # App Hosting / Cloud Build'e gönderilmeyecek dosyalar.
-# Görseller ve video Firebase Storage'dan servis edildiği için build'e dahil edilmez —
-# bu, her deploy'da 26 MB'lık gereksiz yükü ortadan kaldırır.
+# Medya artık repoda da yok (bkz. .gitignore) ama yerelden deploy edilirse
+# diye bu kayıt duruyor.
 src/assets/
 scripts/
 

@@ -1,46 +1,37 @@
 "use client";
 import { campaignUrl, type Campaign } from "@/lib/campaigns";
 import { getBuildImage, getPromotionVideos } from "@/lib/media";
-import { ArrowDown, ArrowUpRight, Volume2, VolumeX } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const posterSrc = getBuildImage(1);
 
 export default function HeroSection({ projectName, title, campaigns }: { projectName: string; title: string; campaigns: Campaign[] }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
-  const [loadVideo, setLoadVideo] = useState(false);
+  const [variant, setVariant] = useState<"mobile" | "desktop" | null>(null);
 
-  // Video 16 MB. Poster görsel LCP'yi taşır; video ancak geniş ekranda,
-  // veri tasarrufu kapalıyken ve sayfa boşa düştükten sonra indirilir.
+  // Poster görsel LCP'yi taşır; video sayfa boşa düştükten sonra yüklenir.
+  // Mobilde 640x360'lık (~3 MB) sürüm, masaüstünde tam kalite (~15 MB) oynar.
+  // "Hareketi azalt" tercihi veya veri tasarrufu açıksa video hiç indirilmez.
   useEffect(() => {
-    if (window.matchMedia("(max-width: 767px)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (connection?.saveData) return;
 
+    const next = window.matchMedia("(max-width: 767px)").matches ? "mobile" : "desktop";
     const idle = window.requestIdleCallback ?? ((callback: () => void) => window.setTimeout(callback, 1200));
-    const handle = idle(() => setLoadVideo(true));
+    const handle = idle(() => setVariant(next));
     return () => window.clearTimeout(handle as number);
   }, []);
-
-  const toggleSound = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !muted;
-    setMuted(!muted);
-    void video.play();
-  };
 
   const discover = () => document.getElementById("brosurler")?.scrollIntoView({ behavior: "smooth" });
 
   return <section id="giris" className="relative h-dvh snap-start snap-always overflow-hidden bg-[#121412] text-white">
     <Image src={posterSrc} alt="Elys Prime projesinin genel görünümü" fill priority sizes="100vw" className="object-cover" />
-    {loadVideo && <video ref={videoRef} autoPlay muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover" aria-label="Elys Prime proje tanıtım videosu">
-      {getPromotionVideos().map((video) => <source key={video.type} src={video.src} type={video.type}/>) }
+    {variant && <video autoPlay muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover" aria-label="Elys Prime proje tanıtım videosu">
+      {getPromotionVideos(variant).map((video) => <source key={video.type} src={video.src} type={video.type}/>) }
     </video>}
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,10,.82)_0%,rgba(10,12,10,.45)_45%,rgba(10,12,10,.12)_78%),linear-gradient(0deg,rgba(10,12,10,.78)_0%,transparent_52%)]" />
     <div className="ambient-grid absolute inset-0 opacity-30" />
@@ -92,6 +83,5 @@ export default function HeroSection({ projectName, title, campaigns }: { project
       </span>
     </button>
 
-    {loadVideo && <button onClick={toggleSound} className="absolute right-5 top-24 z-10 grid size-11 place-items-center rounded-full border border-white/35 bg-black/10 backdrop-blur transition-colors hover:bg-white hover:text-[#181a18] sm:right-9 lg:right-14" aria-label={muted ? "Videonun sesini aç" : "Videonun sesini kapat"}>{muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}</button>}
   </section>;
 }
