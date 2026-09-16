@@ -21,11 +21,16 @@ export async function getPageCopy(slug: PageSlug): Promise<PageCopy> {
     const snapshot = await firestore.collection(PAGES_COLLECTION).doc(slug).get();
     if (!snapshot.exists) return fallback;
 
+    // Yalnızca bilinen anahtarlar: doküman `updatedAt` gibi Firestore Timestamp
+    // alanları içerir ve bunlar Client Component'e serileştirilemez.
     const stored = snapshot.data() as Partial<PageCopy>;
     return {
-      ...fallback,
-      ...stored,
       slug,
+      label: fallback.label,
+      title: stored.title || fallback.title,
+      lead: stored.lead || fallback.lead,
+      seoTitle: stored.seoTitle || fallback.seoTitle,
+      seoDescription: stored.seoDescription || fallback.seoDescription,
       blocks: stored.blocks?.length ? stored.blocks : fallback.blocks,
       planTypes: stored.planTypes ?? fallback.planTypes,
     };

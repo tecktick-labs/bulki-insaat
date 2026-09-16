@@ -43,3 +43,8 @@ next-env.d.ts
 # Next 16 tarafından otomatik üretilir
 /AGENTS.md
 /CLAUDE.md
+
+# Servis hesabı anahtarları — asla commit edilmemeli
+*service-account*.json
+*serviceAccount*.json
+*-adminsdk-*.json

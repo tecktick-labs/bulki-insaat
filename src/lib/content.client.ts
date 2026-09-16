@@ -32,9 +32,12 @@ export async function fetchPageCopy(slug: PageSlug): Promise<PageCopy> {
 
   const stored = snapshot.data() as Partial<PageCopy>;
   return {
-    ...fallback,
-    ...stored,
     slug,
+    label: fallback.label,
+    title: stored.title || fallback.title,
+    lead: stored.lead || fallback.lead,
+    seoTitle: stored.seoTitle || fallback.seoTitle,
+    seoDescription: stored.seoDescription || fallback.seoDescription,
     blocks: stored.blocks?.length ? stored.blocks : fallback.blocks,
     planTypes: stored.planTypes ?? fallback.planTypes,
   };
