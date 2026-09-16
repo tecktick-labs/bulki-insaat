@@ -2,34 +2,27 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /projectData/{documentId} {
-      allow read: if documentId == 'website' || documentId == 'panel-access';
 
-      allow create, update: if documentId == 'panel-access'
-        && request.resource.data.keys().hasOnly(['codeHash'])
-        && request.resource.data.codeHash == '1f01eeaf275dc3ebe336ba85d69d28ee3b62a828e146642fdf6c4908b19bbfbb';
+    // Yönetici listesi. Her yetkili için admins/{uid} dokümanı elle oluşturulur.
+    // Kimse istemciden okuyamaz veya yazamaz; sadece Admin SDK erişir.
+    match /admins/{uid} {
+      allow read, write: if false;
+    }
 
-      allow create, update: if documentId == 'website'
-        && request.resource.data.keys().hasAll([
-          'general',
-          'hero',
-          'apartmentTypes',
-          'location',
-          'blocks',
-          'contacts',
-          'updatedAt'
-        ])
-        && request.resource.data.keys().hasOnly([
-          'general',
-          'hero',
-          'apartmentTypes',
-          'location',
-          'blocks',
-          'contacts',
-          'updatedAt'
-        ]);
+    match /projectData/website {
+      // Site içeriği herkese açık okunur.
+      allow read: if true;
 
-      allow update, delete: if false;
+      // Yazma yalnızca admins koleksiyonunda kaydı olan, giriş yapmış kullanıcılara açık.
+      allow write: if request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && request.resource.data.keys().hasAll(['general', 'hero', 'location', 'blocks', 'contacts', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['general', 'hero', 'location', 'blocks', 'contacts', 'updatedAt']);
+    }
+
+    // Diğer her şey kapalı.
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

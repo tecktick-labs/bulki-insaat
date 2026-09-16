@@ -6,30 +6,31 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint",
-    "deploy": "npm run build && firebase deploy --only hosting,firestore:rules"
+    "deploy": "firebase deploy --only firestore:rules,storage"
   },
   "dependencies": {
     "firebase": "^12.18.0",
-    "framer-motion": "^12.23.26",
+    "firebase-admin": "^14.4.0",
     "lucide-react": "^0.562.0",
+    "next": "^16.3.5",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9",
-    "@tailwindcss/vite": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "@vitejs/plugin-react": "^5",
+    "eslint-config-next": "^16.3.5",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8",
-    "vite": "^7"
+    "typescript-eslint": "^8"
   }
 }

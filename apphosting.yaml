@@ -1,0 +1,52 @@
+# Firebase App Hosting yapılandırması.
+# Cloud Run üzerinde Next.js sunucusunu çalıştırır; deploy GitHub'daki main branch'ine push ile tetiklenir.
+runConfig:
+  minInstances: 0
+  maxInstances: 2
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: https://www.elysprime.com
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: elysprime
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_STORAGE_BUCKET
+    value: elysprime.firebasestorage.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Aşağıdakiler public web config değerleridir; gizli değildir.
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyDHLCKaONtAIRzFT_9IjdKcbIGMKbxovPU
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: elysprime.firebaseapp.com
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "410333401132"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:410333401132:web:e36572d075a043a8b80189
+    availability:
+      - BUILD
+      - RUNTIME

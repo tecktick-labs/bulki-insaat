@@ -1,0 +1,14 @@
+# App Hosting / Cloud Build'e gönderilmeyecek dosyalar.
+# Görseller ve video Firebase Storage'dan servis edildiği için build'e dahil edilmez —
+# bu, her deploy'da 26 MB'lık gereksiz yükü ortadan kaldırır.
+src/assets/
+scripts/
+
+.git/
+.github/
+node_modules/
+.next/
+.firebase/
+README.md
+.env*
+!.env.example

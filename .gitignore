@@ -34,3 +34,8 @@ firebase-debug.log*
 
 # typescript
 *.tsbuildinfo
+
+# next
+/.next/
+/out/
+next-env.d.ts
