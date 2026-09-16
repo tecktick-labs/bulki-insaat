@@ -22,6 +22,7 @@ type TabId = (typeof tabs)[number]["id"];
 export default function PanelClient() {
   const [content, setContent] = useState<ProjectContent>(projectDefaults);
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [authReady, setAuthReady] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,10 +44,29 @@ export default function PanelClient() {
   }, []);
 
   // Firebase Auth harici bir sistem; oturum durumu değiştiğinde içeriği de burada çekiyoruz.
-  useEffect(() => onAuthStateChanged(auth, (nextUser) => {
+  //
+  // Yönetici yetkisi `admin` custom claim'i olarak ID token'ın içine gömülüdür.
+  // Token bir saate kadar önbellekte kalabildiği için, yetkisi yeni verilmiş bir
+  // hesap çıkış yapmadan yetkili görünmez. `getIdTokenResult(true)` token'ı
+  // zorla tazeler; böylece sayfayı yenilemek yeterli olur.
+  useEffect(() => onAuthStateChanged(auth, async (nextUser) => {
     setUser(nextUser);
+
+    if (!nextUser) {
+      setIsAdmin(false);
+      setAuthReady(true);
+      return;
+    }
+
+    try {
+      const token = await nextUser.getIdTokenResult(true);
+      setIsAdmin(token.claims.admin === true);
+    } catch {
+      setIsAdmin(false);
+    }
+
     setAuthReady(true);
-    if (nextUser) void loadContent();
+    void loadContent();
   }), [loadContent]);
 
   const login = async (event: FormEvent<HTMLFormElement>) => {
@@ -93,6 +113,34 @@ export default function PanelClient() {
           <Link href="/" className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.12em] text-white/45 hover:text-white">
             <ChevronLeft size={14} /> Siteye dön
           </Link>
+        </section>
+      </main>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <main className="grid min-h-dvh place-items-center bg-[#181a18] px-5 text-[#f6f1eb]">
+        <section className="w-full max-w-lg border border-white/10 bg-[#202320] p-7 sm:p-10">
+          <p className="eyebrow text-[#d8b792]">Elys Prime</p>
+          <h1 className="mt-4 text-3xl font-semibold tracking-[-.03em]">Bu hesabın yönetici yetkisi yok</h1>
+          <p className="mt-4 text-sm leading-7 text-white/55">
+            <strong className="text-white/80">{user.email}</strong> ile giriş yapıldı, ancak bu hesapta
+            yönetici yetkisi tanımlı değil. Yetki verildikten sonra bu sayfayı yenilemeniz yeterlidir.
+          </p>
+          <p className="mt-5 text-[10px] font-bold uppercase tracking-[.14em] text-white/35">Yetki vermek için</p>
+          <pre className="mt-2 overflow-x-auto border border-white/10 bg-[#181a18] p-4 text-[11px] leading-6 text-white/60">
+{`npm run set-admin -- ${user.email}`}
+          </pre>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <button type="button" onClick={() => window.location.reload()} className={primaryButtonClass}>
+              Yeniden dene
+            </button>
+            <button type="button" onClick={logout} className={buttonClass}>
+              <LogOut size={14} /> Çıkış yap
+            </button>
+            <Link href="/" className={buttonClass}><ChevronLeft size={14} /> Siteye dön</Link>
+          </div>
         </section>
       </main>
     );
