@@ -5,8 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { planDescriptions } from "@/data/copy";
 import { findPlan, planImage, planTitle, plans } from "@/lib/plans";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
@@ -43,8 +43,8 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
   const plan = findPlan(slug);
   if (!plan) notFound();
 
-  const content = await getProjectContent();
-  const paragraphs = planDescriptions[`${plan.floor}|${plan.position}`] ?? [];
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("daire-planlari")]);
+  const paragraphs = copy.planTypes?.[`${plan.floor}|${plan.position}`] ?? [];
   const index = plans.indexOf(plan);
   const previous = plans[(index - 1 + plans.length) % plans.length];
   const next = plans[(index + 1) % plans.length];
@@ -93,7 +93,7 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
             </dl>
 
             <div className="mt-8 space-y-5">
-              {paragraphs.map((paragraph) => (
+              {paragraphs.map((paragraph: string) => (
                 <p key={paragraph.slice(0, 40)} className="text-[15px] leading-8 text-white/60">{paragraph}</p>
               ))}
               <p className="text-[13px] leading-7 text-white/35">

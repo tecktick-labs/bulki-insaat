@@ -1,24 +1,27 @@
 import { Bus, CarFront, ExternalLink, TrainFront } from "lucide-react";
 import type { Metadata } from "next";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
-import { CallToAction, Container, PageHeader, Section } from "@/components/Prose";
-import { konumPage } from "@/data/copy";
+import BlockRenderer from "@/components/BlockRenderer";
+import { CallToAction, Container, PageHeader } from "@/components/Prose";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
-  title: "Konum ve Ulaşım",
-  description:
-    "Elys Prime'ın Pendik'teki konumu: metroya 5 dakika, otobüs durağına 2 dakika yürüme mesafesi, şehir merkezine araçla 6 dakika. Harita ve ulaşım bilgileri.",
-  alternates: { canonical: "/konum" },
-  openGraph: { url: "/konum", title: "Elys Prime Konum ve Ulaşım" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("konum");
+  return {
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    alternates: { canonical: "/konum" },
+    openGraph: { url: "/konum", title: copy.seoTitle, description: copy.seoDescription },
+  };
+}
 
 export default async function KonumPage() {
-  const content = await getProjectContent();
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("konum")]);
   const { location, general } = content;
   const mapEmbedUrl = `https://www.google.com/maps?q=${location.latitude},${location.longitude}&z=16&output=embed`;
   const mapDetailUrl = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
@@ -31,7 +34,7 @@ export default async function KonumPage() {
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Konum" title={konumPage.title} lead={konumPage.lead}>
+      <PageHeader eyebrow="Konum" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "Konum", path: "/konum" }]} />
       </PageHeader>
 
@@ -58,9 +61,9 @@ export default async function KonumPage() {
         <p className="mt-6 max-w-2xl text-[15px] leading-8 text-white/60">{location.description}</p>
       </Container>
 
-      {konumPage.body.map((block) => (
-        <Section key={block.heading} heading={block.heading} paragraphs={block.paragraphs} />
-      ))}
+      <Container className="max-w-3xl pb-4 lg:pb-8">
+        <BlockRenderer blocks={copy.blocks} />
+      </Container>
 
       <Container className="py-12 lg:py-16">
         <h2 className="display-font text-2xl font-medium tracking-[-.03em] sm:text-4xl">Harita üzerinde</h2>

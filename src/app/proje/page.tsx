@@ -1,26 +1,29 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
-import { CallToAction, Container, PageHeader, Section } from "@/components/Prose";
-import { projePage } from "@/data/copy";
+import BlockRenderer from "@/components/BlockRenderer";
+import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { getBuildImage } from "@/lib/media";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema, residenceSchema } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Proje Hakkında",
-  description:
-    "Elys Prime; Pendik'te 4 blok, 192 daire ve 35.000 m² inşaat alanına sahip bir yaşam projesi. Mimari yaklaşım, blok kurgusu ve daire çeşitliliği hakkında ayrıntılar.",
-  alternates: { canonical: "/proje" },
-  openGraph: { url: "/proje", title: "Elys Prime Projesi Hakkında" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("proje");
+  return {
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    alternates: { canonical: "/proje" },
+    openGraph: { url: "/proje", title: copy.seoTitle, description: copy.seoDescription },
+  };
+}
 
 const highlightImages = [3, 5, 6, 9];
 
 export default async function ProjePage() {
-  const content = await getProjectContent();
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("proje")]);
   const { general } = content;
 
   const facts = [
@@ -32,7 +35,7 @@ export default async function ProjePage() {
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Proje" title={projePage.title} lead={projePage.lead}>
+      <PageHeader eyebrow="Proje" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "Proje", path: "/proje" }]} />
       </PageHeader>
 
@@ -47,9 +50,9 @@ export default async function ProjePage() {
         </dl>
       </Container>
 
-      {projePage.body.map((block) => (
-        <Section key={block.heading} heading={block.heading} paragraphs={block.paragraphs} />
-      ))}
+      <Container className="max-w-3xl pb-4 lg:pb-8">
+        <BlockRenderer blocks={copy.blocks} />
+      </Container>
 
       <Container className="py-12 lg:py-16">
         <h2 className="display-font text-2xl font-medium tracking-[-.03em] sm:text-4xl">Projeden görseller</h2>

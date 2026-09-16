@@ -1,0 +1,79 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import PageShell from "@/components/PageShell";
+import PostDetail from "@/components/PostDetail";
+import { getPost, getPosts } from "@/lib/content.server";
+import { postUrl } from "@/lib/content-types";
+import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { absoluteUrl, companyName } from "@/lib/site";
+import { getProjectContent } from "@/lib/project-content.server";
+
+export const revalidate = 600;
+
+export async function generateStaticParams() {
+  const posts = await getPosts("tanitim");
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost("tanitim", slug);
+  if (!post) return {};
+
+  const title = post.seoTitle || post.title;
+  const description = post.seoDescription || post.excerpt;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: postUrl(post) },
+    openGraph: {
+      type: "article",
+      url: postUrl(post),
+      title,
+      description,
+      publishedTime: post.publishedAt,
+      modifiedTime: post.updatedAt,
+      images: post.coverImage ? [{ url: post.coverImage, alt: post.coverAlt || post.title }] : undefined,
+    },
+  };
+}
+
+export default async function TanitimDetayPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const [post, content] = await Promise.all([getPost("tanitim", slug), getProjectContent()]);
+  if (!post) notFound();
+
+  return (
+    <PageShell content={content}>
+      <PostDetail
+        post={post}
+        listLabel="Tanıtımlar"
+        whatsappLink={content.general.whatsappLink}
+        email={content.general.email}
+      />
+
+      <JsonLd
+        schema={[
+          breadcrumbSchema([
+            { name: "Ana Sayfa", path: "/" },
+            { name: "Tanıtımlar", path: "/tanitimlar" },
+            { name: post.title, path: postUrl(post) },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.seoDescription || post.excerpt,
+            url: absoluteUrl(postUrl(post)),
+            datePublished: post.publishedAt,
+            dateModified: post.updatedAt,
+            image: post.coverImage || undefined,
+            author: { "@type": "Organization", name: companyName },
+            publisher: { "@type": "Organization", name: companyName },
+          },
+        ]}
+      />
+    </PageShell>
+  );
+}

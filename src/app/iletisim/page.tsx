@@ -1,34 +1,37 @@
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
+import BlockRenderer from "@/components/BlockRenderer";
 import { Container, PageHeader } from "@/components/Prose";
-import { iletisimPage } from "@/data/copy";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "İletişim",
-  description:
-    "Elys Prime satış ekibiyle iletişime geçin. Güncel fiyatlar, ödeme planı ve daire seçenekleri için telefon, WhatsApp ve e-posta bilgileri.",
-  alternates: { canonical: "/iletisim" },
-  openGraph: { url: "/iletisim", title: "Elys Prime İletişim" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("iletisim");
+  return {
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    alternates: { canonical: "/iletisim" },
+    openGraph: { url: "/iletisim", title: copy.seoTitle, description: copy.seoDescription },
+  };
+}
 
 function digits(phone: string) {
   return phone.replace(/[^\d]/g, "");
 }
 
 export default async function IletisimPage() {
-  const content = await getProjectContent();
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("iletisim")]);
   const { general, contacts, location } = content;
   const message = encodeURIComponent(`Merhaba, ${general.projectName} hakkında bilgi almak istiyorum.`);
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Satış & Randevu" title={iletisimPage.title} lead={iletisimPage.lead}>
+      <PageHeader eyebrow="Satış & Randevu" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "İletişim", path: "/iletisim" }]} />
       </PageHeader>
 
@@ -69,7 +72,9 @@ export default async function IletisimPage() {
           </div>
         </div>
 
-        <p className="mt-10 max-w-2xl text-[15px] leading-8 text-white/55">{iletisimPage.note}</p>
+        <div className="mt-10 max-w-2xl">
+          <BlockRenderer blocks={copy.blocks} />
+        </div>
       </Container>
 
       <JsonLd

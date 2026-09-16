@@ -3,24 +3,43 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Yönetici listesi. Her yetkili için admins/{uid} dokümanı elle oluşturulur.
-    // Kimse istemciden okuyamaz veya yazamaz; sadece Admin SDK erişir.
-    match /admins/{uid} {
-      allow read, write: if false;
+    // Yönetici yetkisi Firebase Auth custom claim'i ile verilir:
+    //   node scripts/set-admin.mjs eposta@ornek.com
+    // Aynı claim Storage kurallarında da kullanılır.
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
     }
 
+    // Site içeriği (proje verileri)
     match /projectData/website {
-      // Site içeriği herkese açık okunur.
       allow read: if true;
-
-      // Yazma yalnızca admins koleksiyonunda kaydı olan, giriş yapmış kullanıcılara açık.
-      allow write: if request.auth != null
-        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      allow write: if isAdmin()
         && request.resource.data.keys().hasAll(['general', 'hero', 'location', 'blocks', 'contacts', 'updatedAt'])
         && request.resource.data.keys().hasOnly(['general', 'hero', 'location', 'blocks', 'contacts', 'updatedAt']);
     }
 
-    // Diğer her şey kapalı.
+    // Alt sayfa metinleri
+    match /pages/{pageId} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.data.title is string
+        && request.resource.data.blocks is list;
+    }
+
+    // Blog yazıları ve tanıtım/broşür içerikleri
+    match /posts/{postId} {
+      // Yayındakiler herkese açık; taslakları yalnızca yöneticiler görür.
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.type in ['blog', 'tanitim']
+        && request.resource.data.slug is string
+        && request.resource.data.slug.size() > 0
+        && request.resource.data.title is string
+        && request.resource.data.blocks is list
+        && request.resource.data.published is bool;
+      allow delete: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

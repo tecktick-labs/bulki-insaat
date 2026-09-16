@@ -9,7 +9,7 @@ runConfig:
 
 env:
   - variable: NEXT_PUBLIC_SITE_URL
-    value: https://www.elysprime.com
+    value: https://elysprime.com
     availability:
       - BUILD
       - RUNTIME

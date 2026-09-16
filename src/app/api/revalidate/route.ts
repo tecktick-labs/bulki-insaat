@@ -1,11 +1,24 @@
 import { getAuth } from "firebase-admin/auth";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { adminApp, adminFirestore } from "@/lib/firebase-admin";
+import { adminApp } from "@/lib/firebase-admin";
 
-const REVALIDATED_PATHS = ["/", "/proje", "/daire-planlari", "/proje-durumu", "/konum", "/iletisim"];
+const BASE_PATHS = [
+  "/",
+  "/proje",
+  "/proje-durumu",
+  "/daire-planlari",
+  "/konum",
+  "/iletisim",
+  "/blog",
+  "/tanitimlar",
+  "/sitemap.xml",
+];
 
-/** Panel kaydettiğinde ISR sayfalarını tazeler. Sadece admins/{uid} kaydı olan kullanıcılar çağırabilir. */
+/**
+ * Panel kaydettiğinde ISR sayfalarını tazeler.
+ * Yalnızca `admin` custom claim'i olan hesaplar çağırabilir.
+ */
 export async function POST(request: Request) {
   const header = request.headers.get("authorization") ?? "";
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
@@ -16,18 +29,28 @@ export async function POST(request: Request) {
 
   try {
     const decoded = await getAuth(adminApp).verifyIdToken(token);
-    const admin = await adminFirestore.collection("admins").doc(decoded.uid).get();
-
-    if (!admin.exists) {
+    if (decoded.admin !== true) {
       return NextResponse.json({ error: "Bu hesabın yönetici yetkisi yok." }, { status: 403 });
     }
   } catch {
     return NextResponse.json({ error: "Oturum doğrulanamadı." }, { status: 401 });
   }
 
-  for (const path of REVALIDATED_PATHS) {
+  // İstemci ek bir yol bildirebilir (örn. yeni yayımlanan bir yazının kendi sayfası).
+  let extraPaths: string[] = [];
+  try {
+    const body = (await request.json()) as { paths?: unknown };
+    if (Array.isArray(body.paths)) {
+      extraPaths = body.paths.filter((path): path is string => typeof path === "string" && path.startsWith("/"));
+    }
+  } catch {
+    // Gövdesiz istek de geçerli.
+  }
+
+  const paths = [...new Set([...BASE_PATHS, ...extraPaths])];
+  for (const path of paths) {
     revalidatePath(path);
   }
 
-  return NextResponse.json({ revalidated: REVALIDATED_PATHS, at: Date.now() });
+  return NextResponse.json({ revalidated: paths, at: Date.now() });
 }

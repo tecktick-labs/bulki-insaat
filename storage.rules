@@ -2,10 +2,23 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    // Proje görselleri ve videosu herkese açık okunur; yazma yalnızca konsol/Admin SDK üzerinden.
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Proje görselleri ve videosu — herkese açık okuma, yazma yok.
     match /media/{allPaths=**} {
       allow read: if true;
       allow write: if false;
+    }
+
+    // Panelden yüklenen blog/tanıtım görselleri.
+    match /uploads/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.size < 8 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp|avif)');
+      allow delete: if isAdmin();
     }
 
     match /{allPaths=**} {

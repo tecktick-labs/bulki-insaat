@@ -1,30 +1,33 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
-import { CallToAction, Container, PageHeader, Section } from "@/components/Prose";
-import { durumPage } from "@/data/copy";
+import BlockRenderer from "@/components/BlockRenderer";
+import { CallToAction, Container, PageHeader } from "@/components/Prose";
 import { BUILD_IMAGE_COUNT, getBuildImage } from "@/lib/media";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 
 export const revalidate = 1800;
 
-export const metadata: Metadata = {
-  title: "Proje Durumu",
-  description:
-    "Elys Prime'ın güncel inşaat durumu, blok bazlı daire doluluğu ve satılan daire sayısı. Şantiyeden güncel proje görselleri.",
-  alternates: { canonical: "/proje-durumu" },
-  openGraph: { url: "/proje-durumu", title: "Elys Prime Güncel Proje Durumu" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("proje-durumu");
+  return {
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    alternates: { canonical: "/proje-durumu" },
+    openGraph: { url: "/proje-durumu", title: copy.seoTitle, description: copy.seoDescription },
+  };
+}
 
 export default async function ProjeDurumuPage() {
-  const content = await getProjectContent();
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("proje-durumu")]);
   const { general, blocks } = content;
   const remaining = Math.max(0, general.totalUnits - general.unitsSold);
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Güncel Durum" title={durumPage.title} lead={durumPage.lead}>
+      <PageHeader eyebrow="Güncel Durum" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "Proje Durumu", path: "/proje-durumu" }]} />
       </PageHeader>
 
@@ -44,9 +47,9 @@ export default async function ProjeDurumuPage() {
         </dl>
       </Container>
 
-      {durumPage.body.map((block) => (
-        <Section key={block.heading} heading={block.heading} paragraphs={block.paragraphs} />
-      ))}
+      <Container className="max-w-3xl pb-4 lg:pb-8">
+        <BlockRenderer blocks={copy.blocks} />
+      </Container>
 
       <Container className="py-12 lg:py-16">
         <h2 className="display-font text-2xl font-medium tracking-[-.03em] sm:text-4xl">Blok bazlı durum</h2>

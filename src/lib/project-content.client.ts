@@ -1,6 +1,7 @@
 "use client";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import { auth, firestore } from "./firebase";
+import { firestore } from "./firebase";
+import { revalidateSite } from "./content.client";
 import {
   CONTENT_DOCUMENT,
   PROJECT_DATA_COLLECTION,
@@ -20,15 +21,5 @@ export async function saveProjectContent(content: ProjectContent) {
     updatedAt: serverTimestamp(),
   });
 
-  const token = await auth.currentUser?.getIdToken();
-  if (!token) return;
-
-  const response = await fetch("/api/revalidate", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!response.ok) {
-    throw new Error("İçerik kaydedildi ancak site önbelleği tazelenemedi.");
-  }
+  await revalidateSite();
 }

@@ -8,6 +8,8 @@ export const pageNav = [
   { href: "/proje-durumu", label: "Proje Durumu" },
   { href: "/daire-planlari", label: "Daire Planları" },
   { href: "/konum", label: "Konum" },
+  { href: "/tanitimlar", label: "Tanıtımlar" },
+  { href: "/blog", label: "Blog" },
   { href: "/iletisim", label: "İletişim" },
 ];
 
@@ -45,7 +47,7 @@ export default function PageShell({ content, children }: { content: ProjectConte
               <span className="mt-1 block text-[8px] font-bold tracking-[.25em] opacity-60">BULKİ YAPI</span>
             </span>
           </Link>
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {pageNav.map((item) => (
               <Link key={item.href} href={item.href} className="py-2 text-[11px] font-bold uppercase tracking-[.17em] opacity-75 transition-opacity hover:opacity-100">
                 {item.label}

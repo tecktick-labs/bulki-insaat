@@ -3,37 +3,38 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
+import BlockRenderer from "@/components/BlockRenderer";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { planlarPage } from "@/data/copy";
 import { blockNames, planImage, planTitle, plans } from "@/lib/plans";
+import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Daire Planları",
-  description:
-    "Elys Prime'ın 4 bloğundaki 16 daire tipi: normal kat köşe ve orta tipler, çatı katı ve dubleks planlar. Tüm kat planlarını büyüterek inceleyin.",
-  alternates: { canonical: "/daire-planlari" },
-  openGraph: { url: "/daire-planlari", title: "Elys Prime Daire Planları" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("daire-planlari");
+  return {
+    title: copy.seoTitle,
+    description: copy.seoDescription,
+    alternates: { canonical: "/daire-planlari" },
+    openGraph: { url: "/daire-planlari", title: copy.seoTitle, description: copy.seoDescription },
+  };
+}
 
 export default async function DairePlanlariPage() {
-  const content = await getProjectContent();
+  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("daire-planlari")]);
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Daire Planları" title={planlarPage.title} lead={planlarPage.lead}>
+      <PageHeader eyebrow="Daire Planları" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "Daire Planları", path: "/daire-planlari" }]} />
       </PageHeader>
 
       <Container className="py-10 lg:py-14">
-        <div className="max-w-3xl space-y-5">
-          {planlarPage.intro.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)} className="text-[15px] leading-8 text-white/60">{paragraph}</p>
-          ))}
+        <div className="max-w-3xl">
+          <BlockRenderer blocks={copy.blocks} />
         </div>
       </Container>
 

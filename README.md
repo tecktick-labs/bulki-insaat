@@ -29,7 +29,7 @@ src/
   components/     Ortak bileşenler (PageShell, ScrollSnapShell, PanelClient)
   sections/       Ana sayfanın scroll-snap bölümleri
   lib/            Firestore erişimi, medya URL'leri, daire planı kataloğu, SEO şemaları
-  data/           project-status.json (varsayılan veriler) + copy.ts (sayfa metinleri)
+  data/           project-status.json (proje verileri) + copy.ts (varsayılan sayfa metinleri)
   assets/         Storage'a yüklenen kaynak dosyalar — build'e dahil edilmez
 ```
 
@@ -43,11 +43,36 @@ src/
 | `/daire-planlari` | 16 daire tipinin listesi |
 | `/daire-planlari/[slug]` | Her tipin kendi sayfası |
 | `/konum` | Konum, ulaşım süreleri, harita |
+| `/tanitimlar` | Tanıtım ve broşür içerikleri |
+| `/tanitimlar/[slug]` | Her tanıtımın kendi sayfası |
+| `/blog` | Blog yazıları |
+| `/blog/[slug]` | Her yazının kendi sayfası |
 | `/iletisim` | Satış ekibi iletişim bilgileri |
 | `/panel` | İçerik yönetim paneli (noindex) |
 
-Sayfa metinleri `src/data/copy.ts` içinde toplanmıştır; kod değiştirmeden
-düzenlenebilir.
+## İçerik yönetimi
+
+Panelde üç sekme vardır:
+
+- **Proje Verileri** — daire sayıları, blok durumu, iletişim bilgileri
+  (`projectData/website`)
+- **Sayfa Metinleri** — alt sayfaların başlık, giriş, SEO ve gövde metinleri
+  (`pages/{slug}`). Gövde; ara başlık, paragraf, görsel, liste ve alıntı
+  bloklarından oluşur.
+- **Blog & Tanıtım** — blog yazıları ve tanıtım/broşür sayfaları (`posts`).
+  Aynı blok editörü kullanılır; her içerik taslak olarak başlar ve
+  yayınlandığında kendi URL'inde erişilebilir olur.
+
+Görseller panelden doğrudan Storage'a (`uploads/`) yüklenir.
+
+Firestore'da kayıt yoksa sayfalar `src/data/copy.ts` içindeki varsayılan
+metinlerle çalışır. Taslakları Firestore'a yazmak için:
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json npm run seed-content
+```
+
+Script mevcut dokümanlara dokunmaz; üzerine yazmak için `-- --force` ekleyin.
 
 ## Medyayı Storage'a yükleme
 
@@ -65,13 +90,20 @@ firebase deploy --only storage
 
 ## Panel erişimi
 
-Panel Firebase Authentication (e-posta/şifre) kullanır. Yeni bir yönetici için:
+Panel Firebase Authentication (e-posta/şifre) kullanır. Yetki, `admin` adlı bir
+custom claim olarak verilir ve hem Firestore hem Storage kurallarında okunur.
 
-1. Firebase Console → Authentication → Users → kullanıcı ekleyin.
-2. Firestore'da `admins/{uid}` dokümanını oluşturun (içerik boş olabilir).
+1. Firebase Console → Authentication → Users → kullanıcıyı ekleyin.
+2. Yetkiyi verin:
 
-`admins` koleksiyonu istemciden okunamaz; yalnızca Firestore Rules ve Admin SDK
-erişir. Panelden kaydedildiğinde `/api/revalidate` çağrılır ve ISR sayfaları
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/yol/servis-hesabi.json npm run set-admin -- eposta@ornek.com
+```
+
+Yetki değişikliğinin geçerli olması için kullanıcının panelden çıkıp tekrar
+girmesi gerekir. Yetkiyi geri almak için `-- --revoke eposta@ornek.com`.
+
+Panelden kaydedildiğinde `/api/revalidate` çağrılır ve ilgili ISR sayfaları
 tazelenir.
 
 ## Deploy
@@ -79,8 +111,12 @@ tazelenir.
 Site **Firebase App Hosting** üzerinde çalışır ve GitHub'daki `main` branch'ine
 push ile otomatik deploy olur. Yapılandırma `apphosting.yaml` dosyasındadır.
 
-Firestore ve Storage kuralları ayrıca yayınlanır:
+Firestore kuralları, Firestore indeksleri ve Storage kuralları ayrıca
+yayınlanır:
 
 ```bash
 npm run deploy
 ```
+
+Blog/tanıtım listeleri bileşik indeks gerektirir (`firestore.indexes.json`);
+bu komut onları da yayınlar.
