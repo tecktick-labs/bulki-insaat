@@ -11,9 +11,9 @@ import {
   setDoc,
   Timestamp,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { defaultPages } from "@/data/copy";
-import { auth, firebaseApp, firestore } from "./firebase";
+import { auth, firestore, storage } from "./firebase";
 import type { PageCopy, PageSlug, Post, PostType } from "./content-types";
 
 const PAGES = "pages";
@@ -84,7 +84,7 @@ export async function deletePost(id: string) {
 export async function uploadImage(file: File): Promise<string> {
   const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
   const path = `uploads/${Date.now()}-${safeName}`;
-  const storageRef = ref(getStorage(firebaseApp), path);
+  const storageRef = ref(storage, path);
   await uploadBytes(storageRef, file, { cacheControl: "public, max-age=31536000, immutable" });
   return getDownloadURL(storageRef);
 }

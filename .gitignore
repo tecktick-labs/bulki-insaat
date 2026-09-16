@@ -39,3 +39,7 @@ firebase-debug.log*
 /.next/
 /out/
 next-env.d.ts
+
+# Next 16 tarafından otomatik üretilir
+/AGENTS.md
+/CLAUDE.md

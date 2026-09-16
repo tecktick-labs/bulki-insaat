@@ -1,5 +1,5 @@
 import "server-only";
-import { adminFirestore } from "./firebase-admin";
+import { getAdminFirestore } from "./firebase-admin";
 import { defaultPages } from "@/data/copy";
 import type { PageCopy, PageSlug, Post, PostType } from "./content-types";
 
@@ -14,8 +14,11 @@ export const POSTS_COLLECTION = "posts";
 export async function getPageCopy(slug: PageSlug): Promise<PageCopy> {
   const fallback = defaultPages[slug];
 
+  const firestore = await getAdminFirestore();
+  if (!firestore) return fallback;
+
   try {
-    const snapshot = await adminFirestore.collection(PAGES_COLLECTION).doc(slug).get();
+    const snapshot = await firestore.collection(PAGES_COLLECTION).doc(slug).get();
     if (!snapshot.exists) return fallback;
 
     const stored = snapshot.data() as Partial<PageCopy>;
@@ -60,8 +63,11 @@ function toPost(id: string, data: FirebaseFirestore.DocumentData): Post {
 
 /** Yayındaki içerikler, en yeniden eskiye. */
 export async function getPosts(type?: PostType): Promise<Post[]> {
+  const firestore = await getAdminFirestore();
+  if (!firestore) return [];
+
   try {
-    let query = adminFirestore
+    let query = firestore
       .collection(POSTS_COLLECTION)
       .where("published", "==", true) as FirebaseFirestore.Query;
 
@@ -76,8 +82,11 @@ export async function getPosts(type?: PostType): Promise<Post[]> {
 }
 
 export async function getPost(type: PostType, slug: string): Promise<Post | null> {
+  const firestore = await getAdminFirestore();
+  if (!firestore) return null;
+
   try {
-    const snapshot = await adminFirestore
+    const snapshot = await firestore
       .collection(POSTS_COLLECTION)
       .where("type", "==", type)
       .where("slug", "==", slug)

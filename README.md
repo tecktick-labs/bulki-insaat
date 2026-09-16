@@ -15,11 +15,20 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Sunucu tarafı Firestore okuması lokalde kimlik bilgisi ister. Firebase Console →
-Proje ayarları → Servis hesapları bölümünden bir anahtar indirip
-`GOOGLE_APPLICATION_CREDENTIALS` ile gösterin. Kimlik bilgisi yoksa site
-`src/data/project-status.json` içindeki varsayılanlarla çalışır — geliştirme
-için çoğu zaman bu yeterlidir.
+Site kimlik bilgisi olmadan da çalışır: Firestore'a erişilemiyorsa
+`src/data/` içindeki varsayılan metinler kullanılır ve konsola tek satırlık bir
+bilgi notu düşer. Görseller Storage'dan geldiği için yüklenene kadar boş görünür.
+
+Gerçek veriyle çalışmak için üç seçenekten biri (ayrıntılar `.env.example`):
+
+| Seçenek | Ne zaman |
+|---|---|
+| `GOOGLE_APPLICATION_CREDENTIALS` ile servis hesabı anahtarı | Canlı veriyi yerelde görmek için en pratiği |
+| `gcloud auth application-default login` | gcloud kuruluysa, anahtar dosyası tutmadan |
+| `npm run emulators` + `NEXT_PUBLIC_USE_EMULATORS=1` | Canlı veriye hiç dokunmadan, izole geliştirme |
+
+Canlıda hiçbirine gerek yoktur — App Hosting, Cloud Run servis hesabını
+otomatik kullanır.
 
 ## Yapı
 

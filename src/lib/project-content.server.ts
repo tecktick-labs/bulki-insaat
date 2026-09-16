@@ -1,5 +1,5 @@
 import "server-only";
-import { adminFirestore } from "./firebase-admin";
+import { getAdminFirestore } from "./firebase-admin";
 import {
   CONTENT_DOCUMENT,
   PROJECT_DATA_COLLECTION,
@@ -13,8 +13,11 @@ import {
  * böylece site veritabanı sorunundan dolayı hiç render edilmeden kalmaz.
  */
 export async function getProjectContent(): Promise<ProjectContent> {
+  const firestore = await getAdminFirestore();
+  if (!firestore) return projectDefaults;
+
   try {
-    const snapshot = await adminFirestore
+    const snapshot = await firestore
       .collection(PROJECT_DATA_COLLECTION)
       .doc(CONTENT_DOCUMENT)
       .get();

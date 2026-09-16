@@ -1,7 +1,7 @@
 import { getAuth } from "firebase-admin/auth";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { adminApp } from "@/lib/firebase-admin";
+import { getAdminApp } from "@/lib/firebase-admin";
 
 const BASE_PATHS = [
   "/",
@@ -25,6 +25,14 @@ export async function POST(request: Request) {
 
   if (!token) {
     return NextResponse.json({ error: "Yetkisiz." }, { status: 401 });
+  }
+
+  const adminApp = await getAdminApp();
+  if (!adminApp) {
+    return NextResponse.json(
+      { error: "Sunucuda Firebase kimlik bilgisi yapılandırılmamış." },
+      { status: 503 },
+    );
   }
 
   try {
