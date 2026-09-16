@@ -35,23 +35,6 @@ export const defaultPages: Record<PageSlug, PageCopy> = {
     ],
   },
 
-  "proje-durumu": {
-    slug: "proje-durumu",
-    label: "Proje Durumu",
-    title: "Proje Durumu",
-    lead: "İnşaatın güncel ilerlemesini, blok bazlı daire durumunu ve şantiyeden güncel görselleri bu sayfadan takip edebilirsiniz.",
-    seoTitle: "Proje Durumu",
-    seoDescription:
-      "Elys Prime'ın güncel inşaat durumu, blok bazlı daire doluluğu ve satılan daire sayısı. Şantiyeden güncel proje görselleri.",
-    blocks: [
-      h("Şeffaf ilerleme takibi"),
-      p("Konut alırken en çok merak edilen soru, projenin gerçekte hangi aşamada olduğudur. Elys Prime'da bu bilgiyi gizlemek yerine düzenli olarak güncelliyoruz: aşağıdaki tamamlanma oranı, satılan daire sayısı ve blok bazlı doluluk verileri doğrudan satış ekibimizin tuttuğu kayıtlardan geliyor."),
-      p("Blok kartlarındaki satış oranı, o bloktaki toplam daire sayısına göre hesaplanır. Kalan daire sayısı gerçek zamanlı değildir; bir daire için görüşme sürecindeyseniz güncel durumu satış ekibimizden teyit etmenizi öneririz."),
-      h("Daire tipi dağılımı"),
-      p("Her blokta normal kat köşe tipleri, normal kat orta tipleri ve çatı katı ya da dubleks olarak kurgulanan özel tipler bulunuyor. A ve C bloklarda üst kat çatı katı olarak, B ve D bloklarda ise dubleks olarak tasarlandı. Bu dağılım, aynı proje içinde birbirinden belirgin biçimde farklı yaşam alanları sunuyor."),
-    ],
-  },
-
   "daire-planlari": {
     slug: "daire-planlari",
     label: "Daire Planları",

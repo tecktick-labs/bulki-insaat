@@ -1,23 +1,42 @@
 "use client";
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
-import { ChevronLeft, LogOut } from "lucide-react";
+import { ChevronLeft, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useCallback, useEffect, useState } from "react";
+import CampaignsEditor from "./panel/CampaignsEditor";
+import DocumentsEditor from "./panel/DocumentsEditor";
+import GalleryEditor from "./panel/GalleryEditor";
 import GeneralEditor from "./panel/GeneralEditor";
 import PagesEditor from "./panel/PagesEditor";
+import PlanRoomsEditor from "./panel/PlanRoomsEditor";
 import PostsEditor from "./panel/PostsEditor";
 import { buttonClass, inputClass, labelClass, primaryButtonClass } from "./panel/ui";
 import { auth } from "@/lib/firebase";
-import { projectDefaults, type ProjectContent } from "@/lib/project-content";
+import { fetchAllPosts } from "@/lib/content.client";
 import { fetchProjectContent } from "@/lib/project-content.client";
+import { fetchSection } from "@/lib/sections.client";
+import { pageSlugs } from "@/lib/content-types";
+import { projectDefaults, type ProjectContent } from "@/lib/project-content";
 
-const tabs = [
-  { id: "genel", label: "Proje Verileri" },
-  { id: "sayfalar", label: "Sayfa Metinleri" },
-  { id: "icerikler", label: "Blog & Tanıtım" },
-] as const;
+type PanelSection = {
+  id: string;
+  label: string;
+  hint: string;
+  group: "İçerik" | "Yayın";
+};
 
-type TabId = (typeof tabs)[number]["id"];
+const sections: PanelSection[] = [
+  { id: "genel", label: "Proje Verileri", hint: "Daire sayıları, bloklar, iletişim", group: "İçerik" },
+  { id: "kampanyalar", label: "Kampanyalar", hint: "Broşür şeridi ve kampanya sayfaları", group: "İçerik" },
+  { id: "galeri", label: "Galeri", hint: "Ana sayfa görselleri ve başlıkları", group: "İçerik" },
+  { id: "belgeler", label: "Belgeler", hint: "Ruhsat, iskân, imar, tapu", group: "İçerik" },
+  { id: "daire-tipleri", label: "Daire Tipleri", hint: "Oda tipi filtresi", group: "İçerik" },
+  { id: "sayfalar", label: "Sayfa Metinleri", hint: "Alt sayfaların metni ve SEO'su", group: "Yayın" },
+  { id: "icerikler", label: "Blog & Tanıtım", hint: "Yazılar ve tanıtım sayfaları", group: "Yayın" },
+];
+
+/** Sidebar'daki rozetler: neyin eksik olduğunu bölümü açmadan göstermek için. */
+type Badges = Partial<Record<string, string>>;
 
 export default function PanelClient() {
   const [content, setContent] = useState<ProjectContent>(projectDefaults);
@@ -30,7 +49,9 @@ export default function PanelClient() {
   const [isCheckingAccess, setIsCheckingAccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dataError, setDataError] = useState("");
-  const [tab, setTab] = useState<TabId>("genel");
+  const [active, setActive] = useState("genel");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [badges, setBadges] = useState<Badges>({});
 
   const loadContent = useCallback(async () => {
     try {
@@ -40,6 +61,31 @@ export default function PanelClient() {
       setDataError("Veriler Firestore'dan yüklenemedi. Bağlantıyı ve Firestore Rules ayarını kontrol edin.");
     } finally {
       setIsLoading(false);
+    }
+  }, []);
+
+  const loadBadges = useCallback(async () => {
+    try {
+      const [campaigns, gallery, documents, posts] = await Promise.all([
+        fetchSection("campaigns"),
+        fetchSection("gallery"),
+        fetchSection("documents"),
+        fetchAllPosts(),
+      ]);
+
+      const missingPdf = documents.filter((document) => !document.file).length;
+      const published = posts.filter((post) => post.published).length;
+
+      setBadges({
+        kampanyalar: String(campaigns.length),
+        galeri: String(gallery.length),
+        belgeler: missingPdf > 0 ? `${documents.length} · ${missingPdf} eksik` : String(documents.length),
+        "daire-tipleri": "16",
+        sayfalar: String(pageSlugs.length),
+        icerikler: published > 0 ? `${posts.length} · ${published} yayında` : `${posts.length} · taslak`,
+      });
+    } catch {
+      // Rozetler yardımcı bilgidir; okunamazsa panel yine de çalışır.
     }
   }, []);
 
@@ -58,16 +104,24 @@ export default function PanelClient() {
       return;
     }
 
+    let admin = false;
     try {
       const token = await nextUser.getIdTokenResult(true);
-      setIsAdmin(token.claims.admin === true);
+      admin = token.claims.admin === true;
     } catch {
-      setIsAdmin(false);
+      admin = false;
     }
 
+    setIsAdmin(admin);
     setAuthReady(true);
-    void loadContent();
-  }), [loadContent]);
+
+    if (admin) {
+      void loadContent();
+      void loadBadges();
+    } else {
+      setIsLoading(false);
+    }
+  }), [loadContent, loadBadges]);
 
   const login = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -133,12 +187,8 @@ export default function PanelClient() {
 {`npm run set-admin -- ${user.email}`}
           </pre>
           <div className="mt-6 flex flex-wrap gap-2">
-            <button type="button" onClick={() => window.location.reload()} className={primaryButtonClass}>
-              Yeniden dene
-            </button>
-            <button type="button" onClick={logout} className={buttonClass}>
-              <LogOut size={14} /> Çıkış yap
-            </button>
+            <button type="button" onClick={() => window.location.reload()} className={primaryButtonClass}>Yeniden dene</button>
+            <button type="button" onClick={logout} className={buttonClass}><LogOut size={14} /> Çıkış yap</button>
             <Link href="/" className={buttonClass}><ChevronLeft size={14} /> Siteye dön</Link>
           </div>
         </section>
@@ -150,47 +200,88 @@ export default function PanelClient() {
     return <main className="grid min-h-dvh place-items-center bg-[#181a18] text-sm text-white/55">Panel verileri yükleniyor...</main>;
   }
 
+  const current = sections.find((section) => section.id === active) ?? sections[0];
+
+  const nav = (
+    <nav className="space-y-7">
+      {(["İçerik", "Yayın"] as const).map((group) => (
+        <div key={group}>
+          <p className="px-4 text-[9px] font-bold uppercase tracking-[.2em] text-white/25">{group}</p>
+          <ul className="mt-2 space-y-px">
+            {sections.filter((section) => section.group === group).map((section) => (
+              <li key={section.id}>
+                <button
+                  type="button"
+                  onClick={() => { setActive(section.id); setMenuOpen(false); }}
+                  aria-current={active === section.id ? "page" : undefined}
+                  className={`flex w-full items-center justify-between gap-3 border-l-2 px-4 py-3 text-left transition ${
+                    active === section.id
+                      ? "border-[#d8b792] bg-[#d8b792]/10 text-[#f6f1eb]"
+                      : "border-transparent text-white/55 hover:bg-white/[.04] hover:text-white"
+                  }`}
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate text-[13px] font-semibold">{section.label}</span>
+                    <span className="mt-0.5 block truncate text-[10px] leading-4 text-white/30">{section.hint}</span>
+                  </span>
+                  {badges[section.id] && (
+                    <span className="shrink-0 whitespace-nowrap text-[9px] font-bold uppercase tracking-[.1em] text-[#d8b792]/70">
+                      {badges[section.id]}
+                    </span>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  );
+
   return (
-    <main className="min-h-dvh bg-[#181a18] text-[#f6f1eb]">
-      <header className="sticky top-0 z-20 border-b border-white/10 bg-[#181a18]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-          <div>
-            <p className="display-font text-2xl font-semibold">Elys Prime</p>
+    <div className="min-h-dvh bg-[#181a18] text-[#f6f1eb] lg:grid lg:grid-cols-[280px_minmax(0,1fr)]">
+      <aside className="border-b border-white/10 lg:sticky lg:top-0 lg:h-dvh lg:overflow-y-auto lg:border-b-0 lg:border-r">
+        <div className="flex items-center justify-between gap-3 px-5 py-5 lg:px-4">
+          <Link href="/" className="min-w-0">
+            <p className="display-font truncate text-xl font-semibold">Elys Prime</p>
             <p className="text-[8px] font-bold uppercase tracking-[.22em] text-white/40">Yönetim Paneli</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="hidden text-[10px] font-bold uppercase tracking-[.12em] text-white/35 lg:inline">{user.email}</span>
-            <Link href="/" className={buttonClass}><ChevronLeft size={14} /> Siteye dön</Link>
-            <button type="button" onClick={logout} aria-label="Çıkış yap" className="border border-white/15 p-3 transition hover:bg-[#292c29]">
-              <LogOut size={14} />
-            </button>
-          </div>
+          </Link>
+          <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label="Menüyü aç veya kapat" aria-expanded={menuOpen} className="border border-white/15 p-2.5 lg:hidden">
+            {menuOpen ? <X size={16} /> : <Menu size={16} />}
+          </button>
         </div>
 
-        <nav className="mx-auto flex max-w-7xl gap-1 px-5 sm:px-8">
-          {tabs.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setTab(item.id)}
-              aria-current={tab === item.id ? "page" : undefined}
-              className={`border-b-2 px-4 py-4 text-[10px] font-bold uppercase tracking-[.13em] transition ${
-                tab === item.id ? "border-[#d8b792] text-[#d8b792]" : "border-transparent text-white/45 hover:text-white"
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-      </header>
+        <div className={`${menuOpen ? "block" : "hidden"} pb-5 lg:block`}>
+          {nav}
 
-      <div className="mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-12">
+          <div className="mt-8 border-t border-white/10 px-4 pt-5">
+            <p className="truncate text-[10px] font-bold uppercase tracking-[.12em] text-white/30">{user.email}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link href="/" className={buttonClass}><ChevronLeft size={13} /> Siteye dön</Link>
+              <button type="button" onClick={logout} aria-label="Çıkış yap" className="border border-white/15 p-3 transition hover:bg-[#292c29]">
+                <LogOut size={13} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main className="min-w-0 px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <header className="mb-8 border-b border-white/10 pb-6">
+          <p className="eyebrow text-[#d8b792]">{current.group}</p>
+          <h1 className="mt-3 text-3xl font-medium tracking-[-.035em] sm:text-4xl">{current.label}</h1>
+        </header>
+
         {dataError && <p role="alert" className="mb-6 border border-red-300/25 bg-red-300/10 px-5 py-4 text-sm text-red-200">{dataError}</p>}
 
-        {tab === "genel" && <GeneralEditor content={content} setContent={setContent} />}
-        {tab === "sayfalar" && <PagesEditor />}
-        {tab === "icerikler" && <PostsEditor />}
-      </div>
-    </main>
+        {active === "genel" && <GeneralEditor content={content} setContent={setContent} />}
+        {active === "kampanyalar" && <CampaignsEditor />}
+        {active === "galeri" && <GalleryEditor />}
+        {active === "belgeler" && <DocumentsEditor />}
+        {active === "daire-tipleri" && <PlanRoomsEditor />}
+        {active === "sayfalar" && <PagesEditor />}
+        {active === "icerikler" && <PostsEditor />}
+      </main>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 {
   "general": {
     "projectName": "Elys Prime",
-    "companyName": "BULKİ YAPI LİMİTED ŞİRKETİ",
+    "companyName": "BÜLKİ YAPI ve ÇÖZÜM KONUT Ortaklığı",
     "completionRate": 10,
     "unitsSold": 21,
     "totalUnits": 192,
@@ -17,16 +17,54 @@
     "latitude": 40.948906,
     "longitude": 29.302832,
     "metrics": {
-      "metro": { "label": "Metro", "walkMin": 5 },
-      "bus": { "label": "Otobüs Durağı", "walkMin": 2 },
-      "center": { "label": "Şehir Merkezi", "walkMin": 18, "driveMin": 6 }
+      "metro": {
+        "label": "Metro",
+        "walkMin": 5
+      },
+      "bus": {
+        "label": "Otobüs Durağı",
+        "walkMin": 2
+      },
+      "center": {
+        "label": "Şehir Merkezi",
+        "walkMin": 18,
+        "driveMin": 6
+      }
     }
   },
   "blocks": [
-    { "name": "A Blok", "total": 48, "sold": 4, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
-    { "name": "B Blok", "total": 48, "sold": 7, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
-    { "name": "C Blok", "total": 48, "sold": 5, "normalCorner": 4, "normalMiddle": 2, "special": 6 },
-    { "name": "D Blok", "total": 48, "sold": 5, "normalCorner": 4, "normalMiddle": 2, "special": 6 }
+    {
+      "name": "A Blok",
+      "total": 48,
+      "sold": 4,
+      "normalCorner": 4,
+      "normalMiddle": 2,
+      "special": 6
+    },
+    {
+      "name": "B Blok",
+      "total": 48,
+      "sold": 7,
+      "normalCorner": 4,
+      "normalMiddle": 2,
+      "special": 6
+    },
+    {
+      "name": "C Blok",
+      "total": 48,
+      "sold": 5,
+      "normalCorner": 4,
+      "normalMiddle": 2,
+      "special": 6
+    },
+    {
+      "name": "D Blok",
+      "total": 48,
+      "sold": 5,
+      "normalCorner": 4,
+      "normalMiddle": 2,
+      "special": 6
+    }
   ],
   "contacts": [
     {
@@ -40,6 +78,12 @@
       "role": "SATIŞ VE PAZARLAMA SORUMLUSU",
       "phone": "+90 552 204 67 12",
       "whatsapp": "+90 552 204 67 12"
+    },
+    {
+      "name": "ABDULLAH ÇEVİK",
+      "role": "SATIŞ DANIŞMANI",
+      "phone": "+90 532 139 33 30",
+      "whatsapp": "+90 532 139 33 30"
     }
   ]
 }

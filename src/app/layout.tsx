@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Figtree } from "next/font/google";
+import { Figtree, Montserrat } from "next/font/google";
 import { JsonLd, organizationSchema } from "@/lib/seo";
 import { companyName, siteName, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+const display = Montserrat({
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",

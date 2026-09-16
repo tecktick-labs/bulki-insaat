@@ -26,6 +26,12 @@ service cloud.firestore {
         && request.resource.data.blocks is list;
     }
 
+    // Panelden yönetilen site bölümleri: kampanyalar, galeri, belgeler, daire tipleri
+    match /sections/{sectionId} {
+      allow read: if true;
+      allow write: if isAdmin() && request.resource.data.items is list;
+    }
+
     // Blog yazıları ve tanıtım/broşür içerikleri
     match /posts/{postId} {
       // Yayındakiler herkese açık; taslakları yalnızca yöneticiler görür.

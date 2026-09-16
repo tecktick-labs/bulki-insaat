@@ -83,14 +83,19 @@ export async function deletePost(id: string) {
   await deleteDoc(doc(firestore, POSTS, id));
 }
 
-/** Panelden seçilen görseli Storage'a yükler ve public URL'ini döndürür. */
-export async function uploadImage(file: File): Promise<string> {
+/**
+ * Panelden seçilen dosyayı Storage'a yükler ve public URL'ini döndürür.
+ * Görseller `uploads/`, PDF belgeler `belgeler/` altına gider — Storage
+ * kuralları iki klasör için farklı boyut ve tür sınırları uygular.
+ */
+export async function uploadFile(file: File, folder: "uploads" | "belgeler" = "uploads"): Promise<string> {
   const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
-  const path = `uploads/${Date.now()}-${safeName}`;
-  const storageRef = ref(storage, path);
+  const storageRef = ref(storage, `${folder}/${Date.now()}-${safeName}`);
   await uploadBytes(storageRef, file, { cacheControl: "public, max-age=31536000, immutable" });
   return getDownloadURL(storageRef);
 }
+
+export const uploadImage = (file: File) => uploadFile(file, "uploads");
 
 /** Kaydettikten sonra ISR sayfalarını tazeler. */
 export async function revalidateSite(paths: string[] = []) {

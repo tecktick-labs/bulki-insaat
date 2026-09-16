@@ -1,9 +1,9 @@
 "use client";
-import { Check, RotateCcw, Save } from "lucide-react";
+import { Check, Plus, RotateCcw, Save, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { projectDefaults, type ProjectContent } from "@/lib/project-content";
 import { saveProjectContent } from "@/lib/project-content.client";
-import { inputClass, labelClass } from "./ui";
+import { buttonClass, inputClass, labelClass } from "./ui";
 
 export default function GeneralEditor({
   content,
@@ -27,6 +27,16 @@ export default function GeneralEditor({
   const setGeneral = (key: keyof ProjectContent["general"], value: string | number) => setContent((current) => ({ ...current, general: { ...current.general, [key]: value } }));
   const setBlock = (index: number, key: keyof ProjectContent["blocks"][number], value: string | number) => setContent((current) => ({ ...current, blocks: current.blocks.map((block, blockIndex) => blockIndex === index ? { ...block, [key]: value } : block) }));
   const setContact = (index: number, key: keyof ProjectContent["contacts"][number], value: string) => setContent((current) => ({ ...current, contacts: current.contacts.map((contact, contactIndex) => contactIndex === index ? { ...contact, [key]: value } : contact) }));
+
+  const addContact = () => setContent((current) => ({
+    ...current,
+    contacts: [...current.contacts, { name: "", role: "", phone: "", whatsapp: "" }],
+  }));
+
+  const removeContact = (index: number) => setContent((current) => ({
+    ...current,
+    contacts: current.contacts.filter((_, contactIndex) => contactIndex !== index),
+  }));
 
   const persist = async (next: ProjectContent) => {
     setContent(next);
@@ -68,7 +78,7 @@ export default function GeneralEditor({
         <div className="grid gap-4 lg:grid-cols-2">{content.blocks.map((block, index) => <article key={block.name} className="border border-white/10 bg-[#292c29] p-5"><div className="mb-5 flex items-center justify-between"><input aria-label="Blok adı" value={block.name} onChange={(e) => setBlock(index, "name", e.target.value)} className="display-font w-36 border-b border-white/15 bg-transparent text-2xl font-semibold outline-none focus:border-[#d8b792]"/><span className="text-xs font-bold text-[#d8b792]">{Math.max(0, block.total - block.sold)} daire kaldı</span></div><div className="grid grid-cols-2 gap-4 sm:grid-cols-5">{([ ["total","Toplam"], ["sold","Satılan"], ["normalCorner","Normal Köşe"], ["normalMiddle","Normal Orta"], ["special","Çatı / Dubleks"] ] as const).map(([key,label]) => <label key={key} className={labelClass}>{label}<input type="number" min="0" className={inputClass} value={block[key]} onChange={(e) => setBlock(index, key, Number(e.target.value))}/></label>)}</div></article>)}</div>
       </section>
 
-      <section className="mt-6 border border-white/10 bg-[#202320] p-5 sm:p-7"><div className="mb-6"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#d8b792]">03</p><h2 className="mt-1 text-3xl font-semibold">İletişim Bilgileri</h2></div><div className="grid gap-4 lg:grid-cols-2">{content.contacts.map((contact, index) => <article key={index} className="grid gap-4 border border-white/10 bg-[#292c29] p-5 sm:grid-cols-2"><label className={labelClass}>Ad soyad<input className={inputClass} value={contact.name} onChange={(e) => setContact(index, "name", e.target.value)}/></label><label className={labelClass}>Görev<input className={inputClass} value={contact.role} onChange={(e) => setContact(index, "role", e.target.value)}/></label><label className={labelClass}>Telefon<input className={inputClass} value={contact.phone} onChange={(e) => setContact(index, "phone", e.target.value)}/></label><label className={labelClass}>WhatsApp<input className={inputClass} value={contact.whatsapp} onChange={(e) => setContact(index, "whatsapp", e.target.value)}/></label></article>)}</div></section>
+      <section className="mt-6 border border-white/10 bg-[#202320] p-5 sm:p-7"><div className="mb-6"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#d8b792]">03</p><h2 className="mt-1 text-3xl font-semibold">İletişim Bilgileri</h2></div><div className="grid gap-4 lg:grid-cols-2">{content.contacts.map((contact, index) => <article key={index} className="relative grid gap-4 border border-white/10 bg-[#292c29] p-5 pt-12 sm:grid-cols-2"><button type="button" onClick={() => removeContact(index)} className="absolute right-4 top-4 inline-flex items-center gap-2 border border-white/15 px-3 py-2 text-[9px] font-bold uppercase tracking-[.12em] text-white/60 transition hover:border-red-400/60 hover:text-red-300" aria-label={`${contact.name || "Kişiyi"} sil`}><Trash2 size={12}/> Sil</button><label className={labelClass}>Ad soyad<input className={inputClass} value={contact.name} onChange={(e) => setContact(index, "name", e.target.value)}/></label><label className={labelClass}>Görev<input className={inputClass} value={contact.role} onChange={(e) => setContact(index, "role", e.target.value)}/></label><label className={labelClass}>Telefon<input className={inputClass} value={contact.phone} onChange={(e) => setContact(index, "phone", e.target.value)}/></label><label className={labelClass}>WhatsApp<input className={inputClass} value={contact.whatsapp} onChange={(e) => setContact(index, "whatsapp", e.target.value)}/></label></article>)}</div><button type="button" onClick={addContact} className={`${buttonClass} mt-4`}><Plus size={13}/> Kişi ekle</button></section>
 
       <div className="mt-7 flex flex-wrap justify-between gap-3"><button type="button" disabled={isSaving} onClick={reset} className="inline-flex items-center gap-2 border border-white/15 px-5 py-4 text-[10px] font-bold uppercase tracking-[.13em] hover:bg-[#292c29] disabled:opacity-45"><RotateCcw size={14}/> Varsayılanlara dön</button><button type="button" disabled={isSaving} onClick={save} className="inline-flex items-center gap-2 bg-[#d8b792] px-7 py-4 text-[10px] font-bold uppercase tracking-[.13em] text-[#181a18] hover:bg-white disabled:opacity-45">{saved ? <Check size={14}/> : <Save size={14}/>} {isSaving ? "Kaydediliyor..." : saved ? "Kaydedildi" : "Değişiklikleri kaydet"}</button></div>
 

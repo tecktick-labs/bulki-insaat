@@ -6,7 +6,6 @@ import { getAdminApp } from "@/lib/firebase-admin";
 const BASE_PATHS = [
   "/",
   "/proje",
-  "/proje-durumu",
   "/daire-planlari",
   "/konum",
   "/iletisim",

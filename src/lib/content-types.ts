@@ -38,7 +38,7 @@ export type PageCopy = {
   planTypes?: Record<string, string[]>;
 };
 
-export const pageSlugs = ["proje", "proje-durumu", "daire-planlari", "konum", "iletisim"] as const;
+export const pageSlugs = ["proje", "daire-planlari", "konum", "iletisim"] as const;
 export type PageSlug = (typeof pageSlugs)[number];
 
 export type PostType = "blog" | "tanitim";

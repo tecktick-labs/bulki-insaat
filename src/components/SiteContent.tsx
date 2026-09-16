@@ -1,39 +1,36 @@
 "use client";
 import type { ProjectContent } from "@/lib/project-content";
 import ScrollSnapShell from "./ScrollSnapShell";
+import { homeSections } from "@/lib/nav";
+import type { Campaign } from "@/lib/campaigns";
+import type { ProjectDocument } from "@/lib/documents";
+import type { Plan } from "@/lib/plans";
+import type { GallerySlide } from "@/lib/sections";
 import ApartmentsSection from "@/sections/ApartmentsSection";
-import AvailabilitySection from "@/sections/AvailabilitySection";
+import BrochureSection from "@/sections/BrochureSection";
 import ContactSection from "@/sections/ContactSection";
 import HeroSection from "@/sections/HeroSection";
 import LocationSection from "@/sections/LocationSection";
 import ProjectGallerySection from "@/sections/ProjectGallerySection";
 
-const navItems = [
-  { id: "vizyon", label: "Proje" },
-  { id: "durum", label: "Proje Durumu" },
-  { id: "planlar", label: "Daire Planları" },
-  { id: "konum", label: "Konum" },
-  { id: "iletisim", label: "İletişim" },
-];
+export type SiteSections = {
+  campaigns: Campaign[];
+  gallery: GallerySlide[];
+  documents: ProjectDocument[];
+  plans: Plan[];
+};
 
-export default function SiteContent({ content }: { content: ProjectContent }) {
+export default function SiteContent({ content, sections }: { content: ProjectContent; sections: SiteSections }) {
   return (
-    <ScrollSnapShell navItems={navItems}>
+    <ScrollSnapShell navItems={homeSections}>
       <HeroSection
         projectName={content.general.projectName}
         title={content.hero.title}
-        completionRate={content.general.completionRate}
-        unitsSold={content.general.unitsSold}
-        constructionArea={content.general.constructionArea}
-        whatsappLink={content.general.whatsappLink}
+        campaigns={sections.campaigns}
       />
-      <ProjectGallerySection />
-      <AvailabilitySection
-        totalUnits={content.general.totalUnits}
-        unitsSold={content.general.unitsSold}
-        blocks={content.blocks}
-      />
-      <ApartmentsSection />
+      <BrochureSection campaigns={sections.campaigns} />
+      <ProjectGallerySection slides={sections.gallery} />
+      <ApartmentsSection plans={sections.plans} />
       <LocationSection
         description={content.location.description}
         metrics={content.location.metrics}
@@ -47,6 +44,8 @@ export default function SiteContent({ content }: { content: ProjectContent }) {
         contacts={content.contacts}
         latitude={content.location.latitude}
         longitude={content.location.longitude}
+        documents={sections.documents}
+        campaigns={sections.campaigns}
       />
     </ScrollSnapShell>
   );

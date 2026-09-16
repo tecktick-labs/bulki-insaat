@@ -1,29 +1,151 @@
 "use client";
-import { Bus, CarFront, ExternalLink, MapPin, Plane, TrainFront } from "lucide-react";
+import { getBuildImage } from "@/lib/media";
+import { Bus, ExternalLink, Home, Minus, Navigation, Plane, Plus, TrainFront, X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export default function LocationSection({ description, metrics, latitude, longitude }: { description: string; metrics: { metro: { label: string; walkMin: number }; bus: { label: string; walkMin: number }; center: { label: string; walkMin: number; driveMin: number }; airport?: { label: string; driveMin: number } }; latitude: number; longitude: number }) {
-  const mapEmbedUrl = `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
-  const mapDetailUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+type Metrics = {
+  metro: { label: string; walkMin: number };
+  bus: { label: string; walkMin: number };
+  center: { label: string; walkMin: number; driveMin: number };
+  airport?: { label: string; driveMin: number };
+};
+
+export default function LocationSection({ description, metrics, latitude, longitude }: { description: string; metrics: Metrics; latitude: number; longitude: number }) {
+  const [zoom, setZoom] = useState(16);
+  // `q=` Google'ın kendi kırmızı işaretçisini basar; `ll=` yalnızca haritayı
+  // ortalar ve işaretçi çizmez — tek işaretçi bizim ev rozetimiz olur.
+  const mapEmbedUrl = `https://www.google.com/maps?ll=${latitude},${longitude}&z=${zoom}&output=embed`;
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+  const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const cards = [
-    { icon: TrainFront, label: metrics.metro.label, value: metrics.metro.walkMin, unit: "yürüyerek" },
-    { icon: Bus, label: metrics.bus.label, value: metrics.bus.walkMin, unit: "yürüyerek" },
-    { icon: CarFront, label: metrics.center.label, value: metrics.center.driveMin, unit: "araçla" },
-    metrics.airport ? { icon: Plane, label: metrics.airport.label, value: metrics.airport.driveMin, unit: "araçla" } : null,
-  ].filter((card): card is NonNullable<typeof card> => card !== null);
+    { icon: TrainFront, label: metrics.metro.label, value: metrics.metro.walkMin, unit: "dk yürüyerek" },
+    { icon: Bus, label: metrics.bus.label, value: metrics.bus.walkMin, unit: "dk yürüyerek" },
+    metrics.airport
+      ? { icon: Plane, label: metrics.airport.label, value: metrics.airport.driveMin, unit: "dk araçla" }
+      : { icon: Navigation, label: metrics.center.label, value: metrics.center.driveMin, unit: "dk araçla" },
+  ];
 
-  return <section id="konum" className="h-dvh snap-start snap-always overflow-hidden bg-[#202320] text-[#f6f1eb]">
-    <div className="mx-auto grid h-full max-w-[1440px] grid-rows-[auto_minmax(0,1fr)] gap-4 px-5 pb-5 pt-24 sm:px-9 sm:pb-8 lg:grid-cols-[.9fr_1.1fr] lg:grid-rows-1 lg:gap-10 lg:px-14 lg:pb-10 lg:pt-28">
-      <div className="flex min-h-0 flex-col lg:justify-between">
-        <div><p className="eyebrow text-[#d8b792]">Konum</p><h2 className="mt-3 text-4xl font-medium leading-[.9] tracking-[-.045em] sm:text-6xl lg:text-7xl">Her yere<br/><em>birkaç dakika.</em></h2><p className="mt-3 hidden max-w-md text-xs leading-6 text-white/45 sm:block lg:mt-5 lg:text-sm">{description}</p></div>
-        <div className="mt-4 grid gap-2.5">{cards.map((card, cardIndex) => <div key={card.label} className="group flex items-center justify-between gap-5 rounded-xl border border-white/10 bg-[#292c29] px-4 py-3 shadow-[0_10px_28px_rgba(0,0,0,.14)] transition-colors hover:border-[#d8b792]/30 sm:rounded-2xl sm:px-5 sm:py-3.5 lg:px-6"><div className="flex min-w-0 items-center gap-4"><span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/10 bg-[#202320] text-[#d8b792] sm:size-11"><card.icon size={18}/></span><div><span className="block truncate text-[9px] font-bold uppercase tracking-[.12em] text-white/70 sm:text-[10px]">{card.label}</span><span className="mt-0.5 block text-[7px] font-bold uppercase tracking-[.1em] text-white/25 sm:text-[8px]">{String(cardIndex + 1).padStart(2, "0")} · {card.unit}</span></div></div><div className="flex shrink-0 items-baseline gap-1"><strong className="display-font text-3xl font-semibold leading-none text-[#f6f1eb] sm:text-4xl lg:text-5xl">{card.value}</strong><span className="display-font text-base italic text-[#d8b792] sm:text-lg">dk</span></div></div>)}</div>
+  return <section id="konum" className="relative h-dvh snap-start snap-always overflow-hidden bg-[#202320] text-[#f6f1eb]">
+    {/*
+      Harita section'ın tamamını kaplar. Google embed'i kendi işaretçisini
+      değiştirmeye izin vermediği için iframe etkileşime kapalı tutulur ve
+      konum, üstüne bindirdiğimiz ev işaretçisiyle gösterilir; böylece
+      işaretçi her zaman doğru noktada durur. Gezinme için alttaki iki buton var.
+    */}
+    <div className="absolute inset-0 overflow-hidden">
+      <iframe
+        src={mapEmbedUrl}
+        title="Elys Prime konum haritası"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        tabIndex={-1}
+        className="pointer-events-none absolute inset-0 h-full w-full border-0 grayscale-[.25]"
+      />
+    </div>
+
+    <div className="absolute right-5 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-1.5 sm:right-9 lg:right-14">
+      <button
+        type="button"
+        onClick={() => setZoom((value) => Math.min(19, value + 1))}
+        disabled={zoom >= 19}
+        className="grid size-10 place-items-center rounded-full border border-white/25 bg-[#12140f]/80 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] disabled:opacity-35 disabled:hover:border-white/25 disabled:hover:bg-[#12140f]/80 disabled:hover:text-white"
+        aria-label="Haritayı yakınlaştır"
+      ><Plus size={17}/></button>
+      <button
+        type="button"
+        onClick={() => setZoom((value) => Math.max(12, value - 1))}
+        disabled={zoom <= 12}
+        className="grid size-10 place-items-center rounded-full border border-white/25 bg-[#12140f]/80 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] disabled:opacity-35 disabled:hover:border-white/25 disabled:hover:bg-[#12140f]/80 disabled:hover:text-white"
+        aria-label="Haritayı uzaklaştır"
+      ><Minus size={17}/></button>
+    </div>
+
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,rgba(16,18,16,.8)_0%,rgba(16,18,16,.45)_45%,transparent_100%)]" />
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-80 bg-[linear-gradient(0deg,rgba(16,18,16,.94)_0%,rgba(16,18,16,.6)_50%,transparent_100%)]" />
+
+    {/* Ev işaretçisi — haritanın merkezinde, tıklanınca görsel modalı açar. */}
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className="group absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-full"
+      aria-label="Elys Prime konumu — proje görselini aç"
+    >
+      <span className="relative grid size-16 place-items-center rounded-full border-2 border-white bg-[#d8b792] text-[#181a18] shadow-[0_10px_30px_rgba(0,0,0,.45)] transition-transform duration-300 group-hover:scale-110 sm:size-20">
+        <Home size={28} className="sm:hidden" />
+        <Home size={34} className="hidden sm:block" />
+        <span aria-hidden="true" className="absolute -bottom-2 left-1/2 size-4 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-white bg-[#d8b792]" />
+        <span aria-hidden="true" className="absolute inset-0 -z-10 animate-ping rounded-full bg-[#d8b792]/40" />
+      </span>
+      <span className="mt-4 block whitespace-nowrap rounded-full bg-[#181a18]/90 px-4 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-white backdrop-blur">
+        Elys Prime
+      </span>
+    </button>
+
+    <div className="pointer-events-none absolute inset-0 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-6 pt-24 sm:px-9 sm:pb-8 lg:px-14 lg:pb-10 lg:pt-28">
+      {/* Başlığın arkasına okunurluk için koyu panel. */}
+      <div className="pointer-events-auto w-fit max-w-2xl rounded-2xl border border-white/10 bg-[#12140f]/75 p-5 backdrop-blur-xl sm:p-7">
+        <p className="eyebrow text-[#d8b792]">Konum</p>
+        <h2 className="mt-2 whitespace-nowrap text-xl font-semibold tracking-[-.02em] sm:text-2xl lg:text-3xl">Her yere <em className="font-light">birkaç dakika.</em></h2>
+        <p className="mt-3 hidden max-w-md text-sm leading-6 text-white/65 sm:block">{description}</p>
       </div>
 
-      <div className="relative min-h-0 overflow-hidden bg-[#c9c2b5]">
-        <iframe src={mapEmbedUrl} title="Elys Prime Google konum haritası" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0" allowFullScreen />
-        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10"/>
-        <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2 bg-[#181a18] px-3 py-2 text-white sm:left-5 sm:top-5 sm:px-4 sm:py-3"><MapPin size={14} className="text-[#d8b792]"/><span className="text-[8px] font-bold uppercase tracking-[.14em] sm:text-[10px]">Elys Prime</span></div>
-        <a href={mapDetailUrl} target="_blank" rel="noreferrer" className="absolute bottom-3 right-3 inline-flex items-center gap-2 bg-[#181a18] px-4 py-3 text-[8px] font-bold uppercase tracking-[.12em] text-white transition-colors hover:bg-[#d8b792] hover:text-[#181a18] sm:bottom-5 sm:right-5 sm:text-[9px]">Google Maps&apos;te aç <ExternalLink size={13}/></a>
+      <div className="flex flex-col gap-3">
+        {/* Yatay, uzun mesafe kartları. */}
+        <div className="pointer-events-auto grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3">
+          {cards.map((card) => (
+            <div key={card.label} className="flex min-w-0 items-center gap-4 rounded-2xl border border-white/15 bg-[#161816]/85 px-4 py-3.5 backdrop-blur-md sm:px-5 sm:py-4">
+              <span className="grid size-11 shrink-0 place-items-center rounded-full border border-white/15 bg-[#202320] text-[#d8b792] sm:size-12"><card.icon size={19}/></span>
+              <div className="min-w-0 flex-1">
+                <span className="block truncate text-[10px] font-bold uppercase tracking-[.14em] text-white/60">{card.label}</span>
+                <div className="mt-0.5 flex items-baseline gap-1.5">
+                  <strong className="display-font text-2xl font-semibold leading-none sm:text-3xl">{card.value}</strong>
+                  <span className="truncate text-[10px] font-bold uppercase tracking-[.1em] text-[#d8b792]">{card.unit}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pointer-events-auto flex flex-col gap-2.5 sm:flex-row sm:justify-end sm:gap-3">
+          <a href={mapUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-3 rounded-full border border-white/25 bg-[#161816]/85 px-6 py-3.5 text-[11px] font-bold uppercase tracking-[.16em] text-white backdrop-blur-md transition-colors hover:border-white hover:bg-white hover:text-[#181a18]">
+            <ExternalLink size={15}/> Haritada aç
+          </a>
+          <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-3 rounded-full bg-[#d8b792] px-6 py-3.5 text-[11px] font-bold uppercase tracking-[.16em] text-[#181a18] transition-colors hover:bg-white">
+            <Navigation size={15}/> Yol tarifi al
+          </a>
+        </div>
       </div>
     </div>
+
+    {open && (
+      <div className="fixed inset-0 z-[80] grid place-items-center bg-black/85 p-4 backdrop-blur-sm sm:p-8" role="dialog" aria-modal="true" aria-label="Elys Prime proje görseli">
+        <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-white/15 bg-[#161816]">
+          <div className="relative aspect-[16/10]">
+            <Image src={getBuildImage(7)} alt="Elys Prime genel görünümü" fill sizes="(max-width: 768px) 100vw, 48rem" className="object-cover"/>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
+            <div>
+              <span className="text-[9px] font-bold uppercase tracking-[.2em] text-[#d8b792]">Pendik / İstanbul</span>
+              <h3 className="mt-1 text-xl font-semibold sm:text-2xl">Elys Prime</h3>
+              <p className="mt-1 text-xs text-white/50">4 blok · 192 daire · Metroya {metrics.metro.walkMin} dk</p>
+            </div>
+            <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#d8b792] px-5 py-3 text-[10px] font-bold uppercase tracking-[.14em] text-[#181a18] transition-colors hover:bg-white">
+              <Navigation size={14}/> Yol tarifi al
+            </a>
+          </div>
+        </div>
+        <button onClick={() => setOpen(false)} className="absolute right-5 top-5 grid size-12 place-items-center rounded-full bg-white text-black" aria-label="Kapat"><X/></button>
+      </div>
+    )}
   </section>;
 }

@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
+import { campaignUrl } from "@/lib/campaigns";
+import { getSection } from "@/lib/sections.server";
 import { plans } from "@/lib/plans";
 import { absoluteUrl } from "@/lib/site";
 
@@ -10,13 +12,12 @@ type Entry = MetadataRoute.Sitemap[number];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const posts = await getPosts();
+  const [posts, campaigns] = await Promise.all([getPosts(), getSection("campaigns")]);
 
   const staticRoutes: { path: string; priority: number; changeFrequency: Entry["changeFrequency"] }[] = [
     { path: "/", priority: 1, changeFrequency: "weekly" },
     { path: "/proje", priority: 0.9, changeFrequency: "monthly" },
     { path: "/daire-planlari", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/proje-durumu", priority: 0.8, changeFrequency: "weekly" },
     { path: "/tanitimlar", priority: 0.8, changeFrequency: "weekly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/konum", priority: 0.7, changeFrequency: "yearly" },
@@ -29,6 +30,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
+    })),
+    ...campaigns.map((campaign) => ({
+      url: absoluteUrl(campaignUrl(campaign)),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
     })),
     ...plans.map((plan) => ({
       url: absoluteUrl(`/daire-planlari/${plan.slug}`),

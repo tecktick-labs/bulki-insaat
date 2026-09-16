@@ -4,7 +4,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--paper); }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body), Arial, sans-serif; font-optical-sizing: auto; }
-h1, h2, h3, .display-font { font-family: var(--font-display), Georgia, serif; }
+h1, h2, h3, .display-font { font-family: var(--font-display), "Helvetica Neue", Arial, sans-serif; }
 button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: #b7865d; color: white; }
 .no-scrollbar::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
@@ -32,3 +32,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .reveal-delay-2 { animation-delay: .24s; }
 .reveal-delay-3 { animation-delay: .36s; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal-up { animation: none; } }
+
+/* Hero'daki "Keşfedelim" okunun sürekli aşağı süzülen ipucu hareketi. */
+@keyframes nudge-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+.nudge-down { animation: nudge-down 1.8s ease-in-out infinite; }
+
+/* Broşür şeridi: ortadaki kart snap ile ortalanır, kenardakiler geri çekilir. */
+.filmstrip { scroll-snap-type: x mandatory; scroll-padding-inline: 50%; }
+.filmstrip > * { scroll-snap-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge-down { animation: none; }
+}

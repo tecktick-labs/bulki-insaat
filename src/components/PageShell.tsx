@@ -2,16 +2,9 @@ import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { ProjectContent } from "@/lib/project-content";
+import { pageNav } from "@/lib/nav";
+import SiteHeader from "./SiteHeader";
 
-export const pageNav = [
-  { href: "/proje", label: "Proje" },
-  { href: "/proje-durumu", label: "Proje Durumu" },
-  { href: "/daire-planlari", label: "Daire Planları" },
-  { href: "/konum", label: "Konum" },
-  { href: "/tanitimlar", label: "Tanıtımlar" },
-  { href: "/blog", label: "Blog" },
-  { href: "/iletisim", label: "İletişim" },
-];
 
 function digits(phone: string) {
   return phone.replace(/[^\d]/g, "");
@@ -38,27 +31,7 @@ export default function PageShell({ content, children }: { content: ProjectConte
 
   return (
     <div className="min-h-dvh bg-[#181a18] text-[#f6f1eb]">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#181a18]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between gap-6 px-5 sm:px-9 lg:px-14">
-          <Link href="/" className="flex items-center gap-3" aria-label="Elys Prime ana sayfa">
-            <span className="grid size-9 place-items-center border border-white/50 text-sm font-bold tracking-[-.08em]">EP</span>
-            <span>
-              <span className="display-font block text-xl font-semibold leading-none tracking-wide">ELYS PRIME</span>
-              <span className="mt-1 block text-[8px] font-bold tracking-[.25em] opacity-60">BULKİ YAPI</span>
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-6 lg:flex">
-            {pageNav.map((item) => (
-              <Link key={item.href} href={item.href} className="py-2 text-[11px] font-bold uppercase tracking-[.17em] opacity-75 transition-opacity hover:opacity-100">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <a href={general.whatsappLink} target="_blank" rel="noreferrer" className="shrink-0 border border-white/45 px-4 py-3 text-[10px] font-bold uppercase tracking-[.16em] transition-colors hover:bg-[#d8b792] hover:text-[#181a18]">
-            Randevu Al
-          </a>
-        </div>
-      </header>
+      <SiteHeader whatsappLink={general.whatsappLink} />
 
       <main>{children}</main>
 

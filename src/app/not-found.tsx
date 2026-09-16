@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { pageNav } from "@/components/PageShell";
+import { pageNav } from "@/lib/nav";
 
 export default function NotFound() {
   return (

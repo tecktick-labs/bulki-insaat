@@ -11,9 +11,9 @@
     "start": "next start",
     "lint": "eslint",
     "emulators": "firebase emulators:start --only auth,firestore,storage",
-    "upload-media": "node scripts/upload-media.mjs",
-    "seed-content": "node scripts/seed-content.mjs",
-    "set-admin": "node scripts/set-admin.mjs",
+    "upload-media": "tsx scripts/upload-media.mjs",
+    "seed-content": "tsx scripts/seed-content.mjs",
+    "set-admin": "tsx scripts/set-admin.mjs",
     "deploy": "firebase deploy --only firestore:rules,firestore:indexes,storage"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16.3.5",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5",
     "typescript-eslint": "^8"
   }

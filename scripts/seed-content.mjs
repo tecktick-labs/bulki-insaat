@@ -12,6 +12,7 @@
 import { cert, initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore, Timestamp } from "firebase-admin/firestore";
 import { defaultPages } from "../src/data/copy.ts";
+import { sectionDefaults, sectionIds } from "../src/lib/sections.ts";
 
 const force = process.argv.includes("--force");
 
@@ -140,6 +141,21 @@ for (const [slug, page] of Object.entries(defaultPages)) {
 
   await ref.set({ ...page, updatedAt: FieldValue.serverTimestamp() });
   console.log(`✓ pages/${slug}`);
+  written += 1;
+}
+
+// --- Panelden yönetilen bölümler: kampanyalar, galeri, belgeler, daire tipleri ---
+for (const id of sectionIds) {
+  const ref = db.collection("sections").doc(id);
+
+  if (!force && (await ref.get()).exists) {
+    console.log(`- sections/${id} zaten var, atlandı`);
+    skipped += 1;
+    continue;
+  }
+
+  await ref.set({ items: sectionDefaults[id], updatedAt: FieldValue.serverTimestamp() });
+  console.log(`✓ sections/${id} (${sectionDefaults[id].length} kayıt)`);
   written += 1;
 }
 
