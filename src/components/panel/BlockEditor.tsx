@@ -104,6 +104,23 @@ export default function BlockEditor({
               </div>
             )}
 
+            {block.type === "cta" && (
+              <div className="grid gap-4 lg:grid-cols-2">
+                <label className={`${labelClass} lg:col-span-2`}>
+                  Açıklama metni
+                  <textarea rows={2} className={inputClass} value={block.text} onChange={(event) => update(index, { ...block, text: event.target.value })} />
+                </label>
+                <label className={labelClass}>
+                  Bağlantı adresi <span className="text-white/25">(/daire-planlari gibi)</span>
+                  <input className={inputClass} value={block.href} onChange={(event) => update(index, { ...block, href: event.target.value })} />
+                </label>
+                <label className={labelClass}>
+                  Bağlantı yazısı
+                  <input className={inputClass} value={block.label} onChange={(event) => update(index, { ...block, label: event.target.value })} />
+                </label>
+              </div>
+            )}
+
             {block.type === "image" && (
               <>
                 <ImageField

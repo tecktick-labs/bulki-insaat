@@ -60,6 +60,7 @@ function toPost(id: string, data: FirebaseFirestore.DocumentData): Post {
     seoTitle: data.seoTitle ?? "",
     seoDescription: data.seoDescription ?? "",
     blocks: Array.isArray(data.blocks) ? data.blocks : [],
+    faq: Array.isArray(data.faq) ? data.faq : [],
     published: data.published === true,
     publishedAt: toIso(data.publishedAt),
     updatedAt: toIso(data.updatedAt),

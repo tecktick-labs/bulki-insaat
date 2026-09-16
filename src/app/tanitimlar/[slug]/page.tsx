@@ -4,7 +4,7 @@ import PageShell from "@/components/PageShell";
 import PostDetail from "@/components/PostDetail";
 import { getPost, getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
-import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, companyName } from "@/lib/site";
 import { getProjectContent } from "@/lib/project-content.server";
 
@@ -68,6 +68,7 @@ export default async function TanitimDetayPage({ params }: { params: Promise<{ s
             author: { "@type": "Organization", name: companyName },
             publisher: { "@type": "Organization", name: companyName },
           },
+          ...(post.faq.length > 0 ? [faqSchema(post.faq)] : []),
         ]}
       />
     </PageShell>

@@ -191,6 +191,50 @@ export default function PostsEditor() {
         </section>
 
         <section className="mt-6 border border-white/10 bg-[#202320] p-5 sm:p-7">
+          <h3 className="text-xl font-semibold">Sık sorulan sorular</h3>
+          <p className="mt-2 mb-5 text-xs leading-6 text-white/40">
+            İsteğe bağlı. Doldurursanız Google arama sonuçlarında soru-cevap olarak görünebilir —
+            tıklanma oranını belirgin biçimde artıran birkaç şeyden biri. Soruları müşterilerin
+            gerçekten sorduğu cümlelerle yazın.
+          </p>
+          <div className="space-y-3">
+            {draft.faq.map((item, index) => (
+              <article key={index} className="border border-white/10 bg-[#292c29] p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-[.16em] text-[#d8b792]">
+                    Soru {index + 1}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label="Soruyu sil"
+                    onClick={() => set("faq", draft.faq.filter((_, currentIndex) => currentIndex !== index))}
+                    className="border border-white/15 p-2 text-red-300 transition hover:bg-[#181a18]"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+                <input
+                  className={inputClass}
+                  placeholder="Soru"
+                  value={item.question}
+                  onChange={(event) => set("faq", draft.faq.map((current, currentIndex) => (currentIndex === index ? { ...current, question: event.target.value } : current)))}
+                />
+                <textarea
+                  rows={3}
+                  className={inputClass}
+                  placeholder="Cevap"
+                  value={item.answer}
+                  onChange={(event) => set("faq", draft.faq.map((current, currentIndex) => (currentIndex === index ? { ...current, answer: event.target.value } : current)))}
+                />
+              </article>
+            ))}
+          </div>
+          <button type="button" onClick={() => set("faq", [...draft.faq, { question: "", answer: "" }])} className={`${buttonClass} mt-4`}>
+            <Plus size={13} /> Soru ekle
+          </button>
+        </section>
+
+        <section className="mt-6 border border-white/10 bg-[#202320] p-5 sm:p-7">
           <h3 className="mb-5 text-xl font-semibold">SEO</h3>
           <div className="grid gap-5 lg:grid-cols-2">
             <label className={labelClass}>

@@ -1,4 +1,6 @@
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import type { ContentBlock } from "@/lib/content-types";
 
 /** Panelde üretilen blokları sayfaya basar. Bilinmeyen blok tipleri sessizce atlanır. */
@@ -46,6 +48,20 @@ export default function BlockRenderer({ blocks }: { blocks: ContentBlock[] }) {
                   </figcaption>
                 )}
               </figure>
+            );
+
+          case "cta":
+            if (!block.href || !block.label) return null;
+            return (
+              <div key={key} className="border border-[#d8b792]/35 bg-[#d8b792]/[.07] p-6">
+                {block.text && <p className="text-[15px] leading-8 text-white/70">{block.text}</p>}
+                <Link
+                  href={block.href}
+                  className="mt-3 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[.14em] text-[#d8b792] underline-offset-4 hover:underline"
+                >
+                  {block.label} <ArrowRight size={14} />
+                </Link>
+              </div>
             );
 
           case "image":

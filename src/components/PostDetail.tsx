@@ -48,6 +48,20 @@ export default function PostDetail({
             <BlockRenderer blocks={post.blocks} />
           </div>
 
+          {post.faq.length > 0 && (
+            <section className="mt-14 border-t border-white/10 pt-10">
+              <h2 className="display-font text-2xl font-medium tracking-[-.03em] sm:text-3xl">Sık sorulan sorular</h2>
+              <dl className="mt-8 space-y-6">
+                {post.faq.map((item) => (
+                  <div key={item.question} className="border-b border-white/[.07] pb-6 last:border-0">
+                    <dt className="text-[15px] font-semibold leading-7 text-[#f6f1eb]">{item.question}</dt>
+                    <dd className="mt-3 text-[15px] leading-8 text-white/60">{item.answer}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
+
           <Link href={basePath} className="mt-12 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.14em] text-white/45 transition-colors hover:text-[#d8b792]">
             <ArrowLeft size={14} /> {listLabel} sayfasına dön
           </Link>

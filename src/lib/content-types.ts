@@ -4,7 +4,8 @@ export type ContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "image"; url: string; alt: string; caption?: string }
   | { type: "list"; items: string[] }
-  | { type: "quote"; text: string; cite?: string };
+  | { type: "quote"; text: string; cite?: string }
+  | { type: "cta"; text: string; href: string; label: string };
 
 export const blockTypeLabels: Record<ContentBlock["type"], string> = {
   heading: "Ara başlık",
@@ -12,6 +13,7 @@ export const blockTypeLabels: Record<ContentBlock["type"], string> = {
   image: "Görsel",
   list: "Madde listesi",
   quote: "Alıntı",
+  cta: "Bağlantı kutusu",
 };
 
 export function emptyBlock(type: ContentBlock["type"]): ContentBlock {
@@ -20,6 +22,7 @@ export function emptyBlock(type: ContentBlock["type"]): ContentBlock {
     case "image": return { type: "image", url: "", alt: "" };
     case "list": return { type: "list", items: [""] };
     case "quote": return { type: "quote", text: "" };
+    case "cta": return { type: "cta", text: "", href: "/", label: "" };
     default: return { type: "paragraph", text: "" };
   }
 }
@@ -41,6 +44,9 @@ export type PageCopy = {
 export const pageSlugs = ["proje", "daire-planlari", "konum", "iletisim"] as const;
 export type PageSlug = (typeof pageSlugs)[number];
 
+/** Yazının sonundaki soru-cevap bölümü. Google'da FAQ zengin sonucu üretir. */
+export type FaqItem = { question: string; answer: string };
+
 export type PostType = "blog" | "tanitim";
 
 export const postTypeLabels: Record<PostType, string> = {
@@ -60,6 +66,8 @@ export type Post = {
   seoTitle: string;
   seoDescription: string;
   blocks: ContentBlock[];
+  /** İsteğe bağlı sık sorulan sorular. Boşsa sayfada bölüm çıkmaz. */
+  faq: FaqItem[];
   published: boolean;
   /** ISO 8601 — Firestore Timestamp'ı serileştirmemek için string tutuyoruz. */
   publishedAt: string;
@@ -86,6 +94,7 @@ export function emptyPost(type: PostType): Omit<Post, "id"> {
     seoTitle: "",
     seoDescription: "",
     blocks: [{ type: "paragraph", text: "" }],
+    faq: [],
     published: false,
     publishedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

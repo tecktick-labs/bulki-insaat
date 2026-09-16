@@ -14,7 +14,8 @@
     "upload-media": "tsx scripts/upload-media.mjs",
     "seed-content": "tsx scripts/seed-content.mjs",
     "set-admin": "tsx scripts/set-admin.mjs",
-    "deploy": "firebase deploy --only firestore:rules,firestore:indexes,storage"
+    "deploy": "firebase deploy --only firestore:rules,firestore:indexes,storage",
+    "seed-posts": "tsx scripts/seed-posts.mjs"
   },
   "dependencies": {
     "firebase": "^12.18.0",
