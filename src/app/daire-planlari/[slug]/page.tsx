@@ -5,8 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { planImage, planTitle } from "@/lib/plans";
-import { applyPlanRooms } from "@/lib/sections";
+import { planImage, planImageAlt, planTitle } from "@/lib/plans";
 import { getSection } from "@/lib/sections.server";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
@@ -16,13 +15,13 @@ import { absoluteUrl } from "@/lib/site";
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  const planRooms = await getSection("plan-rooms");
-  return applyPlanRooms(planRooms).map((plan) => ({ slug: plan.slug }));
+  const plans = await getSection("plan-rooms");
+  return plans.map((plan) => ({ slug: plan.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const plan = applyPlanRooms(await getSection("plan-rooms")).find((item) => item.slug === slug);
+  const plan = (await getSection("plan-rooms")).find((item) => item.slug === slug);
   if (!plan) return {};
 
   const title = `${planTitle(plan)} Daire Planı`;
@@ -33,19 +32,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     path: `/daire-planlari/${plan.slug}`,
     image: planImage(plan),
-    imageAlt: `${planTitle(plan)} daire planı`,
+    imageAlt: planImageAlt(plan),
   });
 }
 
 export default async function PlanDetayPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [content, copy, planRooms] = await Promise.all([
+  const [content, copy, plans] = await Promise.all([
     getProjectContent(),
     getPageCopy("daire-planlari"),
     getSection("plan-rooms"),
   ]);
 
-  const plans = applyPlanRooms(planRooms);
   const plan = plans.find((item) => item.slug === slug);
   if (!plan) notFound();
   const paragraphs = copy.planTypes?.[`${plan.floor}|${plan.position}`] ?? [];
@@ -74,7 +72,7 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
           <div className="relative aspect-[4/3] overflow-hidden rounded-[1.35rem] bg-[#eeece7]">
             <Image
               src={planImage(plan)}
-              alt={`${planTitle(plan)} daire planı çizimi`}
+              alt={planImageAlt(plan)}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 55vw"
@@ -117,7 +115,7 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
             {siblings.map((sibling) => (
               <Link key={sibling.slug} href={`/daire-planlari/${sibling.slug}`} className="group flex flex-col overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#252825] transition-colors hover:border-[#d8b792]/45">
                 <div className="relative aspect-[4/3] bg-[#eeece7]">
-                  <Image src={planImage(sibling)} alt={`${planTitle(sibling)} daire planı`} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-4" />
+                  <Image src={planImage(sibling)} alt={planImageAlt(sibling)} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-4" />
                 </div>
                 <div className="border-t border-white/10 p-4">
                   <h3 className="text-base font-semibold">{sibling.floor}</h3>

@@ -15,6 +15,7 @@
     "upload-media": "tsx scripts/upload-media.mjs",
     "transcode-video": "node scripts/transcode-video.mjs",
     "seed-content": "tsx scripts/seed-content.mjs",
+    "sync-campaigns": "node --env-file-if-exists=.env.local --import tsx scripts/sync-campaigns.mjs",
     "seed-posts": "tsx scripts/seed-posts.mjs",
     "set-admin": "tsx scripts/set-admin.mjs",
     "deploy": "firebase deploy --only firestore:rules,firestore:indexes,storage"

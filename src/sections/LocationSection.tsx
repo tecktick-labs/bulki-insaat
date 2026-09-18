@@ -49,11 +49,16 @@ export default function LocationSection({ description, metrics, latitude, longit
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         tabIndex={-1}
-        className="pointer-events-none absolute inset-0 h-full w-full border-0 grayscale-[.25]"
+        /* Mobilde harita bölümden %24 yukarı taşırılır: merkezi (ve dolayısıyla
+           üstüne bindirdiğimiz ev işaretçisi) alttaki mesafe kartlarının değil,
+           boş alanın ortasına denk gelsin. Alt kenar yine bölümle hizalı kalır. */
+        className="pointer-events-none absolute -top-[20%] left-0 h-[120%] w-full border-0 grayscale-[.25] sm:top-0 sm:h-full"
       />
     </div>
 
-    <div className="absolute right-5 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-1.5 sm:right-9 lg:right-14">
+    {/* Mobilde dikey orta, alttaki mesafe kartlarının üstüne denk geliyordu;
+        telefonlarda haritanın üst çeyreğinde durur, sm'den itibaren ortada. */}
+    <div className="absolute right-5 top-[28%] z-10 flex flex-col gap-1.5 sm:right-9 sm:top-1/2 sm:-translate-y-1/2 lg:right-14">
       <button
         type="button"
         onClick={() => setZoom((value) => Math.min(19, value + 1))}
@@ -77,23 +82,23 @@ export default function LocationSection({ description, metrics, latitude, longit
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="group absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-full"
+      className="group absolute left-1/2 top-[40%] z-10 -translate-x-1/2 -translate-y-full sm:top-1/2"
       aria-label="Elys Prime konumu — proje görselini aç"
     >
-      <span className="relative grid size-16 place-items-center rounded-full border-2 border-white bg-[#d8b792] text-[#181a18] shadow-[0_10px_30px_rgba(0,0,0,.45)] transition-transform duration-300 group-hover:scale-110 sm:size-20">
-        <Home size={28} className="sm:hidden" />
+      <span className="relative grid size-14 place-items-center rounded-full border-2 border-white bg-[#d8b792] text-[#181a18] shadow-[0_10px_30px_rgba(0,0,0,.45)] transition-transform duration-300 group-hover:scale-110 sm:size-20">
+        <Home size={24} className="sm:hidden" />
         <Home size={34} className="hidden sm:block" />
         <span aria-hidden="true" className="absolute -bottom-2 left-1/2 size-4 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-white bg-[#d8b792]" />
         <span aria-hidden="true" className="absolute inset-0 -z-10 animate-ping rounded-full bg-[#d8b792]/40" />
       </span>
-      <span className="mt-4 block whitespace-nowrap rounded-full bg-[#181a18]/90 px-4 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-white backdrop-blur">
+      <span className="mt-4 hidden whitespace-nowrap rounded-full sm:block bg-[#181a18]/90 px-4 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-white backdrop-blur">
         Elys Prime
       </span>
     </button>
 
     <div className="pointer-events-none absolute inset-0 mx-auto flex h-full max-w-[1440px] flex-col justify-between px-5 pb-6 pt-24 sm:px-9 sm:pb-8 lg:px-14 lg:pb-10 lg:pt-28">
       {/* Başlığın arkasına okunurluk için koyu panel. */}
-      <div className="pointer-events-auto w-fit max-w-2xl rounded-2xl border border-white/10 bg-[#12140f]/75 p-5 backdrop-blur-xl sm:p-7">
+      <div className="pointer-events-auto w-fit max-w-2xl rounded-2xl border border-white/10 bg-[#12140f]/75 p-4 backdrop-blur-xl sm:p-7">
         <p className="eyebrow text-[#d8b792]">Konum</p>
         <h2 className="mt-2 whitespace-nowrap text-xl font-semibold tracking-[-.02em] sm:text-2xl lg:text-3xl">Her yere <em className="font-light">birkaç dakika.</em></h2>
         <p className="mt-3 hidden max-w-md text-sm leading-6 text-white/65 sm:block">{description}</p>

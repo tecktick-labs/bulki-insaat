@@ -69,7 +69,10 @@ export default function BrochureSection({ campaigns }: { campaigns: Campaign[] }
                   draggable={false}
                   unoptimized={slide.vector}
                   sizes="(max-width: 640px) 76vw, (max-width: 1024px) 50vw, 30rem"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  /* Kampanya broşürleri 3:4 dikey tasarım; kart alanı yatay
+                     kaldığında `cover` posteri yarıdan fazla kırpıyordu.
+                     Vektör broşürler tam görünür, fotoğraflar alanı doldurur. */
+                  className={`transition-transform duration-700 group-hover:scale-[1.03] ${slide.vector ? "object-contain p-3" : "object-cover"}`}
                 />
                 <span className="absolute left-4 top-4 bg-[#181a18]/85 px-3 py-2 text-[9px] font-bold uppercase tracking-[.18em] text-[#d8b792] backdrop-blur">{slide.badge}</span>
               </div>

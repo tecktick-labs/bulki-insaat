@@ -217,7 +217,9 @@ export default function Filmstrip<T>({
     movedRef.current = false;
   };
 
-  const sideButton = "pointer-events-auto grid size-11 place-items-center rounded-full border border-white/25 bg-[#12140f]/70 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] sm:size-12";
+  // Kenar okları yalnızca sm ve üstünde: telefonda kartın üstünü kapatıyorlardı
+  // ve alttaki ok/nokta kontrolleri aynı işi görüyor.
+  const sideButton = "pointer-events-auto hidden size-11 place-items-center sm:grid rounded-full border border-white/25 bg-[#12140f]/70 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] sm:size-12";
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
@@ -249,10 +251,10 @@ export default function Filmstrip<T>({
         </div>
 
         {/* Kenarlardaki oklar */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1 sm:pl-3">
+        <div className="pointer-events-none absolute inset-y-0 left-0 hidden items-center pl-1 sm:flex sm:pl-3">
           <button type="button" onClick={() => step(-1)} className={sideButton} aria-label="Önceki"><ArrowLeft size={18}/></button>
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1 sm:pr-3">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden items-center pr-1 sm:flex sm:pr-3">
           <button type="button" onClick={() => step(1)} className={sideButton} aria-label="Sonraki"><ArrowRight size={18}/></button>
         </div>
       </div>

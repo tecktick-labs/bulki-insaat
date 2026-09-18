@@ -30,7 +30,7 @@ const sections: PanelSection[] = [
   { id: "kampanyalar", label: "Kampanyalar", hint: "Broşür şeridi ve kampanya sayfaları", group: "İçerik" },
   { id: "galeri", label: "Galeri", hint: "Ana sayfa görselleri ve başlıkları", group: "İçerik" },
   { id: "belgeler", label: "Belgeler", hint: "Ruhsat, iskân, imar, tapu", group: "İçerik" },
-  { id: "daire-tipleri", label: "Daire Tipleri", hint: "Oda tipi filtresi", group: "İçerik" },
+  { id: "daire-tipleri", label: "Daire Tipleri", hint: "Plan görselleri, blok ve kat tipi", group: "İçerik" },
   { id: "sayfalar", label: "Sayfa Metinleri", hint: "Alt sayfaların metni ve SEO'su", group: "Yayın" },
   { id: "icerikler", label: "Blog & Tanıtım", hint: "Yazılar ve tanıtım sayfaları", group: "Yayın" },
 ];

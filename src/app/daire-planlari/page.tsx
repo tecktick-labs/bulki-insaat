@@ -5,7 +5,8 @@ import Link from "next/link";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import BlockRenderer from "@/components/BlockRenderer";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { blockNames, planImage, planTitle, plans } from "@/lib/plans";
+import { blockNames, planImage, planImageAlt, planTitle } from "@/lib/plans";
+import { getSection } from "@/lib/sections.server";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
 import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
@@ -19,7 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DairePlanlariPage() {
-  const [content, copy] = await Promise.all([getProjectContent(), getPageCopy("daire-planlari")]);
+  const [content, copy, plans] = await Promise.all([
+    getProjectContent(),
+    getPageCopy("daire-planlari"),
+    getSection("plan-rooms"),
+  ]);
 
   return (
     <PageShell content={content}>
@@ -46,7 +51,7 @@ export default async function DairePlanlariPage() {
                 <div className="relative aspect-[4/3] bg-[#eeece7]">
                   <Image
                     src={planImage(plan)}
-                    alt={`${planTitle(plan)} daire planı`}
+                    alt={planImageAlt(plan)}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-contain p-4"

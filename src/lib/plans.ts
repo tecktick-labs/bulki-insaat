@@ -1,13 +1,15 @@
 import { getFloorPlan } from "./media";
 
 export type Plan = {
-  /** URL slug — /daire-planlari/[slug] */
+  /** URL slug — /daire-planlari/[slug]. Yapısaldır: rota ve sitemap buna bağlı, panelden değişmez. */
   slug: string;
-  /** Storage'daki dosya adı (uzantısız) */
-  file: string;
-  block: "A" | "B" | "C" | "D";
-  floor: string;
-  position: string;
+  /** Plan çiziminin tam görsel URL'i — panelden yüklenebilir ya da değiştirilebilir. */
+  image: string;
+  /** Görselin alternatif metni. Boşsa plan başlığından türetilir. */
+  imageAlt: string;
+  block: BlockName;
+  floor: FloorType;
+  position: PositionType;
   /**
    * Daire planlarındaki alt kategori filtresi.
    *
@@ -18,43 +20,57 @@ export type Plan = {
   rooms: RoomType;
 };
 
+export const blockNames = ["A", "B", "C", "D"] as const;
+export type BlockName = (typeof blockNames)[number];
+
+/** Kat tipleri. `copy.planTypes` anahtarları `${floor}|${position}` olduğu için bu liste sabit kalmalı. */
+export const floorTypes = ["Normal Kat", "Çatı Katı", "Dubleks"] as const;
+export type FloorType = (typeof floorTypes)[number];
+
+export const positionTypes = ["Köşe Tip", "Orta Tip"] as const;
+export type PositionType = (typeof positionTypes)[number];
+
 export const roomTypes = ["2+1", "3+1", "Dubleks"] as const;
 export type RoomType = (typeof roomTypes)[number];
 
-export const plans: Plan[] = [
-  { slug: "a-blok-normal-kat-kose", file: "a-blok-normal-kat-kose-tip", block: "A", floor: "Normal Kat", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "a-blok-normal-kat-orta", file: "a-blok-normal-kat-orta-tip", block: "A", floor: "Normal Kat", position: "Orta Tip", rooms: "2+1" },
-  { slug: "a-blok-cati-kati-kose", file: "a-blok-cati-kat-kose-tip", block: "A", floor: "Çatı Katı", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "a-blok-cati-kati-orta", file: "a-blok-cati-kat-orta-tip", block: "A", floor: "Çatı Katı", position: "Orta Tip", rooms: "2+1" },
-  { slug: "b-blok-normal-kat-kose", file: "b-blok-normal-kat-kose-tip", block: "B", floor: "Normal Kat", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "b-blok-normal-kat-orta", file: "b-blok-normal-kat-orta-tip", block: "B", floor: "Normal Kat", position: "Orta Tip", rooms: "2+1" },
-  { slug: "b-blok-dubleks-kose", file: "b-blok-dubleks-kose-tip", block: "B", floor: "Dubleks", position: "Köşe Tip", rooms: "Dubleks" },
-  { slug: "b-blok-dubleks-orta", file: "b-blok-dubleks-orta-tip", block: "B", floor: "Dubleks", position: "Orta Tip", rooms: "Dubleks" },
-  { slug: "c-blok-normal-kat-kose", file: "c-blok-normal-kat-kose-tip", block: "C", floor: "Normal Kat", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "c-blok-normal-kat-orta", file: "c-blok-normal-kat-orta-tip", block: "C", floor: "Normal Kat", position: "Orta Tip", rooms: "2+1" },
-  { slug: "c-blok-cati-kati-kose", file: "c-blok-cati-kat-kose-tip", block: "C", floor: "Çatı Katı", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "c-blok-cati-kati-orta", file: "c-blok-cati-kat-orta-tip", block: "C", floor: "Çatı Katı", position: "Orta Tip", rooms: "2+1" },
-  { slug: "d-blok-normal-kat-kose", file: "d-blok-normal-kat-kose-tip", block: "D", floor: "Normal Kat", position: "Köşe Tip", rooms: "3+1" },
-  { slug: "d-blok-normal-kat-orta", file: "d-blok-normal-kat-orta-tip", block: "D", floor: "Normal Kat", position: "Orta Tip", rooms: "2+1" },
-  { slug: "d-blok-dubleks-kose", file: "d-blok-dubleks-kat-kose-tip", block: "D", floor: "Dubleks", position: "Köşe Tip", rooms: "Dubleks" },
-  { slug: "d-blok-dubleks-orta", file: "d-blok-dubleks-orta-tip", block: "D", floor: "Dubleks", position: "Orta Tip", rooms: "Dubleks" },
-];
+/** Storage'daki plan çizimi — koddaki varsayılan görseller bu dosyalardan gelir. */
+const plan = (
+  slug: string,
+  file: string,
+  block: BlockName,
+  floor: FloorType,
+  position: PositionType,
+  rooms: RoomType,
+): Plan => ({ slug, image: getFloorPlan(file), imageAlt: "", block, floor, position, rooms });
 
-export const blockNames = ["A", "B", "C", "D"] as const;
+export const plans: Plan[] = [
+  plan("a-blok-normal-kat-kose", "a-blok-normal-kat-kose-tip", "A", "Normal Kat", "Köşe Tip", "3+1"),
+  plan("a-blok-normal-kat-orta", "a-blok-normal-kat-orta-tip", "A", "Normal Kat", "Orta Tip", "2+1"),
+  plan("a-blok-cati-kati-kose", "a-blok-cati-kat-kose-tip", "A", "Çatı Katı", "Köşe Tip", "3+1"),
+  plan("a-blok-cati-kati-orta", "a-blok-cati-kat-orta-tip", "A", "Çatı Katı", "Orta Tip", "2+1"),
+  plan("b-blok-normal-kat-kose", "b-blok-normal-kat-kose-tip", "B", "Normal Kat", "Köşe Tip", "3+1"),
+  plan("b-blok-normal-kat-orta", "b-blok-normal-kat-orta-tip", "B", "Normal Kat", "Orta Tip", "2+1"),
+  plan("b-blok-dubleks-kose", "b-blok-dubleks-kose-tip", "B", "Dubleks", "Köşe Tip", "Dubleks"),
+  plan("b-blok-dubleks-orta", "b-blok-dubleks-orta-tip", "B", "Dubleks", "Orta Tip", "Dubleks"),
+  plan("c-blok-normal-kat-kose", "c-blok-normal-kat-kose-tip", "C", "Normal Kat", "Köşe Tip", "3+1"),
+  plan("c-blok-normal-kat-orta", "c-blok-normal-kat-orta-tip", "C", "Normal Kat", "Orta Tip", "2+1"),
+  plan("c-blok-cati-kati-kose", "c-blok-cati-kat-kose-tip", "C", "Çatı Katı", "Köşe Tip", "3+1"),
+  plan("c-blok-cati-kati-orta", "c-blok-cati-kat-orta-tip", "C", "Çatı Katı", "Orta Tip", "2+1"),
+  plan("d-blok-normal-kat-kose", "d-blok-normal-kat-kose-tip", "D", "Normal Kat", "Köşe Tip", "3+1"),
+  plan("d-blok-normal-kat-orta", "d-blok-normal-kat-orta-tip", "D", "Normal Kat", "Orta Tip", "2+1"),
+  plan("d-blok-dubleks-kose", "d-blok-dubleks-kat-kose-tip", "D", "Dubleks", "Köşe Tip", "Dubleks"),
+  plan("d-blok-dubleks-orta", "d-blok-dubleks-orta-tip", "D", "Dubleks", "Orta Tip", "Dubleks"),
+];
 
 export function planTitle(plan: Plan) {
   return `${plan.block} Blok ${plan.floor} ${plan.position}`;
 }
 
 export function planImage(plan: Plan) {
-  return getFloorPlan(plan.file);
+  return plan.image;
 }
 
-export function findPlan(slug: string) {
-  return plans.find((plan) => plan.slug === slug);
-}
-
-/** Bir blokta fiilen bulunan oda tipleri — filtre çipleri boş seçenek göstermesin diye. */
-export function roomTypesForBlock(block: Plan["block"]) {
-  return roomTypes.filter((room) => plans.some((plan) => plan.block === block && plan.rooms === room));
+/** Panelden alternatif metin girilmediyse başlıktan türetilen erişilebilir metin. */
+export function planImageAlt(plan: Plan) {
+  return plan.imageAlt.trim() || `${planTitle(plan)} daire planı`;
 }

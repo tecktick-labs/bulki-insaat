@@ -1,9 +1,15 @@
 /**
  * Lansman kampanyaları.
  *
- * Tek kaynak: hero'daki üç kutu, broşür şeridi ve /kampanya/[slug] SEO
- * sayfaları hep buradan beslenir. Yeni bir kampanya eklemek için diziye
- * bir kayıt eklemek yeterli — sitemap ve sayfalar kendiliğinden üretilir.
+ * Tek kaynak: hero kutuları, broşür şeridi, footer menüsü ve /kampanya/[slug]
+ * SEO sayfaları hep buradan beslenir. Diziye bir kayıt eklemek yeterli —
+ * sitemap ve sayfalar kendiliğinden üretilir. Hero yalnızca ilk üç kampanyayı
+ * gösterir; geri kalanı broşür şeridinde ve footer menüsünde yer alır.
+ *
+ * DİKKAT: Bu dizi yalnızca VARSAYILAN. Panelden bir kez kaydedildikten sonra
+ * site Firestore'daki `sections/campaigns` belgesini okur; buraya eklenen yeni
+ * bir kampanya yayına kendiliğinden yansımaz. `npm run sync-campaigns` eksik
+ * kampanyaları mevcut kayıtlara dokunmadan Firestore'a ekler.
  */
 
 export type Campaign = {
@@ -95,6 +101,29 @@ export const campaigns: Campaign[] = [
       { label: "Vade farkı", value: "Yok" },
       { label: "Toplam bedel", value: "Sözleşmedeki tutar" },
       { label: "Gizli maliyet", value: "Yok" },
+    ],
+  },
+  {
+    slug: "bankasiz-kefilsiz-kurasiz",
+    label: "Bankasız, kefilsiz, kurasız",
+    hint: "Doğrudan satış",
+    title: "Bankasız, Kefilsiz, Kurasız",
+    lead: "Daireyi doğrudan bizden alıyorsunuz: banka kredisi şartı, kefil ve kura yok.",
+    seoTitle: "Bankasız, Kefilsiz, Kurasız",
+    seoDescription:
+      "Elys Prime'da daire alımında banka kredisi şartı, kefil ve kura yok. Ödeme planının ayrıntıları için satış ekibimizle görüşebilirsiniz.",
+    poster: "/brosur/bankasiz-kefilsiz-kurasiz.svg",
+    posterAlt: "Bankasız kefilsiz kurasız kampanya broşürü",
+    badge: "0 BANKA",
+    paragraphs: [
+      "Konut alımında süreci uzatan şey çoğu zaman dairenin kendisi değil, onun etrafındaki başlıklardır: kredi başvurusu, kefil arayışı, kurada sıra beklemek. Elys Prime'da bu üç başlık yok — daireyi doğrudan bizden alıyorsunuz.",
+      "Banka kredisi kullanmak bir zorunluluk değil; kullanmak isteyen alıcılar için de bir engel bulunmuyor. Kefil gösterme şartı aranmıyor. Daire seçimi kurayla değil, satışta olan planlar arasından sizin tercihinizle yapılıyor.",
+      "Ödeme planının ayrıntıları — peşinat oranı, vade ve taksit tutarı — seçtiğiniz daire tipine göre belirlenir ve sözleşmede yazılı olarak yer alır. Size uygun planı birlikte çıkarmak için satış ekibimizle görüşmeniz yeterlidir.",
+    ],
+    highlights: [
+      { label: "Banka kredisi", value: "Şart değil" },
+      { label: "Kefil", value: "İstenmiyor" },
+      { label: "Daire seçimi", value: "Kura yok" },
     ],
   },
 ];

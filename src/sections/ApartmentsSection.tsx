@@ -1,5 +1,5 @@
 "use client";
-import { blockNames, planImage, planTitle, type Plan, type RoomType } from "@/lib/plans";
+import { blockNames, planImage, planImageAlt, type Plan, type RoomType } from "@/lib/plans";
 import { roomTypesForBlock } from "@/lib/sections";
 import { ArrowRight, Expand } from "lucide-react";
 import Image from "next/image";
@@ -27,26 +27,26 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
 
 
   const chip = (isActive: boolean) =>
-    `border px-4 py-2.5 text-[10px] font-bold uppercase tracking-[.16em] transition-colors ${
+    `shrink-0 border px-3.5 py-2 text-[10px] font-bold uppercase tracking-[.16em] transition-colors sm:px-4 sm:py-2.5 ${
       isActive ? "border-[#d8b792] bg-[#d8b792] text-[#181a18]" : "border-white/15 text-white/60 hover:border-white/45 hover:text-white"
     }`;
 
   return <section id="planlar" className="h-dvh snap-start snap-always overflow-hidden bg-[#1d201d] text-[#f6f1eb]">
-    <div className="mx-auto flex h-full max-w-[1440px] flex-col px-5 pb-5 pt-24 sm:px-9 sm:pb-8 lg:px-14 lg:pb-10 lg:pt-28">
-      <div className="grid shrink-0 gap-4 border-b border-white/10 pb-4 lg:grid-cols-[1fr_auto] lg:items-end">
+    <div className="mx-auto flex h-full max-w-[1440px] flex-col px-5 pb-4 pt-20 sm:px-9 sm:pb-8 sm:pt-24 lg:px-14 lg:pb-10 lg:pt-28">
+      <div className="grid shrink-0 gap-3 border-b border-white/10 pb-3 sm:gap-4 sm:pb-4 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="eyebrow text-[#d8b792]">Daire Planları</p>
-          <h2 className="mt-3 text-3xl font-semibold leading-[.95] tracking-[-.04em] sm:text-4xl lg:text-5xl">Size uyan yaşamı <em className="font-light">inceleyin.</em></h2>
-          <Link href="/daire-planlari" className="mt-3 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-[#d8b792] underline-offset-4 hover:underline">16 daire tipinin tamamı <ArrowRight size={13}/></Link>
+          <h2 className="mt-2 text-[1.75rem] font-semibold leading-[.95] tracking-[-.04em] sm:mt-3 sm:text-4xl lg:text-5xl">Size uyan yaşamı <em className="font-light">inceleyin.</em></h2>
+          <Link href="/daire-planlari" className="mt-2 inline-flex sm:mt-3 items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-[#d8b792] underline-offset-4 hover:underline">16 daire tipinin tamamı <ArrowRight size={13}/></Link>
         </div>
 
         <div className="flex flex-col gap-2 lg:items-end">
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Blok seçimi">
+          <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" role="group" aria-label="Blok seçimi">
             {blockNames.map((item) => (
               <button key={item} onClick={() => pickBlock(item)} aria-pressed={block === item} className={chip(block === item)}>{item} Blok</button>
             ))}
           </div>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Daire tipi seçimi">
+          <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" role="group" aria-label="Daire tipi seçimi">
             <button onClick={() => setRoom("all")} aria-pressed={room === "all"} className={chip(room === "all")}>Tümü</button>
             {availableRooms.map((item) => (
               <button key={item} onClick={() => setRoom(item)} aria-pressed={room === item} className={chip(room === item)}>{item}</button>
@@ -67,7 +67,7 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
             <div className="relative aspect-[1449/1600] h-full shrink-0 overflow-hidden bg-[#f4f2ee]">
               <Image
                 src={planImage(plan)}
-                alt={`${planTitle(plan)} daire planı`}
+                alt={planImageAlt(plan)}
                 fill
                 sizes="(max-width: 640px) 60vw, 26vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
@@ -89,13 +89,13 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
         ))}
       </div>
 
-      <p className="mt-2 shrink-0 text-[9px] leading-4 text-white/35">Planlar bilgilendirme amaçlıdır. Teknik detaylar için satış ekibimizle iletişime geçebilirsiniz.</p>
+      <p className="mt-2 shrink-0 border-t border-white/10 pt-2 text-[9px] leading-4 text-white/35">Planlar bilgilendirme amaçlıdır.<span className="hidden sm:inline"> Teknik detaylar için satış ekibimizle iletişime geçebilirsiniz.</span></p>
     </div>
 
     <Lightbox
       content={selected && {
         src: planImage(selected),
-        alt: `${planTitle(selected)} daire planı`,
+        alt: planImageAlt(selected),
         title: `${selected.floor} · ${selected.position}`,
         subtitle: `${selected.block} Blok · ${selected.rooms}`,
       }}

@@ -11,8 +11,11 @@ export default function ContactSection({ projectName, companyName, email, contac
   const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
   const message = encodeURIComponent(`Merhaba, ${projectName} hakkında bilgi almak istiyorum.`);
 
-  return <section id="iletisim" className="h-dvh snap-start snap-always overflow-y-auto no-scrollbar bg-[#171917] text-white">
-    <div className="mx-auto flex min-h-full max-w-[1440px] flex-col px-5 pb-6 pt-24 sm:px-9 sm:pb-8 lg:px-14 lg:pb-10 lg:pt-28">
+  // Son bölüm: içerik ekrandan uzun. Eskiden h-dvh + iç kaydırma vardı ve
+  // dıştaki snap konteyneriyle çakışıp mobilde kaymaya yol açıyordu.
+  // Artık bölüm içeriğiyle birlikte uzuyor, tek bir kaydırma var.
+  return <section id="iletisim" className="min-h-dvh snap-start bg-[#171917] text-white">
+    <div className="mx-auto flex min-h-dvh max-w-[1440px] flex-col px-5 pb-8 pt-24 sm:px-9 lg:px-14 lg:pb-10 lg:pt-28">
       <div className="grid shrink-0 gap-4 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
         <div>
           <p className="eyebrow text-[#d8b792]">Satış &amp; Randevu</p>
