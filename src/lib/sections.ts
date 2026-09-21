@@ -1,7 +1,16 @@
 import { campaigns as defaultCampaigns, type Campaign } from "./campaigns";
 import { projectDocuments as defaultDocuments, type ProjectDocument } from "./documents";
 import { getBuildImage } from "./media";
-import { blockNames, floorTypes, plans, positionTypes, roomTypes, type Plan } from "./plans";
+import {
+  blockNames,
+  floorTypes,
+  plans,
+  positionTypes,
+  roomTypes,
+  type Plan,
+  type PlanAreas,
+  type PlanRoom,
+} from "./plans";
 
 /**
  * Panelden yönetilen site bölümleri.
@@ -111,6 +120,51 @@ function oneOf<T extends string>(value: unknown, allowed: readonly T[], fallback
   return typeof value === "string" && (allowed as readonly string[]).includes(value) ? (value as T) : fallback;
 }
 
+/** Boş bırakılan metin alanı koddaki varsayılana döner — böylece panel hiçbir zaman boş görünmez. */
+function text(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+/**
+ * Metin listesi. Panelden tümü silinmişse boş dizi olarak korunur; alan hiç
+ * yoksa (eski kayıtlar) varsayılana düşülür. Boş satırlar ayıklanır.
+ */
+function textList(value: unknown, fallback: string[]): string[] {
+  if (!Array.isArray(value)) return fallback;
+  return value.filter((item): item is string => typeof item === "string" && item.trim() !== "").map((item) => item.trim());
+}
+
+/** Metrekare alanı: sayı değilse ya da negatifse "bilinmiyor" anlamında null. */
+function area(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function mergeAreas(value: unknown, fallback: PlanAreas): PlanAreas {
+  if (!value || typeof value !== "object") return fallback;
+  const stored = value as Partial<Record<keyof PlanAreas, unknown>>;
+
+  return {
+    netArea: "netArea" in stored ? area(stored.netArea) : fallback.netArea,
+    grossArea: "grossArea" in stored ? area(stored.grossArea) : fallback.grossArea,
+    balconyArea: "balconyArea" in stored ? area(stored.balconyArea) : fallback.balconyArea,
+    terraceArea: "terraceArea" in stored ? area(stored.terraceArea) : fallback.terraceArea,
+  };
+}
+
+function mergeRoomList(value: unknown, fallback: PlanRoom[]): PlanRoom[] {
+  if (!Array.isArray(value)) return fallback;
+
+  return value
+    .filter((room): room is Record<string, unknown> => Boolean(room) && typeof room === "object")
+    .map((room) => ({
+      name: typeof room.name === "string" ? room.name.trim() : "",
+      area: area(room.area),
+      level: typeof room.level === "string" ? room.level.trim() : "",
+      outdoor: room.outdoor === true,
+    }))
+    .filter((room) => room.name !== "");
+}
+
 /**
  * Koddaki plan listesine Firestore'daki düzeltmeleri uygular.
  *
@@ -127,14 +181,27 @@ export function applyPlanOverrides(overrides: PlanOverride[]): Plan[] {
 
     return {
       ...plan,
-      image: typeof override.image === "string" && override.image.trim() ? override.image.trim() : plan.image,
+      image: text(override.image, plan.image),
       imageAlt: typeof override.imageAlt === "string" ? override.imageAlt : plan.imageAlt,
       block: oneOf(override.block, blockNames, plan.block),
       floor: oneOf(override.floor, floorTypes, plan.floor),
       position: oneOf(override.position, positionTypes, plan.position),
       rooms: oneOf(override.rooms, roomTypes, plan.rooms),
+      roomLayout: text(override.roomLayout, plan.roomLayout),
+      title: text(override.title, plan.title),
+      lead: text(override.lead, plan.lead),
+      seoTitle: text(override.seoTitle, plan.seoTitle),
+      seoDescription: text(override.seoDescription, plan.seoDescription),
+      features: textList(override.features, plan.features),
+      description: textList(override.description, plan.description),
+      areas: mergeAreas(override.areas, plan.areas),
+      roomList: mergeRoomList(override.roomList, plan.roomList),
     };
   });
+}
+
+export function emptyPlanRoom(): PlanRoom {
+  return { name: "", area: null, level: "", outdoor: false };
 }
 
 /** Bir blokta fiilen bulunan oda tipleri — filtre çipleri boş seçenek göstermesin diye. */

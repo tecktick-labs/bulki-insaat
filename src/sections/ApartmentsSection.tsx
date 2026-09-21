@@ -1,5 +1,5 @@
 "use client";
-import { blockNames, planImage, planImageAlt, type Plan, type RoomType } from "@/lib/plans";
+import { blockNames, formatArea, planImage, planImageAlt, planTitle, type Plan, type RoomType } from "@/lib/plans";
 import { roomTypesForBlock } from "@/lib/sections";
 import { ArrowRight, Expand } from "lucide-react";
 import Image from "next/image";
@@ -58,13 +58,19 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
       {/* Plan görselleri 1449x1600 (0.906). Kart yatay kurgulu: görsel kutusu
           tam bu orana sahip ve kart yüksekliğini doldurur, yani içinde boşluk kalmaz. */}
       <div className="mt-4 grid min-h-0 flex-1 auto-rows-[minmax(10.5rem,26vh)] grid-cols-1 content-start gap-3 overflow-y-auto py-1 no-scrollbar sm:grid-cols-2 sm:gap-4 lg:gap-5">
+        {/* Kartın iki ayrı hedefi var: soldaki görsel plan çizimini büyütür,
+            sağdaki metin sütunu o tipin detay sayfasını açar. */}
         {filtered.map((plan) => (
-          <button
+          <article
             key={plan.slug}
-            onClick={() => setSelected(plan)}
-            className="group flex min-h-0 overflow-hidden rounded-2xl border border-white/10 bg-[#252825] text-left shadow-[0_18px_42px_rgba(0,0,0,.24)] transition-all duration-500 hover:border-[#d8b792]/45 hover:shadow-[0_24px_55px_rgba(0,0,0,.38)]"
+            className="group flex min-h-0 overflow-hidden rounded-2xl border border-white/10 bg-[#252825] text-left shadow-[0_18px_42px_rgba(0,0,0,.24)] transition-all duration-500 focus-within:border-[#d8b792]/45 hover:border-[#d8b792]/45 hover:shadow-[0_24px_55px_rgba(0,0,0,.38)]"
           >
-            <div className="relative aspect-[1449/1600] h-full shrink-0 overflow-hidden bg-[#f4f2ee]">
+            <button
+              type="button"
+              onClick={() => setSelected(plan)}
+              aria-label={`${planTitle(plan)} plan çizimini büyüt`}
+              className="relative aspect-[1449/1600] h-full shrink-0 overflow-hidden bg-[#f4f2ee] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d8b792]"
+            >
               <Image
                 src={planImage(plan)}
                 alt={planImageAlt(plan)}
@@ -72,20 +78,28 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
                 sizes="(max-width: 640px) 60vw, 26vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
-            </div>
+              <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full bg-[#181a18]/75 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[.14em] text-white/85 backdrop-blur-sm transition-colors group-hover:bg-[#d8b792] group-hover:text-[#181a18]">
+                <Expand size={11} /> Büyüt
+              </span>
+            </button>
 
-            <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4 sm:p-5">
+            <Link
+              href={`/daire-planlari/${plan.slug}`}
+              className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d8b792] sm:p-5"
+            >
               <div className="min-w-0">
                 <span className="inline-flex items-center gap-2 rounded-full bg-[#d8b792] px-3 py-1.5 text-[8px] font-bold uppercase tracking-[.14em] text-[#181a18]">{plan.block} Blok · {plan.rooms}</span>
                 <h3 className="mt-3 truncate text-xl font-semibold sm:text-2xl">{plan.floor}</h3>
                 <p className="mt-1 truncate text-[12px] text-white/45">{plan.position}</p>
               </div>
               <div className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.14em] text-white/40"><Expand size={13}/> Büyüt</span>
+                <span className="truncate text-[9px] font-bold uppercase tracking-[.14em] text-white/40">
+                  {formatArea(plan.areas.netArea) ? `${formatArea(plan.areas.netArea)} net` : "Planı incele"}
+                </span>
                 <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/15 transition-colors group-hover:bg-[#d8b792] group-hover:text-[#181a18]"><ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5"/></span>
               </div>
-            </div>
-          </button>
+            </Link>
+          </article>
         ))}
       </div>
 

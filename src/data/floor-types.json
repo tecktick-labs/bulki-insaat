@@ -1,0 +1,1886 @@
+{
+  "meta": {
+    "project": "Elys Prime",
+    "developer": "Bulki Yapı",
+    "location": "Pendik, İstanbul",
+    "source": "src/assets/floor-types/*.webp kat planı görsellerinden okunmuştur",
+    "extractedAt": "2026-09-21",
+    "unit": "m²",
+    "notes": [
+      "Tüm oda ölçüleri plan çizimlerinin üzerinde yazan NET değerlerdir.",
+      "grossArea (brüt alan) plan görsellerinde yer almadığı için null bırakılmıştır; ortak alan payı ve duvar kalınlıkları onaylı proje dosyasından teyit edilmelidir.",
+      "netArea = plan üzerinde etiketlenmiş kapalı mekânların toplamıdır (balkon ve teras hariç).",
+      "netAreaWithOutdoor = netArea + balkon + teras.",
+      "Plan üzerindeki 'H.B.' etiketleri hava bacası şaftıdır (~0,31 m²); oda sayılmadığı için toplamlara dâhil edilmemiştir.",
+      "'EBV' = ebeveyn banyosu, 'Ç.A.P' = çatı arası piyesi olarak yorumlanmıştır.",
+      "DİKKAT: rooms (oda tipi) değerleri plan çizimlerindeki oda sayımından türetilmiştir ve src/lib/plans.ts içindeki mevcut varsayımlarla bazı tiplerde ÇAKIŞMAKTADIR. Ayrıntı için meta.roomTypeCorrections listesine bakınız."
+    ],
+    "roomTypeCorrections": [
+      "a-blok-normal-kat-orta: plans.ts 2+1 diyor, plan 3+1 (8,50 + 9,00 + 14,02 m² üç oda).",
+      "a-blok-cati-kati-kose: plans.ts 3+1 diyor, plan 2+1 (8,65 + 13,88 m² iki oda).",
+      "b-blok-normal-kat-orta: plans.ts 2+1 diyor, plan 3+1 (9,00 + 8,06 + 14,32 m² üç oda).",
+      "c-blok-normal-kat-kose: plans.ts 3+1 diyor, plan 2+1 (9,75 + 13,29 m² iki oda).",
+      "c-blok-cati-kati-kose: plans.ts 3+1 diyor, plan 2+1 (11,25 + 9,84 m² iki oda).",
+      "d-blok-normal-kat-kose: plans.ts 3+1 diyor, plan 2+1 (8,78 + 12,09 m² iki oda)."
+    ]
+  },
+  "plans": [
+    {
+      "slug": "a-blok-normal-kat-kose",
+      "file": "a-blok-normal-kat-kose-tip",
+      "block": "A",
+      "floor": "Normal Kat",
+      "position": "Köşe Tip",
+      "rooms": "3+1",
+      "roomLayout": "3+1 (3 oda + 1 salon)",
+      "title": "A Blok Normal Kat Köşe 3+1 Daire Planı",
+      "lead": "Elys Prime A Blok normal kat köşe konumunda bulunan, 87,96 m² net alana ve 25,08 m² salona sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik A Blok 3+1 Köşe Daire Planı",
+      "seoDescription": "Elys Prime A Blok normal kat 3+1 köşe daire planı: 87,96 m² net alan, 25,08 m² salon, 14,05 m² ebeveyn odası, 13,42 m² mutfak. Oda ölçülerini inceleyin.",
+      "features": [
+        "A Blok",
+        "3+1 daire tipi",
+        "Normal kat",
+        "Köşe konum",
+        "İki cepheli plan",
+        "87,96 m² net alan",
+        "25,08 m² salon",
+        "14,05 m² ebeveyn yatak odası",
+        "13,42 m² kapalı mutfak",
+        "Ebeveyn banyosu (3,91 m²)",
+        "Ayrı çamaşır odası",
+        "5,00 m² balkon"
+      ],
+      "areas": {
+        "netArea": 87.96,
+        "grossArea": null,
+        "balconyArea": 5,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 92.96
+      },
+      "roomAreas": {
+        "livingRoomArea": 25.08,
+        "kitchenArea": 13.42,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 14.05,
+        "bedroomAreas": [
+          9.1,
+          9
+        ],
+        "hallArea": 8.5,
+        "bathroomArea": 4.1,
+        "ensuiteBathroomArea": 3.91,
+        "dressingRoomArea": null,
+        "laundryArea": 0.8,
+        "balconyArea": 5,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 25.08,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 13.42,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.05,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.1,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.5,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.1,
+          "level": null
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.91,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.8,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 5,
+          "level": null
+        }
+      ],
+      "description": [
+        "A Blok normal kat köşe tipi, blok yapısının dış köşesinde konumlanan 3+1 daire alternatiflerinden biridir. Plan üzerinde etiketlenmiş kapalı alanların toplamı 87,96 m², balkonla birlikte 92,96 m² olarak okunmaktadır.",
+        "Dairenin yaşam çekirdeğini 25,08 m² salon ve ona bitişik 13,42 m² kapalı mutfak oluşturuyor; mutfak 5,00 m² balkona doğrudan açılıyor. Yatak bölümünde 14,05 m² ebeveyn yatak odası ile 9,10 m² ve 9,00 m² iki oda, 8,50 m² antre üzerinden birbirinden ayrılıyor. Ebeveyn odasına ait 3,91 m² banyo, 4,10 m² ortak WC-banyodan bağımsız çalışıyor.",
+        "Köşe yerleşimi sayesinde salon ve odalar birden fazla cepheden doğal ışık alma potansiyeline sahiptir. 0,80 m² çamaşır odası, ıslak hacimleri yaşam alanından ayrı tutar. Bu sayfadaki ölçüler plan çizimi üzerindeki net değerlerdir; brüt metrekare ve teknik detaylar için onaylı proje dosyasının incelenmesi önerilir."
+      ]
+    },
+    {
+      "slug": "a-blok-normal-kat-orta",
+      "file": "a-blok-normal-kat-orta-tip",
+      "block": "A",
+      "floor": "Normal Kat",
+      "position": "Orta Tip",
+      "rooms": "3+1",
+      "roomLayout": "3+1 (3 oda + 1 salon, giyinme odalı)",
+      "title": "A Blok Normal Kat Orta 3+1 Daire Planı",
+      "lead": "Elys Prime A Blok normal kat orta konumunda bulunan, 91,54 m² net alana ve ebeveyn süitine sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik A Blok 3+1 Orta Daire Planı",
+      "seoDescription": "Elys Prime A Blok normal kat 3+1 orta daire planı: 91,54 m² net alan, 24,12 m² salon, 14,02 m² ebeveyn odası, giyinme odası ve ebeveyn banyosu.",
+      "features": [
+        "A Blok",
+        "3+1 daire tipi",
+        "Normal kat",
+        "Orta konum",
+        "Tek cepheli, korunaklı plan",
+        "91,54 m² net alan",
+        "24,12 m² salon",
+        "Giyinme odalı ebeveyn süiti (14,02 + 3,46 + 3,35 m²)",
+        "10,00 m² açık mutfak",
+        "2,83 m² çamaşır odası",
+        "4,72 m² balkon"
+      ],
+      "areas": {
+        "netArea": 91.54,
+        "grossArea": null,
+        "balconyArea": 4.72,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 96.26
+      },
+      "roomAreas": {
+        "livingRoomArea": 24.12,
+        "kitchenArea": 10,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 14.02,
+        "bedroomAreas": [
+          9,
+          8.5
+        ],
+        "hallArea": 11.72,
+        "bathroomArea": 4.54,
+        "ensuiteBathroomArea": 3.35,
+        "dressingRoomArea": 3.46,
+        "laundryArea": 2.83,
+        "balconyArea": 4.72,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 24.12,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 10,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.02,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.5,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 11.72,
+          "level": null
+        },
+        {
+          "label": "GİYİNME",
+          "name": "Giyinme Odası",
+          "area": 3.46,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.54,
+          "level": null
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.35,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR",
+          "name": "Çamaşır Odası",
+          "area": 2.83,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 4.72,
+          "level": null
+        }
+      ],
+      "description": [
+        "A Blok normal kat orta tipi, iki köşe daire arasında konumlanan 3+1 plandır. Plan üzerindeki kapalı alanların toplamı 91,54 m², balkonla birlikte 96,26 m²'dir ve bu değer A Blok normal kat tipleri arasındaki en geniş net alandır.",
+        "Salon 24,12 m² ile mutfağın açık devamı olarak kurgulanmış; 10,00 m² mutfak, 4,72 m² balkonla doğrudan ilişkilidir. Planın ayırt edici yanı ebeveyn bölümüdür: 14,02 m² yatak odası, 3,46 m² giyinme odası ve 3,35 m² ebeveyn banyosu ile bütünleşik bir süit oluşturur. Diğer iki oda 9,00 m² ve 8,50 m²'dir.",
+        "11,72 m² antre, yaşam alanı ile yatak bölümü arasında bir dağıtım hacmi olarak çalışır; 2,83 m² çamaşır odası ve 4,54 m² ortak WC-banyo bu aksın üzerindedir. Tek cepheli yerleşim, duvar yüzeylerinin bütünlüklü kalması sayesinde mobilya yerleşiminde serbestlik sağlar. Brüt metrekare bilgisi için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "a-blok-cati-kati-kose",
+      "file": "a-blok-cati-kat-kose-tip",
+      "block": "A",
+      "floor": "Çatı Katı",
+      "position": "Köşe Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "A Blok Çatı Katı Köşe 2+1 Daire Planı",
+      "lead": "Elys Prime A Blok çatı katı köşe konumunda bulunan, 64,39 m² net alana ve 8,76 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik A Blok Çatı Katı 2+1 Köşe Planı",
+      "seoDescription": "Elys Prime A Blok çatı katı 2+1 köşe daire planı: 64,39 m² net alan, 20,00 m² salon, 13,88 m² ebeveyn odası ve 8,76 m² teras. Plan ölçülerini inceleyin.",
+      "features": [
+        "A Blok",
+        "2+1 daire tipi",
+        "Çatı katı",
+        "Köşe konum",
+        "Üst komşusu yok",
+        "64,39 m² net alan",
+        "8,76 m² teras",
+        "20,00 m² salon",
+        "13,88 m² ebeveyn yatak odası",
+        "9,50 m² mutfak",
+        "Çamaşır odası"
+      ],
+      "areas": {
+        "netArea": 64.39,
+        "grossArea": null,
+        "balconyArea": null,
+        "terraceArea": 8.76,
+        "netAreaWithOutdoor": 73.15
+      },
+      "roomAreas": {
+        "livingRoomArea": 20,
+        "kitchenArea": 9.5,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 13.88,
+        "bedroomAreas": [
+          8.65
+        ],
+        "hallArea": 7.18,
+        "bathroomArea": 4.38,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": 0.8,
+        "balconyArea": null,
+        "terraceArea": 8.76
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 20,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 9.5,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 13.88,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.65,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 7.18,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.38,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.8,
+          "level": null
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 8.76,
+          "level": null
+        }
+      ],
+      "description": [
+        "A Blok çatı katı köşe tipi, bloğun en üst kotunda ve dış köşesinde konumlanan 2+1 plandır. Kapalı alan toplamı 64,39 m², 8,76 m² terasla birlikte 73,15 m² olarak okunmaktadır.",
+        "Salon 20,00 m² ile terasa açılan cephede yer alır; 9,50 m² mutfak salonun devamında, bağımsız bir hacim olarak çözülmüştür. Yatak bölümünde 13,88 m² ebeveyn yatak odası ve 8,65 m² ikinci oda bulunur; her ikisi de 7,18 m² antre üzerinden ulaşılır ve 4,38 m² WC-banyoyu paylaşır.",
+        "Çatı katı olması nedeniyle dairenin üst komşusu bulunmaz; köşe yerleşimi ile birleştiğinde hem sessizlik hem de iki cepheli manzara potansiyeli sunar. 8,76 m² teras, plandaki en büyük dış mekân kazanımıdır. Brüt alan ve teknik detaylar için onaylı proje dosyası esas alınmalıdır."
+      ]
+    },
+    {
+      "slug": "a-blok-cati-kati-orta",
+      "file": "a-blok-cati-kat-orta-tip",
+      "block": "A",
+      "floor": "Çatı Katı",
+      "position": "Orta Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "A Blok Çatı Katı Orta 2+1 Daire Planı",
+      "lead": "Elys Prime A Blok çatı katı orta konumunda bulunan, 65,82 m² net alana ve 9,25 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik A Blok Çatı Katı 2+1 Orta Planı",
+      "seoDescription": "Elys Prime A Blok çatı katı 2+1 orta daire planı: 65,82 m² net alan, 19,00 m² salon, 13,15 m² ebeveyn odası, 6,08 m² banyo ve 9,25 m² teras.",
+      "features": [
+        "A Blok",
+        "2+1 daire tipi",
+        "Çatı katı",
+        "Orta konum",
+        "Üst komşusu yok",
+        "65,82 m² net alan",
+        "9,25 m² teras",
+        "19,00 m² salon",
+        "13,15 m² ebeveyn yatak odası",
+        "6,08 m² geniş banyo",
+        "11,39 m² antre"
+      ],
+      "areas": {
+        "netArea": 65.82,
+        "grossArea": null,
+        "balconyArea": null,
+        "terraceArea": 9.25,
+        "netAreaWithOutdoor": 75.07
+      },
+      "roomAreas": {
+        "livingRoomArea": 19,
+        "kitchenArea": 8.15,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 13.15,
+        "bedroomAreas": [
+          8.05
+        ],
+        "hallArea": 11.39,
+        "bathroomArea": 6.08,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": null,
+        "terraceArea": 9.25
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 19,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 8.15,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 13.15,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.05,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 11.39,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 6.08,
+          "level": null
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 9.25,
+          "level": null
+        }
+      ],
+      "description": [
+        "A Blok çatı katı orta tipi, bloğun en üst kotunda iki köşe daire arasında konumlanan 2+1 plandır. Kapalı alan toplamı 65,82 m², 9,25 m² terasla birlikte 75,07 m²'dir.",
+        "19,00 m² salon planın bir ucunda, 13,15 m² ebeveyn yatak odası diğer ucunda konumlanır; ikisi arasında 8,15 m² mutfak ve 8,05 m² ikinci oda yer alır. Mutfak doğrudan 9,25 m² terasa açılır. 6,08 m² WC-banyo, projedeki 2+1 tipler arasındaki en geniş ıslak hacimlerden biridir.",
+        "11,39 m² antre, dairenin tüm hacimlerini tek bir dağıtım aksı üzerinde toplar ve odalar arasında mahremiyet sağlar. Üst komşusu olmayan çatı katı konumu sessiz bir yaşam sunar. Buradaki değerler plan çizimi üzerindeki net ölçülerdir; brüt alan için onaylı proje dosyasına başvurulmalıdır."
+      ]
+    },
+    {
+      "slug": "b-blok-normal-kat-kose",
+      "file": "b-blok-normal-kat-kose-tip",
+      "block": "B",
+      "floor": "Normal Kat",
+      "position": "Köşe Tip",
+      "rooms": "3+1",
+      "roomLayout": "3+1 (3 oda + 1 salon)",
+      "title": "B Blok Normal Kat Köşe 3+1 Daire Planı",
+      "lead": "Elys Prime B Blok normal kat köşe konumunda bulunan, 81,94 m² net alana ve ebeveyn banyosuna sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik B Blok 3+1 Köşe Daire Planı",
+      "seoDescription": "Elys Prime B Blok normal kat 3+1 köşe daire planı: 81,94 m² net alan, 22,40 m² salon, 13,34 m² ebeveyn odası, 11,46 m² mutfak ve ebeveyn banyosu.",
+      "features": [
+        "B Blok",
+        "3+1 daire tipi",
+        "Normal kat",
+        "Köşe konum",
+        "İki cepheli plan",
+        "81,94 m² net alan",
+        "22,40 m² salon",
+        "13,34 m² ebeveyn yatak odası",
+        "11,46 m² kapalı mutfak",
+        "Ebeveyn banyosu (3,81 m²)",
+        "Çamaşır odası",
+        "3,46 m² balkon"
+      ],
+      "areas": {
+        "netArea": 81.94,
+        "grossArea": null,
+        "balconyArea": 3.46,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 85.4
+      },
+      "roomAreas": {
+        "livingRoomArea": 22.4,
+        "kitchenArea": 11.46,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 13.34,
+        "bedroomAreas": [
+          9,
+          8.81
+        ],
+        "hallArea": 8.22,
+        "bathroomArea": 4.1,
+        "ensuiteBathroomArea": 3.81,
+        "dressingRoomArea": null,
+        "laundryArea": 0.8,
+        "balconyArea": 3.46,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 22.4,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 11.46,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 13.34,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.81,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.22,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.1,
+          "level": null
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.81,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.8,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 3.46,
+          "level": null
+        }
+      ],
+      "description": [
+        "B Blok normal kat köşe tipi, bloğun dış köşesinde konumlanan 3+1 plandır. Kapalı alan toplamı 81,94 m², 3,46 m² balkonla birlikte 85,40 m² olarak okunmaktadır.",
+        "22,40 m² salon ve 11,46 m² kapalı mutfak planın bir kanadını oluşturur; mutfak balkona doğrudan açılır. Yatak bölümü 13,34 m² ebeveyn yatak odası ile 9,00 m² ve 8,81 m² iki odadan oluşur. Ebeveyn odasına ait 3,81 m² banyo, 4,10 m² ortak WC-banyodan bağımsızdır.",
+        "8,22 m² antre, yaşam alanı ile odalar arasında geçiş kurar ve 0,80 m² çamaşır odası bu aksın üzerinde çözülür. Köşe yerleşimi salon ve odaların farklı cephelerden ışık almasını mümkün kılar. Plan üzerindeki ölçüler nettir; brüt alan ve teknik detaylar onaylı proje dosyasından teyit edilmelidir."
+      ]
+    },
+    {
+      "slug": "b-blok-normal-kat-orta",
+      "file": "b-blok-normal-kat-orta-tip",
+      "block": "B",
+      "floor": "Normal Kat",
+      "position": "Orta Tip",
+      "rooms": "3+1",
+      "roomLayout": "3+1 (3 oda + 1 salon)",
+      "title": "B Blok Normal Kat Orta 3+1 Daire Planı",
+      "lead": "Elys Prime B Blok normal kat orta konumunda bulunan, 82,86 m² net alana ve 14,32 m² ebeveyn odasına sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik B Blok 3+1 Orta Daire Planı",
+      "seoDescription": "Elys Prime B Blok normal kat 3+1 orta daire planı: 82,86 m² net alan, 22,50 m² salon, 14,32 m² ebeveyn odası, açık mutfak ve 4,44 m² balkon.",
+      "features": [
+        "B Blok",
+        "3+1 daire tipi",
+        "Normal kat",
+        "Orta konum",
+        "Tek cepheli, korunaklı plan",
+        "82,86 m² net alan",
+        "22,50 m² salon",
+        "14,32 m² ebeveyn yatak odası",
+        "10,00 m² açık mutfak",
+        "Ebeveyn banyosu (3,25 m²)",
+        "4,44 m² balkon"
+      ],
+      "areas": {
+        "netArea": 82.86,
+        "grossArea": null,
+        "balconyArea": 4.44,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 87.3
+      },
+      "roomAreas": {
+        "livingRoomArea": 22.5,
+        "kitchenArea": 10,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 14.32,
+        "bedroomAreas": [
+          9,
+          8.06
+        ],
+        "hallArea": 10.04,
+        "bathroomArea": 4.24,
+        "ensuiteBathroomArea": 3.25,
+        "dressingRoomArea": null,
+        "laundryArea": 1.45,
+        "balconyArea": 4.44,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 22.5,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 10,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.32,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.06,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 10.04,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.24,
+          "level": null
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.25,
+          "level": null
+        },
+        {
+          "label": "ÇAM.YERİ",
+          "name": "Çamaşır Yeri",
+          "area": 1.45,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 4.44,
+          "level": null
+        }
+      ],
+      "description": [
+        "B Blok normal kat orta tipi, iki köşe daire arasında konumlanan 3+1 plandır. Kapalı alan toplamı 82,86 m², 4,44 m² balkonla birlikte 87,30 m²'dir.",
+        "Salon 22,50 m² ile 10,00 m² açık mutfağın devamında kurgulanmış; mutfak 4,44 m² balkona açılıyor. Yatak bölümünde 14,32 m² ebeveyn yatak odası ile 9,00 m² ve 8,06 m² iki oda bulunuyor. Ebeveyn odasının kendi 3,25 m² banyosu, 4,24 m² ortak WC-banyodan ayrı çalışıyor.",
+        "10,04 m² antre, planın üç odasını ve ıslak hacimlerini tek bir aks üzerinde toplar; 1,45 m² çamaşır yeri de bu aksın üzerindedir. Orta tip yerleşim, komşu dairelerle paylaşılan duvarlar sayesinde ısı ve ses yalıtımı açısından avantaj sağlar. Brüt metrekare için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "b-blok-dubleks-kose",
+      "file": "b-blok-dubleks-kose-tip",
+      "block": "B",
+      "floor": "Dubleks",
+      "position": "Köşe Tip",
+      "rooms": "Dubleks",
+      "roomLayout": "4+2 Dubleks (4 oda + 2 yaşam alanı, iki kat)",
+      "title": "B Blok Dubleks Köşe 4+2 Daire Planı",
+      "lead": "Elys Prime B Blok köşe konumundaki dubleks daire, iki kat boyunca toplam 137,70 m² net alan ve 4 oda sunar; plan detaylarını inceleyin.",
+      "seoTitle": "Pendik B Blok Köşe Dubleks Daire Planı",
+      "seoDescription": "Elys Prime B Blok köşe dubleks daire planı: 137,70 m² net alan, 26,40 m² salon, üst katta 23,32 m² salon+mutfak, 4 oda, teras ve balkon.",
+      "features": [
+        "B Blok",
+        "Dubleks daire tipi",
+        "Köşe konum",
+        "İki katlı, iç merdivenli plan",
+        "İki cepheli plan",
+        "137,70 m² toplam net alan",
+        "Giriş katında 26,40 m² salon",
+        "Üst katta 23,32 m² salon + mutfak",
+        "Toplam 4 oda",
+        "İki ayrı WC-banyo + ebeveyn banyosu",
+        "9,25 m² teras ve 3,46 m² balkon"
+      ],
+      "areas": {
+        "netArea": 137.7,
+        "grossArea": null,
+        "balconyArea": 3.46,
+        "terraceArea": 9.25,
+        "netAreaWithOutdoor": 150.41
+      },
+      "floorAreas": {
+        "entranceFloorNet": 77.77,
+        "upperFloorNet": 59.93
+      },
+      "roomAreas": {
+        "livingRoomArea": 26.4,
+        "kitchenArea": 11.33,
+        "livingKitchenArea": 23.32,
+        "masterBedroomArea": 15.55,
+        "bedroomAreas": [
+          14.33,
+          9.9,
+          9.8
+        ],
+        "hallArea": 13.89,
+        "bathroomArea": 4.1,
+        "ensuiteBathroomArea": 3.81,
+        "upperFloorBathroomArea": 5.27,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": 3.46,
+        "terraceArea": 9.25
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 26.4,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 11.33,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Yatak Odası",
+          "area": 14.33,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.8,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.1,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.81,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": null,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 3.46,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "SALON+MUTFAK",
+          "name": "Salon + Mutfak",
+          "area": 23.32,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 15.55,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.9,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 5.89,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 5.27,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 9.25,
+          "level": "Üst Kat"
+        }
+      ],
+      "description": [
+        "B Blok dubleks köşe tipi, iç merdivenle bağlanan iki kattan oluşan ve bloğun dış köşesinde konumlanan plandır. Giriş katı 77,77 m², üst kat 59,93 m² net alana sahiptir; toplam kapalı alan 137,70 m², balkon ve terasla birlikte 150,41 m²'dir.",
+        "Giriş katı ana yaşam katıdır: 26,40 m² salon, 11,33 m² kapalı mutfak ve 3,46 m² balkon aynı kanatta toplanır; 14,33 m² yatak odası ile 9,80 m² oda, 8,00 m² antre üzerinden ayrılır ve 4,10 m² WC-banyo ile 3,81 m² ebeveyn banyosunu kullanır.",
+        "Üst kat bağımsız bir yaşam katı gibi kurgulanmıştır: 23,32 m² salon + mutfak, 15,55 m² ebeveyn yatak odası, 9,90 m² oda, 5,89 m² antre ve 5,27 m² WC-banyo bulunur; 9,25 m² teras bu kata aittir. Bu kurgu, kalabalık haneler veya iki nesilli kullanım için uygundur. Giriş katındaki çamaşır odası plan üzerinde ölçülendirilmemiştir; brüt alan ve tüm teknik detaylar için onaylı proje dosyası esas alınmalıdır."
+      ]
+    },
+    {
+      "slug": "b-blok-dubleks-orta",
+      "file": "b-blok-dubleks-orta-tip",
+      "block": "B",
+      "floor": "Dubleks",
+      "position": "Orta Tip",
+      "rooms": "Dubleks",
+      "roomLayout": "4+2 Dubleks (4 oda + 2 yaşam alanı, iki kat)",
+      "title": "B Blok Dubleks Orta 4+2 Daire Planı",
+      "lead": "Elys Prime B Blok orta konumdaki dubleks daire, iki kat boyunca toplam 139,47 m² net alan ve 4 oda sunar; plan detaylarını inceleyin.",
+      "seoTitle": "Pendik B Blok Orta Dubleks Daire Planı",
+      "seoDescription": "Elys Prime B Blok orta dubleks daire planı: 139,47 m² net alan, 23,50 m² salon, üst katta 22,35 m² salon+mutfak, 4 oda, teras ve balkon.",
+      "features": [
+        "B Blok",
+        "Dubleks daire tipi",
+        "Orta konum",
+        "İki katlı, iç merdivenli plan",
+        "139,47 m² toplam net alan",
+        "Giriş katında 23,50 m² salon ve 13,30 m² mutfak",
+        "Üst katta 22,35 m² salon + mutfak",
+        "Toplam 4 oda",
+        "İki ayrı WC-banyo + ebeveyn banyosu",
+        "7,14 m² teras ve 5,18 m² balkon"
+      ],
+      "areas": {
+        "netArea": 139.47,
+        "grossArea": null,
+        "balconyArea": 5.18,
+        "terraceArea": 7.14,
+        "netAreaWithOutdoor": 151.79
+      },
+      "floorAreas": {
+        "entranceFloorNet": 81.09,
+        "upperFloorNet": 58.38
+      },
+      "roomAreas": {
+        "livingRoomArea": 23.5,
+        "kitchenArea": 13.3,
+        "livingKitchenArea": 22.35,
+        "masterBedroomArea": 14.85,
+        "bedroomAreas": [
+          14.06,
+          8.82,
+          8.07
+        ],
+        "hallArea": 19.82,
+        "bathroomArea": 4.24,
+        "ensuiteBathroomArea": 3.25,
+        "upperFloorBathroomArea": 5.76,
+        "dressingRoomArea": null,
+        "laundryArea": 1.45,
+        "balconyArea": 5.18,
+        "terraceArea": 7.14
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 23.5,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 13.3,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.85,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.82,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 11.68,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.24,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "EBV.",
+          "name": "Ebeveyn Banyosu",
+          "area": 3.25,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ÇAM.YERİ",
+          "name": "Çamaşır Yeri",
+          "area": 1.45,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 5.18,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "SALON+MUTFAK",
+          "name": "Salon + Mutfak",
+          "area": 22.35,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Yatak Odası",
+          "area": 14.06,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.07,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.14,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 5.76,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 7.14,
+          "level": "Üst Kat"
+        }
+      ],
+      "description": [
+        "B Blok dubleks orta tipi, iç merdivenle bağlanan iki kattan oluşan plandır. Giriş katı 81,09 m², üst kat 58,38 m² net alana sahiptir; toplam kapalı alan 139,47 m², balkon ve terasla birlikte 151,79 m²'dir. Bu değer projedeki en geniş net alanlardan biridir.",
+        "Giriş katında 23,50 m² salon, 13,30 m² mutfak ve 5,18 m² balkon aynı kanatta çözülmüştür. 14,85 m² ebeveyn yatak odası ve 8,82 m² oda, 11,68 m² antre üzerinden ayrılır; 4,24 m² WC-banyo, 3,25 m² ebeveyn banyosu ve 1,45 m² çamaşır yeri bu katta yer alır.",
+        "Üst kat kendi başına bir yaşam katıdır: 22,35 m² salon + mutfak, 14,06 m² yatak odası, 8,07 m² oda, 8,14 m² antre, 5,76 m² WC-banyo ve 7,14 m² teras içerir. Orta tip yerleşim, komşu dairelerle paylaşılan duvarlar sayesinde daha korunaklı bir plan sunar. Brüt metrekare ve teknik detaylar için onaylı proje dosyasına başvurulmalıdır."
+      ]
+    },
+    {
+      "slug": "c-blok-normal-kat-kose",
+      "file": "c-blok-normal-kat-kose-tip",
+      "block": "C",
+      "floor": "Normal Kat",
+      "position": "Köşe Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "C Blok Normal Kat Köşe 2+1 Daire Planı",
+      "lead": "Elys Prime C Blok normal kat köşe konumunda bulunan, 70,41 m² net alana ve 22,50 m² salona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik C Blok 2+1 Köşe Daire Planı",
+      "seoDescription": "Elys Prime C Blok normal kat 2+1 köşe daire planı: 70,41 m² net alan, 22,50 m² salon, 13,29 m² ebeveyn odası, 10,45 m² mutfak ve 3,92 m² balkon.",
+      "features": [
+        "C Blok",
+        "2+1 daire tipi",
+        "Normal kat",
+        "Köşe konum",
+        "İki cepheli plan",
+        "70,41 m² net alan",
+        "22,50 m² salon",
+        "13,29 m² ebeveyn yatak odası",
+        "10,45 m² mutfak",
+        "9,70 m² antre",
+        "3,92 m² balkon"
+      ],
+      "areas": {
+        "netArea": 70.41,
+        "grossArea": null,
+        "balconyArea": 3.92,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 74.33
+      },
+      "roomAreas": {
+        "livingRoomArea": 22.5,
+        "kitchenArea": 10.45,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 13.29,
+        "bedroomAreas": [
+          9.75
+        ],
+        "hallArea": 9.7,
+        "bathroomArea": 4.72,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": 3.92,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 22.5,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 10.45,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 13.29,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.75,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 9.7,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.72,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 3.92,
+          "level": null
+        }
+      ],
+      "description": [
+        "C Blok normal kat köşe tipi, bloğun dış köşesinde konumlanan 2+1 plandır. Kapalı alan toplamı 70,41 m², 3,92 m² balkonla birlikte 74,33 m² olarak okunmaktadır.",
+        "Plan, salon ve odaların tek bir hat üzerinde dizildiği sade bir şemaya sahiptir: 22,50 m² salon, 9,75 m² oda ve 13,29 m² ebeveyn yatak odası aynı cepheye bakar. 10,45 m² mutfak salonun altında konumlanır ve 3,92 m² balkonla ilişkilidir.",
+        "9,70 m² antre, daire girişinden odalara uzanan tek dağıtım aksıdır ve 4,72 m² WC-banyo bu aksın üzerindedir. Köşe konum, iki cepheden ışık alma potansiyeli sunar. Plan üzerindeki değerler net ölçülerdir; brüt alan ve teknik detaylar için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "c-blok-normal-kat-orta",
+      "file": "c-blok-normal-kat-orta-tip",
+      "block": "C",
+      "floor": "Normal Kat",
+      "position": "Orta Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "C Blok Normal Kat Orta 2+1 Daire Planı",
+      "lead": "Elys Prime C Blok normal kat orta konumunda bulunan, 69,85 m² net alana ve 14,25 m² ebeveyn odasına sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik C Blok 2+1 Orta Daire Planı",
+      "seoDescription": "Elys Prime C Blok normal kat 2+1 orta daire planı: 69,85 m² net alan, 22,16 m² salon, 14,25 m² ebeveyn odası, 10,20 m² mutfak ve 4,67 m² balkon.",
+      "features": [
+        "C Blok",
+        "2+1 daire tipi",
+        "Normal kat",
+        "Orta konum",
+        "Tek cepheli, korunaklı plan",
+        "69,85 m² net alan",
+        "22,16 m² salon",
+        "14,25 m² ebeveyn yatak odası",
+        "10,20 m² açık mutfak",
+        "Girişte ayrı WC-banyo",
+        "4,67 m² balkon"
+      ],
+      "areas": {
+        "netArea": 69.85,
+        "grossArea": null,
+        "balconyArea": 4.67,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 74.52
+      },
+      "roomAreas": {
+        "livingRoomArea": 22.16,
+        "kitchenArea": 10.2,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 14.25,
+        "bedroomAreas": [
+          9.26
+        ],
+        "hallArea": 9.68,
+        "bathroomArea": 4.3,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": 4.67,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 22.16,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 10.2,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.25,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.26,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 9.68,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.3,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 4.67,
+          "level": null
+        }
+      ],
+      "description": [
+        "C Blok normal kat orta tipi, iki köşe daire arasında konumlanan 2+1 plandır. Kapalı alan toplamı 69,85 m², 4,67 m² balkonla birlikte 74,52 m²'dir.",
+        "22,16 m² salon ve 10,20 m² mutfak planın merkezinde birbirine açılırken, 14,25 m² ebeveyn yatak odası ve 9,26 m² oda planın diğer ucunda konumlanır. 4,67 m² balkon mutfak ve salon hattına bağlıdır.",
+        "Dairenin 4,30 m² WC-banyosu, giriş kapısına yakın ayrı bir nişte çözülmüştür; bu kurgu ıslak hacmi yaşam alanından uzaklaştırır. 9,68 m² antre tüm hacimleri birbirine bağlar. Tek cepheli orta tip yerleşim, komşu dairelerle paylaşılan duvarlar sayesinde yalıtım avantajı sağlar. Brüt alan için onaylı proje dosyası esas alınmalıdır."
+      ]
+    },
+    {
+      "slug": "c-blok-cati-kati-kose",
+      "file": "c-blok-cati-kat-kose-tip",
+      "block": "C",
+      "floor": "Çatı Katı",
+      "position": "Köşe Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + çatı arası piyesi ile birleşik mutfak)",
+      "title": "C Blok Çatı Katı Köşe 2+1 Daire Planı",
+      "lead": "Elys Prime C Blok çatı katı köşe konumunda bulunan, 52,79 m² net alana ve 18,06 m² birleşik yaşam alanına sahip 2+1 daire planını inceleyin.",
+      "seoTitle": "Pendik C Blok Çatı Katı 2+1 Köşe Planı",
+      "seoDescription": "Elys Prime C Blok çatı katı 2+1 köşe daire planı: 52,79 m² net alan, 18,06 m² salon + mutfak, 11,25 ve 9,84 m² odalar, 7,00 m² teras.",
+      "features": [
+        "C Blok",
+        "2+1 daire tipi",
+        "Çatı katı",
+        "Köşe konum",
+        "Üst komşusu yok",
+        "52,79 m² net alan",
+        "7,00 m² teras",
+        "18,06 m² birleşik yaşam alanı + mutfak",
+        "11,25 m² ve 9,84 m² iki oda",
+        "8,92 m² antre",
+        "Kompakt plan kurgusu"
+      ],
+      "areas": {
+        "netArea": 52.79,
+        "grossArea": null,
+        "balconyArea": null,
+        "terraceArea": 7,
+        "netAreaWithOutdoor": 59.79
+      },
+      "roomAreas": {
+        "livingRoomArea": null,
+        "kitchenArea": null,
+        "livingKitchenArea": 18.06,
+        "masterBedroomArea": 11.25,
+        "bedroomAreas": [
+          9.84
+        ],
+        "hallArea": 8.92,
+        "bathroomArea": 4.72,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": null,
+        "terraceArea": 7
+      },
+      "roomList": [
+        {
+          "label": "Ç.A.P+ MUTFAK",
+          "name": "Çatı Arası Piyesi + Mutfak",
+          "area": 18.06,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 11.25,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 9.84,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.92,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.72,
+          "level": null
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 7,
+          "level": null
+        }
+      ],
+      "description": [
+        "C Blok çatı katı köşe tipi, bloğun en üst kotunda ve dış köşesinde konumlanan 2+1 plandır. Kapalı alan toplamı 52,79 m², 7,00 m² terasla birlikte 59,79 m²'dir; bu, projedeki en kompakt plan tiplerinden biridir.",
+        "Planın merkezinde 18,06 m² çatı arası piyesi ve mutfağın birleştiği tek hacimli yaşam alanı yer alır; bu kurgu, ayrı bir salon duvarı olmadan daha ferah bir kullanım sağlar. İki oda 11,25 m² ve 9,84 m² ölçülerindedir ve 8,92 m² antre üzerinden ayrılır.",
+        "4,72 m² WC-banyo antrenin yanında çözülmüştür. Çatı katı konumu üst komşu olmaması anlamına gelir; köşe yerleşim ise birden fazla cepheden ışık alma potansiyeli sunar. 7,00 m² teras yaşam alanının doğal uzantısıdır. Brüt metrekare ve teknik detaylar için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "c-blok-cati-kati-orta",
+      "file": "c-blok-cati-kat-orta-tip",
+      "block": "C",
+      "floor": "Çatı Katı",
+      "position": "Orta Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + çatı arası piyesi ile birleşik mutfak)",
+      "title": "C Blok Çatı Katı Orta 2+1 Daire Planı",
+      "lead": "Elys Prime C Blok çatı katı orta konumunda bulunan, 51,05 m² net alana ve 9,25 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik C Blok Çatı Katı 2+1 Orta Planı",
+      "seoDescription": "Elys Prime C Blok çatı katı 2+1 orta daire planı: 51,05 m² net alan, 18,36 m² salon + mutfak, 11,03 ve 8,00 m² odalar, 9,25 m² teras.",
+      "features": [
+        "C Blok",
+        "2+1 daire tipi",
+        "Çatı katı",
+        "Orta konum",
+        "Üst komşusu yok",
+        "51,05 m² net alan",
+        "9,25 m² teras",
+        "18,36 m² birleşik yaşam alanı + mutfak",
+        "11,03 m² ve 8,00 m² iki oda",
+        "9,31 m² antre",
+        "Kompakt plan kurgusu"
+      ],
+      "areas": {
+        "netArea": 51.05,
+        "grossArea": null,
+        "balconyArea": null,
+        "terraceArea": 9.25,
+        "netAreaWithOutdoor": 60.3
+      },
+      "roomAreas": {
+        "livingRoomArea": null,
+        "kitchenArea": null,
+        "livingKitchenArea": 18.36,
+        "masterBedroomArea": 11.03,
+        "bedroomAreas": [
+          8
+        ],
+        "hallArea": 9.31,
+        "bathroomArea": 4.35,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": null,
+        "balconyArea": null,
+        "terraceArea": 9.25
+      },
+      "roomList": [
+        {
+          "label": "Ç.A.P+ MUTFAK",
+          "name": "Çatı Arası Piyesi + Mutfak",
+          "area": 18.36,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 11.03,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 9.31,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.35,
+          "level": null
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 9.25,
+          "level": null
+        }
+      ],
+      "description": [
+        "C Blok çatı katı orta tipi, bloğun en üst kotunda iki köşe daire arasında konumlanan 2+1 plandır. Kapalı alan toplamı 51,05 m², 9,25 m² terasla birlikte 60,30 m²'dir.",
+        "18,36 m² çatı arası piyesi ve mutfak tek bir yaşam hacmi olarak çözülmüş, doğrudan 9,25 m² terasa açılmıştır. Odalar 11,03 m² ve 8,00 m² ölçülerindedir ve planın karşı ucunda konumlanır.",
+        "9,31 m² antre, giriş kapısından yaşam alanına ve odalara uzanan aksı oluşturur; 4,35 m² WC-banyo bu aksın üzerindedir. Orta tip yerleşim daha korunaklı bir plan sunarken, çatı katı olması üst komşu bulunmaması avantajını getirir. Bu sayfadaki ölçüler plan çizimi üzerindeki net değerlerdir; brüt alan için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "d-blok-normal-kat-kose",
+      "file": "d-blok-normal-kat-kose-tip",
+      "block": "D",
+      "floor": "Normal Kat",
+      "position": "Köşe Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "D Blok Normal Kat Köşe 2+1 Daire Planı",
+      "lead": "Elys Prime D Blok normal kat köşe konumunda bulunan, 64,49 m² net alana ve 20,10 m² salona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik D Blok 2+1 Köşe Daire Planı",
+      "seoDescription": "Elys Prime D Blok normal kat 2+1 köşe daire planı: 64,49 m² net alan, 20,10 m² salon, 12,09 m² ebeveyn odası, 9,87 m² mutfak ve 3,15 m² balkon.",
+      "features": [
+        "D Blok",
+        "2+1 daire tipi",
+        "Normal kat",
+        "Köşe konum",
+        "İki cepheli plan",
+        "64,49 m² net alan",
+        "20,10 m² salon",
+        "12,09 m² ebeveyn yatak odası",
+        "9,87 m² mutfak",
+        "Ayrı çamaşır odası",
+        "3,15 m² balkon"
+      ],
+      "areas": {
+        "netArea": 64.49,
+        "grossArea": null,
+        "balconyArea": 3.15,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 67.64
+      },
+      "roomAreas": {
+        "livingRoomArea": 20.1,
+        "kitchenArea": 9.87,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 12.09,
+        "bedroomAreas": [
+          8.78
+        ],
+        "hallArea": 8.9,
+        "bathroomArea": 4.25,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": 0.5,
+        "balconyArea": 3.15,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 20.1,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 9.87,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 12.09,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.78,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.9,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.25,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 3.15,
+          "level": null
+        }
+      ],
+      "description": [
+        "D Blok normal kat köşe tipi, bloğun dış köşesinde konumlanan 2+1 plandır. Kapalı alan toplamı 64,49 m², 3,15 m² balkonla birlikte 67,64 m² olarak okunmaktadır.",
+        "20,10 m² salon ve 9,87 m² mutfak planın bir kanadını oluşturur; mutfak balkona açılır. 12,09 m² ebeveyn yatak odası ve 8,78 m² oda, 8,90 m² antre üzerinden ayrılır ve 4,25 m² WC-banyoyu paylaşır.",
+        "0,50 m² çamaşır odası ıslak hacim grubunun içinde ayrı bir niş olarak çözülmüştür. Köşe yerleşim, salon ve odaların farklı cephelerden ışık alma potansiyeli taşımasını sağlar. Ölçüler plan çizimi üzerindeki net değerlerdir; brüt alan ve teknik detaylar için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "d-blok-normal-kat-orta",
+      "file": "d-blok-normal-kat-orta-tip",
+      "block": "D",
+      "floor": "Normal Kat",
+      "position": "Orta Tip",
+      "rooms": "2+1",
+      "roomLayout": "2+1 (2 oda + 1 salon)",
+      "title": "D Blok Normal Kat Orta 2+1 Daire Planı",
+      "lead": "Elys Prime D Blok normal kat orta konumunda bulunan, 63,19 m² net alana ve 4,67 m² balkona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik D Blok 2+1 Orta Daire Planı",
+      "seoDescription": "Elys Prime D Blok normal kat 2+1 orta daire planı: 63,19 m² net alan, 20,19 m² salon, 12,06 m² ebeveyn odası, açık mutfak ve 4,67 m² balkon.",
+      "features": [
+        "D Blok",
+        "2+1 daire tipi",
+        "Normal kat",
+        "Orta konum",
+        "Tek cepheli, korunaklı plan",
+        "63,19 m² net alan",
+        "20,19 m² salon",
+        "12,06 m² ebeveyn yatak odası",
+        "9,03 m² açık mutfak",
+        "Ayrı çamaşır odası",
+        "4,67 m² balkon"
+      ],
+      "areas": {
+        "netArea": 63.19,
+        "grossArea": null,
+        "balconyArea": 4.67,
+        "terraceArea": null,
+        "netAreaWithOutdoor": 67.86
+      },
+      "roomAreas": {
+        "livingRoomArea": 20.19,
+        "kitchenArea": 9.03,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 12.06,
+        "bedroomAreas": [
+          8.09
+        ],
+        "hallArea": 9.22,
+        "bathroomArea": 4.1,
+        "ensuiteBathroomArea": null,
+        "dressingRoomArea": null,
+        "laundryArea": 0.5,
+        "balconyArea": 4.67,
+        "terraceArea": null
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 20.19,
+          "level": null
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 9.03,
+          "level": null
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 12.06,
+          "level": null
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.09,
+          "level": null
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 9.22,
+          "level": null
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.1,
+          "level": null
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": null
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 4.67,
+          "level": null
+        }
+      ],
+      "description": [
+        "D Blok normal kat orta tipi, iki köşe daire arasında konumlanan 2+1 plandır. Kapalı alan toplamı 63,19 m², 4,67 m² balkonla birlikte 67,86 m²'dir.",
+        "20,19 m² salon ve 9,03 m² mutfak birbirine açık biçimde kurgulanmış, 4,67 m² balkon bu hattın ortasında konumlanmıştır. 12,06 m² ebeveyn yatak odası ile 8,09 m² oda planın diğer ucunda yer alır.",
+        "9,22 m² antre, daire girişinden başlayarak tüm hacimleri bağlayan dağıtım aksıdır; 4,10 m² WC-banyo ve 0,50 m² çamaşır odası bu aksın üzerinde çözülmüştür. Orta tip yerleşim, komşu dairelerle paylaşılan duvarlar sayesinde ısı ve ses yalıtımında avantaj sağlar. Brüt alan bilgisi için onaylı proje dosyası incelenmelidir."
+      ]
+    },
+    {
+      "slug": "d-blok-dubleks-kose",
+      "file": "d-blok-dubleks-kat-kose-tip",
+      "block": "D",
+      "floor": "Dubleks",
+      "position": "Köşe Tip",
+      "rooms": "Dubleks",
+      "roomLayout": "3+2 Dubleks (3 oda + 2 yaşam alanı, iki kat)",
+      "title": "D Blok Dubleks Köşe 3+2 Daire Planı",
+      "lead": "Elys Prime D Blok köşe konumundaki dubleks daire, iki kat boyunca toplam 105,32 m² net alan ve 26,05 m² salon sunar; plan detaylarını inceleyin.",
+      "seoTitle": "Pendik D Blok Köşe Dubleks Daire Planı",
+      "seoDescription": "Elys Prime D Blok köşe dubleks daire planı: 105,32 m² net alan, 26,05 m² salon, üst katta 13,00 m² yaşam alanı + mutfak, 3 oda, teras ve balkon.",
+      "features": [
+        "D Blok",
+        "Dubleks daire tipi",
+        "Köşe konum",
+        "İki katlı, iç merdivenli plan",
+        "İki cepheli plan",
+        "105,32 m² toplam net alan",
+        "Giriş katında 26,05 m² salon",
+        "Üst katta 13,00 m² çatı arası piyesi + mutfak",
+        "Toplam 3 oda",
+        "Her katta ayrı WC-banyo",
+        "6,09 m² teras ve 3,15 m² balkon"
+      ],
+      "areas": {
+        "netArea": 105.32,
+        "grossArea": null,
+        "balconyArea": 3.15,
+        "terraceArea": 6.09,
+        "netAreaWithOutdoor": 114.56
+      },
+      "floorAreas": {
+        "entranceFloorNet": 61.57,
+        "upperFloorNet": 43.75
+      },
+      "roomAreas": {
+        "livingRoomArea": 26.05,
+        "kitchenArea": 9.87,
+        "livingKitchenArea": 13,
+        "masterBedroomArea": 12.09,
+        "bedroomAreas": [
+          10,
+          8.26
+        ],
+        "hallArea": 16.55,
+        "bathroomArea": 4.25,
+        "ensuiteBathroomArea": null,
+        "upperFloorBathroomArea": 4.25,
+        "dressingRoomArea": null,
+        "laundryArea": 1,
+        "balconyArea": 3.15,
+        "terraceArea": 6.09
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 26.05,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 9.87,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 12.09,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.81,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.25,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 3.15,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "Ç.A.P+ MUTFAK",
+          "name": "Çatı Arası Piyesi + Mutfak",
+          "area": 13,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 10,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 8.26,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 7.74,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.25,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 6.09,
+          "level": "Üst Kat"
+        }
+      ],
+      "description": [
+        "D Blok dubleks köşe tipi, iç merdivenle bağlanan iki kattan oluşan ve bloğun dış köşesinde konumlanan plandır. Giriş katı 61,57 m², üst kat 43,75 m² net alana sahiptir; toplam kapalı alan 105,32 m², balkon ve terasla birlikte 114,56 m²'dir.",
+        "Giriş katı ortak yaşam katıdır: 26,05 m² salon projedeki en geniş salonlardan biridir ve 9,87 m² mutfak ile 3,15 m² balkon aynı kanatta yer alır. 12,09 m² ebeveyn yatak odası, 8,81 m² antre üzerinden ulaşılır ve 4,25 m² WC-banyoyu kullanır.",
+        "Üst kat özel bölüm olarak kurgulanmıştır: 13,00 m² çatı arası piyesi + mutfak ikinci bir yaşam alanı oluştururken, 10,00 m² ve 8,26 m² iki oda 7,74 m² antre üzerinden ayrılır ve kendi 4,25 m² WC-banyosunu kullanır. 6,09 m² teras bu kata aittir. Her iki katta da ayrı çamaşır odası bulunur. Brüt alan ve tüm teknik detaylar için onaylı proje dosyası esas alınmalıdır."
+      ]
+    },
+    {
+      "slug": "d-blok-dubleks-orta",
+      "file": "d-blok-dubleks-orta-tip",
+      "block": "D",
+      "floor": "Dubleks",
+      "position": "Orta Tip",
+      "rooms": "Dubleks",
+      "roomLayout": "3+1 Dubleks (3 oda + 1 salon, iki kat)",
+      "title": "D Blok Dubleks Orta 3+1 Daire Planı",
+      "lead": "Elys Prime D Blok orta konumdaki dubleks daire, iki kat boyunca toplam 103,73 m² net alan ve 3 oda sunar; plan detaylarını ayrıntılı olarak inceleyin.",
+      "seoTitle": "Pendik D Blok Orta Dubleks Daire Planı",
+      "seoDescription": "Elys Prime D Blok orta dubleks daire planı: 103,73 m² net alan, 23,09 m² salon, 11,38 m² mutfak, üst katta 11,00 ve 14,18 m² iki oda, 9,25 m² teras.",
+      "features": [
+        "D Blok",
+        "Dubleks daire tipi",
+        "Orta konum",
+        "İki katlı, iç merdivenli plan",
+        "103,73 m² toplam net alan",
+        "23,09 m² salon",
+        "11,38 m² mutfak",
+        "Üst katta 11,00 m² ve 14,18 m² iki oda",
+        "Her katta ayrı WC-banyo",
+        "9,25 m² teras ve 4,67 m² balkon",
+        "Yatak bölümü üst katta ayrışmış"
+      ],
+      "areas": {
+        "netArea": 103.73,
+        "grossArea": null,
+        "balconyArea": 4.67,
+        "terraceArea": 9.25,
+        "netAreaWithOutdoor": 117.65
+      },
+      "floorAreas": {
+        "entranceFloorNet": 60.3,
+        "upperFloorNet": 43.43
+      },
+      "roomAreas": {
+        "livingRoomArea": 23.09,
+        "kitchenArea": 11.38,
+        "livingKitchenArea": null,
+        "masterBedroomArea": 14.18,
+        "bedroomAreas": [
+          12.93,
+          11
+        ],
+        "hallArea": 22.05,
+        "bathroomArea": 4.1,
+        "ensuiteBathroomArea": null,
+        "upperFloorBathroomArea": 4,
+        "dressingRoomArea": null,
+        "laundryArea": 1,
+        "balconyArea": 4.67,
+        "terraceArea": 9.25
+      },
+      "roomList": [
+        {
+          "label": "SALON",
+          "name": "Salon",
+          "area": 23.09,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "MUTFAK",
+          "name": "Mutfak",
+          "area": 11.38,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "YATAK ODASI",
+          "name": "Yatak Odası",
+          "area": 12.93,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 8.3,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4.1,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "BALKON",
+          "name": "Balkon",
+          "area": 4.67,
+          "level": "Giriş Katı"
+        },
+        {
+          "label": "ODA",
+          "name": "Ebeveyn Yatak Odası",
+          "area": 14.18,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ODA",
+          "name": "Oda",
+          "area": 11,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ANTRE",
+          "name": "Antre",
+          "area": 13.75,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "WC-BANYO",
+          "name": "WC + Banyo",
+          "area": 4,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "ÇAMAŞIR ODASI",
+          "name": "Çamaşır Odası",
+          "area": 0.5,
+          "level": "Üst Kat"
+        },
+        {
+          "label": "TERAS",
+          "name": "Teras",
+          "area": 9.25,
+          "level": "Üst Kat"
+        }
+      ],
+      "description": [
+        "D Blok dubleks orta tipi, iç merdivenle bağlanan iki kattan oluşan plandır. Giriş katı 60,30 m², üst kat 43,43 m² net alana sahiptir; toplam kapalı alan 103,73 m², balkon ve terasla birlikte 117,65 m²'dir.",
+        "Giriş katı günlük yaşam katıdır: 23,09 m² salon, 11,38 m² mutfak ve 4,67 m² balkon aynı hat üzerinde çözülmüş, 12,93 m² yatak odası 8,30 m² antre üzerinden ayrılmıştır. Bu kat 4,10 m² WC-banyo ve 0,50 m² çamaşır odası içerir.",
+        "Üst kat tamamen yatak bölümüne ayrılmıştır: 14,18 m² ve 11,00 m² iki oda, 13,75 m² geniş antre ve 4,00 m² WC-banyo ile birlikte bağımsız bir gece katı oluşturur; 9,25 m² teras bu kata açılır. Yaşam ve yatak alanlarının farklı katlara ayrılması, kalabalık haneler için mahremiyet sağlar. Brüt metrekare ve teknik detaylar için onaylı proje dosyası incelenmelidir."
+      ]
+    }
+  ]
+}
