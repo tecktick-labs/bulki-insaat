@@ -105,4 +105,31 @@ export const defaultPages: Record<PageSlug, PageCopy> = {
       p("Telefonla ulaşamadığınız durumlarda WhatsApp üzerinden yazabilirsiniz; mesajlarınıza mesai saatleri içinde dönüş yapılır. Şantiye ziyareti ve daire gezisi için önceden randevu almanızı öneririz."),
     ],
   },
+
+  /**
+   * Blog ve Tanıtımlar liste sayfaları. Gövdeyi yazı listesi oluşturduğu için
+   * `blocks` varsayılan olarak boştur; panelden metin eklenirse listenin
+   * üstünde giriş metni olarak görünür.
+   */
+  blog: {
+    slug: "blog",
+    label: "Blog",
+    title: "Blog",
+    lead: "Konut alım süreci, Pendik'teki yaşam ve projeden güncel notlar.",
+    seoTitle: "Blog",
+    seoDescription:
+      "Elys Prime blogu: konut alım süreci, peşinat ve taksit hesabı, 2+1 ile 3+1 arasında seçim, Pendik'te ulaşım ve günlük yaşam üzerine rehber yazılar.",
+    blocks: [],
+  },
+
+  tanitimlar: {
+    slug: "tanitimlar",
+    label: "Tanıtımlar",
+    title: "Tanıtımlar",
+    lead: "Elys Prime'ın tanıtım içerikleri ve dijital broşürleri.",
+    seoTitle: "Tanıtımlar",
+    seoDescription:
+      "Elys Prime tanıtım içerikleri ve dijital broşürleri. Proje sunumunu, blok yerleşimini ve daire tiplerini görsellerle inceleyin, broşürü indirin.",
+    blocks: [],
+  },
 };

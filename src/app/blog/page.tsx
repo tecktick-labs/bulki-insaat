@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import PostList from "@/components/PostList";
-import { PageHeader } from "@/components/Prose";
-import { getPosts } from "@/lib/content.server";
+import BlockRenderer from "@/components/BlockRenderer";
+import { Container, PageHeader } from "@/components/Prose";
+import { getPageCopy, getPosts } from "@/lib/content.server";
 import { postUrl } from "@/lib/content-types";
 import { JsonLd, breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
@@ -10,20 +11,25 @@ import { getProjectContent } from "@/lib/project-content.server";
 
 export const revalidate = 600;
 
-export const metadata: Metadata = pageMetadata({
-  title: "Blog",
-  description: "Elys Prime blogu: konut alım süreci, daire tipi seçimi, Pendik'te yaşam ve projeden güncel notlar.",
-  path: "/blog",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getPageCopy("blog");
+  return pageMetadata({ title: copy.seoTitle, description: copy.seoDescription, path: "/blog" });
+}
 
 export default async function BlogPage() {
-  const [content, posts] = await Promise.all([getProjectContent(), getPosts("blog")]);
+  const [content, copy, posts] = await Promise.all([getProjectContent(), getPageCopy("blog"), getPosts("blog")]);
 
   return (
     <PageShell content={content}>
-      <PageHeader eyebrow="Blog" title="Blog" lead="Konut alım süreci, Pendik'teki yaşam ve projeden güncel notlar.">
+      <PageHeader eyebrow="Blog" title={copy.title} lead={copy.lead}>
         <Breadcrumbs trail={[{ name: "Blog", path: "/blog" }]} />
       </PageHeader>
+
+      {copy.blocks.length > 0 && (
+        <Container className="pt-10">
+          <BlockRenderer blocks={copy.blocks} />
+        </Container>
+      )}
 
       <PostList posts={posts} emptyMessage="Henüz yayımlanmış bir yazı yok. Kısa süre içinde burada olacağız." />
 
@@ -37,7 +43,7 @@ export default async function BlogPage() {
           {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Blog",
+            name: copy.title,
             url: absoluteUrl("/blog"),
             hasPart: posts.map((post) => ({
               "@type": "Article",

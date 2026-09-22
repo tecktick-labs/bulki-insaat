@@ -92,7 +92,7 @@ const seedPosts = [
         "Şantiye ziyareti mümkün mü?",
       ] },
       h("Şeffaflık en iyi göstergedir"),
-      p("Bir yapı firmasının inşaat durumunu düzenli ve açık biçimde paylaşması, kendi başına anlamlı bir güven göstergesidir. Elys Prime'da tamamlanma oranı, satılan daire sayısı ve blok bazlı doluluk bilgileri proje durumu sayfasında güncel olarak yayımlanır."),
+      p("Bir yapı firmasının inşaat durumunu düzenli ve açık biçimde paylaşması, kendi başına anlamlı bir güven göstergesidir. Elys Prime'da tamamlanma oranı, satılan daire sayısı ve blok bazlı doluluk bilgileri satış ekibiyle açık biçimde paylaşılır."),
       p("Daireleri yerinde görmek ve süreci ayrıntılı konuşmak için satış ekibimizden randevu alabilirsiniz."),
     ],
     seoTitle: "İnşaat Aşamasındaki Projeden Daire Almak: Dikkat Edilecekler",

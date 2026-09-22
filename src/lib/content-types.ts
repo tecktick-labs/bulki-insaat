@@ -41,7 +41,7 @@ export type PageCopy = {
   planTypes?: Record<string, string[]>;
 };
 
-export const pageSlugs = ["proje", "daire-planlari", "konum", "iletisim"] as const;
+export const pageSlugs = ["proje", "daire-planlari", "konum", "iletisim", "blog", "tanitimlar"] as const;
 export type PageSlug = (typeof pageSlugs)[number];
 
 /** Yazının sonundaki soru-cevap bölümü. Google'da FAQ zengin sonucu üretir. */

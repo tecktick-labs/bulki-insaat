@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteName}`,
   },
   description:
-    "Elys Prime, Pendik'te 35.000 m² inşaat alanı, 4 blok ve 192 daireden oluşan yeni nesil bir yaşam projesi. Daire planları, güncel proje durumu ve ulaşım bilgileri.",
+    "Elys Prime: Pendik'te 4 blok, 192 daire ve 35.000 m² inşaat alanı. 16 daire tipinin kat planlarını, oda ölçülerini ve ulaşım bilgilerini inceleyin.",
   applicationName: siteName,
   authors: [{ name: companyName }],
   creator: companyName,
@@ -39,12 +39,12 @@ export const metadata: Metadata = {
     siteName,
     title: `${siteName} | Pendik'te Yeni Nesil Yaşam Projesi`,
     description:
-      "Pendik'te 4 blok, 192 daire. Daire planlarını, proje durumunu ve konumu inceleyin.",
+      "Pendik'te 4 blok, 192 daire, 16 farklı daire tipi. Kat planlarını, oda ölçülerini ve konumu inceleyin.",
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteName} | Pendik'te Yeni Nesil Yaşam Projesi`,
-    description: "Pendik'te 4 blok, 192 daire. Daire planlarını ve proje durumunu inceleyin.",
+    description: "Pendik'te 4 blok, 192 daire. Kat planlarını ve konumu inceleyin.",
   },
   robots: {
     index: true,
