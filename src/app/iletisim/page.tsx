@@ -58,7 +58,7 @@ export default async function IletisimPage() {
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[.16em] text-white/40">Konum</p>
             <a href={`https://www.google.com/maps?q=${location.latitude},${location.longitude}`} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-2 text-lg text-white/75 transition-colors hover:text-[#d8b792]">
-              <MapPin size={16} /> Pendik / İstanbul
+              <MapPin size={16} /> Sultanbeyli / İstanbul
             </a>
           </div>
           <div>

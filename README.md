@@ -1,6 +1,6 @@
 # Elys Prime — Bulki Yapı
 
-Pendik'teki Elys Prime konut projesinin tanıtım sitesi ve içerik yönetim paneli.
+Sultanbeyli'deki Elys Prime konut projesinin tanıtım sitesi ve içerik yönetim paneli.
 
 - **Framework:** Next.js 16 (App Router) + React 19 + Tailwind CSS 4
 - **Barındırma:** Firebase App Hosting (Cloud Run)

@@ -56,23 +56,23 @@ const seedPosts = [
       "Köşe ve orta tip daireler arasındaki farklar: ışık, yalıtım, plan düzeni ve mobilya yerleşimi. Hangisinin size uygun olduğunu anlamanın pratik yolları.",
   },
   {
-    id: "blog-pendik-te-yasam",
+    id: "blog-sultanbeyli-de-yasam",
     type: "blog",
-    slug: "pendikte-yasam-ve-ulasim",
-    title: "Pendik'te yaşam: ulaşım, çevre ve günlük hayat",
+    slug: "sultanbeylide-yasam-ve-ulasim",
+    title: "Sultanbeyli'de yaşam: ulaşım, çevre ve günlük hayat",
     excerpt:
-      "İstanbul'da konut seçerken ulaşım süresi, dairenin kendisi kadar belirleyicidir. Pendik'in gelişen bölgesinde günlük hayat nasıl işliyor?",
+      "İstanbul'da konut seçerken ulaşım süresi, dairenin kendisi kadar belirleyicidir. Sultanbeyli'nin gelişen bölgesinde günlük hayat nasıl işliyor?",
     blocks: [
       p("İstanbul'da ev seçerken sorulması gereken ilk soru şu: sabah işe çıktığınızda kapıdan çıkıp kaç dakikada toplu taşımaya ulaşıyorsunuz? Bu tek soru, bir konutun günlük yaşam kalitesi hakkında metrekareden daha fazlasını anlatır."),
       h("Raylı sisteme yürüme mesafesi"),
-      p("Pendik'in gelişen yaşam bölgesi, metro ve otobüs hatlarına yürüme mesafesinde konumlanıyor. Bu, günlük ulaşımı araca bağımlı olmaktan çıkarıyor ve özellikle trafiğin yoğun olduğu saatlerde ciddi bir zaman farkı yaratıyor."),
+      p("Sultanbeyli'nin gelişen yaşam bölgesi, metro ve otobüs hatlarına yürüme mesafesinde konumlanıyor. Bu, günlük ulaşımı araca bağımlı olmaktan çıkarıyor ve özellikle trafiğin yoğun olduğu saatlerde ciddi bir zaman farkı yaratıyor."),
       h("Çevredeki altyapı"),
-      p("Pendik, son yıllarda İstanbul'un en hızlı dönüşen ilçelerinden biri. Sağlık, eğitim ve alışveriş altyapısı yerleşik durumda. Bölgedeki yeni konut projeleri ise çevrenin genel yaşam standardını yukarı çekiyor."),
+      p("Sultanbeyli, son yıllarda İstanbul'un en hızlı dönüşen ilçelerinden biri. Sağlık, eğitim ve alışveriş altyapısı yerleşik durumda. Bölgedeki yeni konut projeleri ise çevrenin genel yaşam standardını yukarı çekiyor."),
       p("Elys Prime'ın konumu ve çevredeki noktalara olan mesafeleri konum sayfasından harita üzerinde inceleyebilirsiniz."),
     ],
-    seoTitle: "Pendik'te Yaşam: Ulaşım, Çevre ve Günlük Hayat",
+    seoTitle: "Sultanbeyli'de Yaşam: Ulaşım, Çevre ve Günlük Hayat",
     seoDescription:
-      "Pendik'te konut seçerken ulaşım süreleri, çevredeki altyapı ve günlük yaşam. Raylı sisteme yürüme mesafesindeki konumun günlük hayata etkisi.",
+      "Sultanbeyli'de konut seçerken ulaşım süreleri, çevredeki altyapı ve günlük yaşam. Raylı sisteme yürüme mesafesindeki konumun günlük hayata etkisi.",
   },
   {
     id: "blog-insaat-asamasinda-konut",
@@ -105,9 +105,9 @@ const seedPosts = [
     slug: "elys-prime-proje-tanitimi",
     title: "Elys Prime proje tanıtımı",
     excerpt:
-      "Dört blok, 192 daire ve 35.000 m² inşaat alanıyla Pendik'te yükselen Elys Prime'ın genel tanıtımı.",
+      "Dört blok, 192 daire ve 35.000 m² inşaat alanıyla Sultanbeyli'de yükselen Elys Prime'ın genel tanıtımı.",
     blocks: [
-      p("Elys Prime; Bulki Yapı güvencesiyle Pendik'te yükselen, dört bloktan ve 192 daireden oluşan bir yaşam projesidir. Toplam 35.000 m² inşaat alanına yayılan proje, modern mimariyi geniş peyzaj alanlarıyla bir araya getirir."),
+      p("Elys Prime; Bulki Yapı güvencesiyle Sultanbeyli'de yükselen, dört bloktan ve 192 daireden oluşan bir yaşam projesidir. Toplam 35.000 m² inşaat alanına yayılan proje, modern mimariyi geniş peyzaj alanlarıyla bir araya getirir."),
       h("Projeyi tanımlayan başlıklar"),
       { type: "list", items: [
         "4 blok, blok başına 48 daire, toplam 192 daire",
@@ -122,7 +122,7 @@ const seedPosts = [
     ],
     seoTitle: "Elys Prime Proje Tanıtımı",
     seoDescription:
-      "Elys Prime tanıtımı: Pendik'te 4 blok, 192 daire, 35.000 m² inşaat alanı, 16 daire tipi ve toplu taşımaya yürüme mesafesinde konum.",
+      "Elys Prime tanıtımı: Sultanbeyli'de 4 blok, 192 daire, 35.000 m² inşaat alanı, 16 daire tipi ve toplu taşımaya yürüme mesafesinde konum.",
   },
 ];
 

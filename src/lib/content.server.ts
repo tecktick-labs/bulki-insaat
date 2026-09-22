@@ -24,6 +24,7 @@ export async function getPageCopy(slug: PageSlug): Promise<PageCopy> {
     // Yalnızca bilinen anahtarlar: doküman `updatedAt` gibi Firestore Timestamp
     // alanları içerir ve bunlar Client Component'e serileştirilemez.
     const stored = snapshot.data() as Partial<PageCopy>;
+    const planTypes = stored.planTypes ?? fallback.planTypes;
     return {
       slug,
       label: fallback.label,
@@ -32,7 +33,8 @@ export async function getPageCopy(slug: PageSlug): Promise<PageCopy> {
       seoTitle: stored.seoTitle || fallback.seoTitle,
       seoDescription: stored.seoDescription || fallback.seoDescription,
       blocks: stored.blocks?.length ? stored.blocks : fallback.blocks,
-      planTypes: stored.planTypes ?? fallback.planTypes,
+      // Yalnızca dolu olduğunda eklenir; `planTypes: undefined` anahtarı panelden geri kaydedilemez.
+      ...(planTypes ? { planTypes } : {}),
     };
   } catch (error) {
     console.error(`pages/${slug} okunamadı, varsayılan metin kullanılıyor.`, error);

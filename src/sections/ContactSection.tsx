@@ -52,10 +52,10 @@ export default function ContactSection({ projectName, companyName, email, contac
         <div className="grid gap-8 border-t border-white/15 pt-8 lg:grid-cols-[1.25fr_1fr_1.35fr]">
           <div>
             <strong className="display-font block text-xl font-semibold text-white sm:text-2xl">{companyName}</strong>
-            <p className="mt-3 max-w-sm text-sm leading-6 text-white/45">Elys Prime resmî proje sunumu. Pendik&apos;te 4 blok, 192 daire.</p>
+            <p className="mt-3 max-w-sm text-sm leading-6 text-white/45">Elys Prime resmî proje sunumu. Sultanbeyli&apos;de 4 blok, 192 daire.</p>
             <div className="mt-4 flex flex-col gap-2">
               <a href={`mailto:${email}`} className="inline-flex items-center gap-2 text-xs text-white/55 transition-colors hover:text-[#d8b792]"><Mail size={14}/> {email}</a>
-              <a href={mapUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs text-white/55 transition-colors hover:text-[#d8b792]"><MapPin size={14}/> Pendik / İstanbul</a>
+              <a href={mapUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs text-white/55 transition-colors hover:text-[#d8b792]"><MapPin size={14}/> Sultanbeyli / İstanbul</a>
             </div>
           </div>
 

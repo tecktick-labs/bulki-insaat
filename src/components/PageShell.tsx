@@ -40,7 +40,7 @@ export default function PageShell({ content, children }: { content: ProjectConte
           <div>
             <strong className="display-font block text-2xl font-semibold">{general.companyName}</strong>
             <p className="mt-3 max-w-sm text-sm leading-7 text-white/50">
-              Elys Prime, Pendik&apos;te {general.totalUnits} daireden oluşan, {general.constructionArea.toLocaleString("tr-TR")} m² inşaat alanına sahip yeni nesil bir yaşam projesidir.
+              Elys Prime, Sultanbeyli&apos;de {general.totalUnits} daireden oluşan, {general.constructionArea.toLocaleString("tr-TR")} m² inşaat alanına sahip yeni nesil bir yaşam projesidir.
             </p>
             <a href={general.whatsappLink} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.14em] text-[#d8b792] hover:text-white">
               <MessageCircle size={14} /> WhatsApp&apos;tan yazın <ArrowUpRight size={13} />
@@ -75,7 +75,7 @@ export default function PageShell({ content, children }: { content: ProjectConte
                 </a>
               </li>
               <li className="inline-flex items-center gap-2 text-white/50">
-                <MapPin size={13} /> Pendik / İstanbul
+                <MapPin size={13} /> Sultanbeyli / İstanbul
               </li>
             </ul>
           </div>

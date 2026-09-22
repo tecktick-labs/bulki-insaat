@@ -140,7 +140,7 @@ export default function LocationSection({ description, metrics, latitude, longit
           </div>
           <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
             <div>
-              <span className="text-[9px] font-bold uppercase tracking-[.2em] text-[#d8b792]">Pendik / İstanbul</span>
+              <span className="text-[9px] font-bold uppercase tracking-[.2em] text-[#d8b792]">Sultanbeyli / İstanbul</span>
               <h3 className="mt-1 text-xl font-semibold sm:text-2xl">Elys Prime</h3>
               <p className="mt-1 text-xs text-white/50">4 blok · 192 daire · Metroya {metrics.metro.walkMin} dk</p>
             </div>

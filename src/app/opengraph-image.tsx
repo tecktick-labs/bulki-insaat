@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Elys Prime — Pendik'te yeni nesil yaşam projesi";
+export const alt = "Elys Prime — Sultanbeyli'de yeni nesil yaşam projesi";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

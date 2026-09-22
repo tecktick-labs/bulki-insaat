@@ -22,11 +22,11 @@ const body = Figtree({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | Pendik'te Yeni Nesil Yaşam Projesi`,
+    default: `${siteName} | Sultanbeyli'de Yeni Nesil Yaşam Projesi`,
     template: `%s | ${siteName}`,
   },
   description:
-    "Elys Prime: Pendik'te 4 blok, 192 daire ve 35.000 m² inşaat alanı. 16 daire tipinin kat planlarını, oda ölçülerini ve ulaşım bilgilerini inceleyin.",
+    "Elys Prime: Sultanbeyli'de 4 blok, 192 daire ve 35.000 m² inşaat alanı. 16 daire tipinin kat planlarını, oda ölçülerini ve ulaşım bilgilerini inceleyin.",
   applicationName: siteName,
   authors: [{ name: companyName }],
   creator: companyName,
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "/",
     siteName,
-    title: `${siteName} | Pendik'te Yeni Nesil Yaşam Projesi`,
+    title: `${siteName} | Sultanbeyli'de Yeni Nesil Yaşam Projesi`,
     description:
-      "Pendik'te 4 blok, 192 daire, 16 farklı daire tipi. Kat planlarını, oda ölçülerini ve konumu inceleyin.",
+      "Sultanbeyli'de 4 blok, 192 daire, 16 farklı daire tipi. Kat planlarını, oda ölçülerini ve konumu inceleyin.",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} | Pendik'te Yeni Nesil Yaşam Projesi`,
-    description: "Pendik'te 4 blok, 192 daire. Kat planlarını ve konumu inceleyin.",
+    title: `${siteName} | Sultanbeyli'de Yeni Nesil Yaşam Projesi`,
+    description: "Sultanbeyli'de 4 blok, 192 daire. Kat planlarını ve konumu inceleyin.",
   },
   robots: {
     index: true,

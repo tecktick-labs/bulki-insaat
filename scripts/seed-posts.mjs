@@ -8,7 +8,7 @@
  * metinleri serbestçe düzenleyebilirsiniz.
  *
  * NOT: Hiçbir metinde fiyat yer almaz. Yalnızca proje verisinden doğrulanabilir
- * bilgiler kullanılmıştır (4 blok, 192 daire, 35.000 m², Pendik, ulaşım süreleri,
+ * bilgiler kullanılmıştır (4 blok, 192 daire, 35.000 m², Sultanbeyli, ulaşım süreleri,
  * 16 daire tipi, lansman kampanyası koşulları).
  */
 import { cert, initializeApp } from "firebase-admin/app";
@@ -95,17 +95,17 @@ const posts = [
   },
 
   {
-    id: "blog-pendik-te-yasam",
+    id: "blog-sultanbeyli-de-yasam",
     type: "blog",
-    slug: "pendikte-yasam-ulasim-ve-gunluk-hayat",
-    title: "Pendik'te yaşam: ulaşım, çevre ve günlük hayatın gerçeği",
+    slug: "sultanbeylide-yasam-ulasim-ve-gunluk-hayat",
+    title: "Sultanbeyli'de yaşam: ulaşım, çevre ve günlük hayatın gerçeği",
     excerpt:
-      "İstanbul'da konut seçerken kapıdan toplu taşımaya kaç dakikada ulaştığınız, dairenin metrekaresinden daha belirleyicidir. Pendik'te bu tablo nasıl işliyor?",
+      "İstanbul'da konut seçerken kapıdan toplu taşımaya kaç dakikada ulaştığınız, dairenin metrekaresinden daha belirleyicidir. Sultanbeyli'de bu tablo nasıl işliyor?",
     cover: 7,
     coverAlt: "Elys Prime projesinin genel görünümü ve çevre yerleşimi",
-    seoTitle: "Pendik'te Yaşam: Ulaşım, Çevre ve Günlük Hayat",
+    seoTitle: "Sultanbeyli'de Yaşam: Ulaşım, Çevre ve Günlük Hayat",
     seoDescription:
-      "Pendik'te konut almadan önce bilinmesi gerekenler: metro ve otobüs bağlantıları, şehir merkezine mesafe, bölgedeki eğitim ve sağlık altyapısı.",
+      "Sultanbeyli'de konut almadan önce bilinmesi gerekenler: metro ve otobüs bağlantıları, şehir merkezine mesafe, bölgedeki eğitim ve sağlık altyapısı.",
     blocks: [
       p("İstanbul'da ev seçerken sorulması gereken ilk soru genellikle sorulmaz: sabah kapıdan çıktığınızda toplu taşımaya kaç dakikada ulaşıyorsunuz? Bu tek soru, bir konutun günlük yaşam kalitesi hakkında metrekareden çok daha fazlasını anlatır."),
       p("Günde iki kez, on beş dakikalık bir fark, yılda yaklaşık 130 saat eder. Bu, tam üç haftalık mesai demektir."),
@@ -113,8 +113,8 @@ const posts = [
       p("Elys Prime'ın konumlandığı bölgede metroya 5 dakika, otobüs durağına 2 dakika yürüme mesafesi var. Şehir merkezine araçla yaklaşık 6 dakikada ulaşılıyor."),
       p("Bu rakamların pratik karşılığı şu: günlük ulaşım için araca bağımlı olmaktan çıkıyorsunuz. Tek araçlı bir hane, ikinci araç almak zorunda kalmıyor. Ehliyeti olmayan ya da araç kullanmayan hane üyeleri — öğrenciler, yaşlılar — kendi başlarına hareket edebiliyor."),
       p("Trafiğin yoğun olduğu saatlerde raylı sistem, karayoluna göre öngörülebilir bir süre sunar. Toplantıya yetişmek ile geç kalmak arasındaki fark çoğu zaman budur."),
-      h("Pendik son on yılda ne değişti"),
-      p("Pendik, İstanbul'un en hızlı dönüşen ilçelerinden biri. Sağlık, eğitim ve alışveriş altyapısı yerleşik durumda; bölgedeki yeni konut projeleri ise çevrenin genel yaşam standardını yukarı çekiyor."),
+      h("Sultanbeyli son on yılda ne değişti"),
+      p("Sultanbeyli, İstanbul'un en hızlı dönüşen ilçelerinden biri. Sağlık, eğitim ve alışveriş altyapısı yerleşik durumda; bölgedeki yeni konut projeleri ise çevrenin genel yaşam standardını yukarı çekiyor."),
       p("Bu dönüşümün konut alıcısı açısından anlamı çift yönlü. Bir yandan bölgedeki hizmet kalitesi artıyor. Öte yandan, gelişimini tamamlamış bölgelere göre giriş eşiği hâlâ daha ulaşılabilir durumda."),
       ul([
         "Anadolu Yakası'ndaki iş merkezlerine raylı sistemle bağlantı",
@@ -137,7 +137,7 @@ const posts = [
         answer: "Şehir merkezine araçla yaklaşık 6 dakikada ulaşılmaktadır. Yürüyerek yaklaşık 18 dakikalık bir mesafededir.",
       },
       {
-        question: "Pendik'te yaşamak araç sahibi olmayı gerektirir mi?",
+        question: "Sultanbeyli'de yaşamak araç sahibi olmayı gerektirir mi?",
         answer:
           "Elys Prime'ın konumu toplu taşımaya yürüme mesafesinde olduğu için günlük ulaşım araç olmadan da mümkündür. Raylı sistem bağlantısı, özellikle trafiğin yoğun olduğu saatlerde öngörülebilir bir ulaşım süresi sağlar.",
       },
@@ -261,16 +261,16 @@ const posts = [
     id: "tanitim-elys-prime-genel",
     type: "tanitim",
     slug: "elys-prime-proje-tanitimi",
-    title: "Elys Prime: Pendik'te 4 blok, 192 daire, 35.000 m² yaşam alanı",
+    title: "Elys Prime: Sultanbeyli'de 4 blok, 192 daire, 35.000 m² yaşam alanı",
     excerpt:
-      "Bülki Yapı ve Çözüm Konut ortaklığıyla Pendik'te yükselen Elys Prime'ın blok kurgusu, daire çeşitliliği, sosyal alanları ve konumu.",
+      "Bülki Yapı ve Çözüm Konut ortaklığıyla Sultanbeyli'de yükselen Elys Prime'ın blok kurgusu, daire çeşitliliği, sosyal alanları ve konumu.",
     cover: 3,
     coverAlt: "Elys Prime mimarisi: modern çizgiler ve sıcak malzeme dokuları",
-    seoTitle: "Elys Prime Proje Tanıtımı — Pendik Konut Projesi",
+    seoTitle: "Elys Prime Proje Tanıtımı — Sultanbeyli Konut Projesi",
     seoDescription:
-      "Elys Prime tanıtımı: Pendik'te 4 blok, 192 daire, 35.000 m² inşaat alanı, 16 daire tipi, iç bahçeler ve toplu taşımaya yürüme mesafesinde konum.",
+      "Elys Prime tanıtımı: Sultanbeyli'de 4 blok, 192 daire, 35.000 m² inşaat alanı, 16 daire tipi, iç bahçeler ve toplu taşımaya yürüme mesafesinde konum.",
     blocks: [
-      p("Elys Prime, Bülki Yapı ve Çözüm Konut ortaklığıyla Pendik'te yükselen, dört bloktan ve 192 daireden oluşan bir yaşam projesidir. Toplam 35.000 m² inşaat alanına yayılan proje, modern mimariyi geniş peyzaj alanları ve sosyal yaşam kurgusuyla bir araya getirir."),
+      p("Elys Prime, Bülki Yapı ve Çözüm Konut ortaklığıyla Sultanbeyli'de yükselen, dört bloktan ve 192 daireden oluşan bir yaşam projesidir. Toplam 35.000 m² inşaat alanına yayılan proje, modern mimariyi geniş peyzaj alanları ve sosyal yaşam kurgusuyla bir araya getirir."),
       h("Projeyi tanımlayan başlıklar"),
       ul([
         "4 blok, blok başına 48 daire, toplam 192 daire",
@@ -292,7 +292,7 @@ const posts = [
       h("Sosyal alanlar ve peyzaj"),
       p("İç bahçeler ve avlular projenin omurgasını oluşturuyor. Peyzaj, bloklar arasındaki boşlukları dolduran bir süs unsuru olarak değil, günlük yaşamın içinden geçtiği bir zemin olarak tasarlandı. Spor alanları, çocuk oyun alanları ve yürüyüş aksları bu zeminin üzerine yerleşiyor."),
       h("Konum"),
-      p("Elys Prime, Pendik'in gelişen yaşam bölgesinde, toplu taşıma bağlantılarına yürüme mesafesinde konumlanıyor. Metroya 5 dakika, otobüs durağına 2 dakika yürüme mesafesindeki konum, günlük ulaşımı araca bağımlı olmaktan çıkarıyor."),
+      p("Elys Prime, Sultanbeyli Akşemsettin Mahallesi'nde, toplu taşıma bağlantılarına yürüme mesafesinde konumlanıyor. Metroya 5 dakika, otobüs durağına 2 dakika yürüme mesafesindeki konum, günlük ulaşımı araca bağımlı olmaktan çıkarıyor."),
       cta("Projenin tam konumunu harita üzerinde inceleyebilirsiniz.", "/konum", "Konum ve ulaşım"),
       p("Bu tanıtım bilgilendirme amaçlıdır. Onaylı proje dosyası, net ve brüt alan bilgileri ile güncel ödeme koşulları için satış ekibimizle iletişime geçebilirsiniz."),
     ],
@@ -300,7 +300,7 @@ const posts = [
       {
         question: "Elys Prime nerede yer alıyor?",
         answer:
-          "Proje, İstanbul Pendik'in gelişen yaşam bölgesinde yer almaktadır. Metro istasyonuna yaklaşık 5 dakika, otobüs durağına 2 dakika yürüme mesafesindedir; şehir merkezine araçla yaklaşık 6 dakikada ulaşılır.",
+          "Proje, İstanbul Sultanbeyli Akşemsettin Mahallesi'nde yer almaktadır. Metro istasyonuna yaklaşık 5 dakika, otobüs durağına 2 dakika yürüme mesafesindedir; şehir merkezine araçla yaklaşık 6 dakikada ulaşılır.",
       },
       {
         question: "Projede kaç daire var?",

@@ -2,7 +2,7 @@
   "meta": {
     "project": "Elys Prime",
     "developer": "Bulki Yapı",
-    "location": "Pendik, İstanbul",
+    "location": "Sultanbeyli, İstanbul",
     "source": "src/assets/floor-types/*.webp kat planı görsellerinden okunmuştur",
     "extractedAt": "2026-09-21",
     "unit": "m²",
@@ -35,7 +35,7 @@
       "roomLayout": "3+1 (3 oda + 1 salon)",
       "title": "A Blok Normal Kat Köşe 3+1 Daire Planı",
       "lead": "Elys Prime A Blok normal kat köşe konumunda bulunan, 87,96 m² net alana ve 25,08 m² salona sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik A Blok 3+1 Köşe Daire Planı",
+      "seoTitle": "Sultanbeyli A Blok 3+1 Köşe Daire Planı",
       "seoDescription": "Elys Prime A Blok normal kat 3+1 köşe daire planı: 87,96 m² net alan, 25,08 m² salon, 14,05 m² ebeveyn odası, 13,42 m² mutfak. Oda ölçülerini inceleyin.",
       "features": [
         "A Blok",
@@ -153,7 +153,7 @@
       "roomLayout": "3+1 (3 oda + 1 salon, giyinme odalı)",
       "title": "A Blok Normal Kat Orta 3+1 Daire Planı",
       "lead": "Elys Prime A Blok normal kat orta konumunda bulunan, 91,54 m² net alana ve ebeveyn süitine sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik A Blok 3+1 Orta Daire Planı",
+      "seoTitle": "Sultanbeyli A Blok 3+1 Orta Daire Planı",
       "seoDescription": "Elys Prime A Blok normal kat 3+1 orta daire planı: 91,54 m² net alan, 24,12 m² salon, 14,02 m² ebeveyn odası, giyinme odası ve ebeveyn banyosu.",
       "features": [
         "A Blok",
@@ -276,7 +276,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "A Blok Çatı Katı Köşe 2+1 Daire Planı",
       "lead": "Elys Prime A Blok çatı katı köşe konumunda bulunan, 64,39 m² net alana ve 8,76 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik A Blok Çatı Katı 2+1 Köşe Planı",
+      "seoTitle": "Sultanbeyli A Blok Çatı Katı 2+1 Köşe Planı",
       "seoDescription": "Elys Prime A Blok çatı katı 2+1 köşe daire planı: 64,39 m² net alan, 20,00 m² salon, 13,88 m² ebeveyn odası ve 8,76 m² teras. Plan ölçülerini inceleyin.",
       "features": [
         "A Blok",
@@ -380,7 +380,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "A Blok Çatı Katı Orta 2+1 Daire Planı",
       "lead": "Elys Prime A Blok çatı katı orta konumunda bulunan, 65,82 m² net alana ve 9,25 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik A Blok Çatı Katı 2+1 Orta Planı",
+      "seoTitle": "Sultanbeyli A Blok Çatı Katı 2+1 Orta Planı",
       "seoDescription": "Elys Prime A Blok çatı katı 2+1 orta daire planı: 65,82 m² net alan, 19,00 m² salon, 13,15 m² ebeveyn odası, 6,08 m² banyo ve 9,25 m² teras.",
       "features": [
         "A Blok",
@@ -478,7 +478,7 @@
       "roomLayout": "3+1 (3 oda + 1 salon)",
       "title": "B Blok Normal Kat Köşe 3+1 Daire Planı",
       "lead": "Elys Prime B Blok normal kat köşe konumunda bulunan, 81,94 m² net alana ve ebeveyn banyosuna sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik B Blok 3+1 Köşe Daire Planı",
+      "seoTitle": "Sultanbeyli B Blok 3+1 Köşe Daire Planı",
       "seoDescription": "Elys Prime B Blok normal kat 3+1 köşe daire planı: 81,94 m² net alan, 22,40 m² salon, 13,34 m² ebeveyn odası, 11,46 m² mutfak ve ebeveyn banyosu.",
       "features": [
         "B Blok",
@@ -596,7 +596,7 @@
       "roomLayout": "3+1 (3 oda + 1 salon)",
       "title": "B Blok Normal Kat Orta 3+1 Daire Planı",
       "lead": "Elys Prime B Blok normal kat orta konumunda bulunan, 82,86 m² net alana ve 14,32 m² ebeveyn odasına sahip 3+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik B Blok 3+1 Orta Daire Planı",
+      "seoTitle": "Sultanbeyli B Blok 3+1 Orta Daire Planı",
       "seoDescription": "Elys Prime B Blok normal kat 3+1 orta daire planı: 82,86 m² net alan, 22,50 m² salon, 14,32 m² ebeveyn odası, açık mutfak ve 4,44 m² balkon.",
       "features": [
         "B Blok",
@@ -713,7 +713,7 @@
       "roomLayout": "4+2 Dubleks (4 oda + 2 yaşam alanı, iki kat)",
       "title": "B Blok Dubleks Köşe 4+2 Daire Planı",
       "lead": "Elys Prime B Blok köşe konumundaki dubleks daire, iki kat boyunca toplam 137,70 m² net alan ve 4 oda sunar; plan detaylarını inceleyin.",
-      "seoTitle": "Pendik B Blok Köşe Dubleks Daire Planı",
+      "seoTitle": "Sultanbeyli B Blok Köşe Dubleks Daire Planı",
       "seoDescription": "Elys Prime B Blok köşe dubleks daire planı: 137,70 m² net alan, 26,40 m² salon, üst katta 23,32 m² salon+mutfak, 4 oda, teras ve balkon.",
       "features": [
         "B Blok",
@@ -866,7 +866,7 @@
       "roomLayout": "4+2 Dubleks (4 oda + 2 yaşam alanı, iki kat)",
       "title": "B Blok Dubleks Orta 4+2 Daire Planı",
       "lead": "Elys Prime B Blok orta konumdaki dubleks daire, iki kat boyunca toplam 139,47 m² net alan ve 4 oda sunar; plan detaylarını inceleyin.",
-      "seoTitle": "Pendik B Blok Orta Dubleks Daire Planı",
+      "seoTitle": "Sultanbeyli B Blok Orta Dubleks Daire Planı",
       "seoDescription": "Elys Prime B Blok orta dubleks daire planı: 139,47 m² net alan, 23,50 m² salon, üst katta 22,35 m² salon+mutfak, 4 oda, teras ve balkon.",
       "features": [
         "B Blok",
@@ -1018,7 +1018,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "C Blok Normal Kat Köşe 2+1 Daire Planı",
       "lead": "Elys Prime C Blok normal kat köşe konumunda bulunan, 70,41 m² net alana ve 22,50 m² salona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik C Blok 2+1 Köşe Daire Planı",
+      "seoTitle": "Sultanbeyli C Blok 2+1 Köşe Daire Planı",
       "seoDescription": "Elys Prime C Blok normal kat 2+1 köşe daire planı: 70,41 m² net alan, 22,50 m² salon, 13,29 m² ebeveyn odası, 10,45 m² mutfak ve 3,92 m² balkon.",
       "features": [
         "C Blok",
@@ -1116,7 +1116,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "C Blok Normal Kat Orta 2+1 Daire Planı",
       "lead": "Elys Prime C Blok normal kat orta konumunda bulunan, 69,85 m² net alana ve 14,25 m² ebeveyn odasına sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik C Blok 2+1 Orta Daire Planı",
+      "seoTitle": "Sultanbeyli C Blok 2+1 Orta Daire Planı",
       "seoDescription": "Elys Prime C Blok normal kat 2+1 orta daire planı: 69,85 m² net alan, 22,16 m² salon, 14,25 m² ebeveyn odası, 10,20 m² mutfak ve 4,67 m² balkon.",
       "features": [
         "C Blok",
@@ -1214,7 +1214,7 @@
       "roomLayout": "2+1 (2 oda + çatı arası piyesi ile birleşik mutfak)",
       "title": "C Blok Çatı Katı Köşe 2+1 Daire Planı",
       "lead": "Elys Prime C Blok çatı katı köşe konumunda bulunan, 52,79 m² net alana ve 18,06 m² birleşik yaşam alanına sahip 2+1 daire planını inceleyin.",
-      "seoTitle": "Pendik C Blok Çatı Katı 2+1 Köşe Planı",
+      "seoTitle": "Sultanbeyli C Blok Çatı Katı 2+1 Köşe Planı",
       "seoDescription": "Elys Prime C Blok çatı katı 2+1 köşe daire planı: 52,79 m² net alan, 18,06 m² salon + mutfak, 11,25 ve 9,84 m² odalar, 7,00 m² teras.",
       "features": [
         "C Blok",
@@ -1306,7 +1306,7 @@
       "roomLayout": "2+1 (2 oda + çatı arası piyesi ile birleşik mutfak)",
       "title": "C Blok Çatı Katı Orta 2+1 Daire Planı",
       "lead": "Elys Prime C Blok çatı katı orta konumunda bulunan, 51,05 m² net alana ve 9,25 m² terasa sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik C Blok Çatı Katı 2+1 Orta Planı",
+      "seoTitle": "Sultanbeyli C Blok Çatı Katı 2+1 Orta Planı",
       "seoDescription": "Elys Prime C Blok çatı katı 2+1 orta daire planı: 51,05 m² net alan, 18,36 m² salon + mutfak, 11,03 ve 8,00 m² odalar, 9,25 m² teras.",
       "features": [
         "C Blok",
@@ -1398,7 +1398,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "D Blok Normal Kat Köşe 2+1 Daire Planı",
       "lead": "Elys Prime D Blok normal kat köşe konumunda bulunan, 64,49 m² net alana ve 20,10 m² salona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik D Blok 2+1 Köşe Daire Planı",
+      "seoTitle": "Sultanbeyli D Blok 2+1 Köşe Daire Planı",
       "seoDescription": "Elys Prime D Blok normal kat 2+1 köşe daire planı: 64,49 m² net alan, 20,10 m² salon, 12,09 m² ebeveyn odası, 9,87 m² mutfak ve 3,15 m² balkon.",
       "features": [
         "D Blok",
@@ -1502,7 +1502,7 @@
       "roomLayout": "2+1 (2 oda + 1 salon)",
       "title": "D Blok Normal Kat Orta 2+1 Daire Planı",
       "lead": "Elys Prime D Blok normal kat orta konumunda bulunan, 63,19 m² net alana ve 4,67 m² balkona sahip 2+1 daire planını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik D Blok 2+1 Orta Daire Planı",
+      "seoTitle": "Sultanbeyli D Blok 2+1 Orta Daire Planı",
       "seoDescription": "Elys Prime D Blok normal kat 2+1 orta daire planı: 63,19 m² net alan, 20,19 m² salon, 12,06 m² ebeveyn odası, açık mutfak ve 4,67 m² balkon.",
       "features": [
         "D Blok",
@@ -1606,7 +1606,7 @@
       "roomLayout": "3+2 Dubleks (3 oda + 2 yaşam alanı, iki kat)",
       "title": "D Blok Dubleks Köşe 3+2 Daire Planı",
       "lead": "Elys Prime D Blok köşe konumundaki dubleks daire, iki kat boyunca toplam 105,32 m² net alan ve 26,05 m² salon sunar; plan detaylarını inceleyin.",
-      "seoTitle": "Pendik D Blok Köşe Dubleks Daire Planı",
+      "seoTitle": "Sultanbeyli D Blok Köşe Dubleks Daire Planı",
       "seoDescription": "Elys Prime D Blok köşe dubleks daire planı: 105,32 m² net alan, 26,05 m² salon, üst katta 13,00 m² yaşam alanı + mutfak, 3 oda, teras ve balkon.",
       "features": [
         "D Blok",
@@ -1752,7 +1752,7 @@
       "roomLayout": "3+1 Dubleks (3 oda + 1 salon, iki kat)",
       "title": "D Blok Dubleks Orta 3+1 Daire Planı",
       "lead": "Elys Prime D Blok orta konumdaki dubleks daire, iki kat boyunca toplam 103,73 m² net alan ve 3 oda sunar; plan detaylarını ayrıntılı olarak inceleyin.",
-      "seoTitle": "Pendik D Blok Orta Dubleks Daire Planı",
+      "seoTitle": "Sultanbeyli D Blok Orta Dubleks Daire Planı",
       "seoDescription": "Elys Prime D Blok orta dubleks daire planı: 103,73 m² net alan, 23,09 m² salon, 11,38 m² mutfak, üst katta 11,00 ve 14,18 m² iki oda, 9,25 m² teras.",
       "features": [
         "D Blok",

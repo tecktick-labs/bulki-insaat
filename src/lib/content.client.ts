@@ -14,6 +14,7 @@ import {
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { defaultPages } from "@/data/copy";
 import { auth, firestore, storage } from "./firebase";
+import { stripUndefined } from "./firestore-clean";
 import type { PageCopy, PageSlug, Post, PostType } from "./content-types";
 
 const PAGES = "pages";
@@ -31,6 +32,7 @@ export async function fetchPageCopy(slug: PageSlug): Promise<PageCopy> {
   if (!snapshot.exists()) return fallback;
 
   const stored = snapshot.data() as Partial<PageCopy>;
+  const planTypes = stored.planTypes ?? fallback.planTypes;
   return {
     slug,
     label: fallback.label,
@@ -39,13 +41,18 @@ export async function fetchPageCopy(slug: PageSlug): Promise<PageCopy> {
     seoTitle: stored.seoTitle || fallback.seoTitle,
     seoDescription: stored.seoDescription || fallback.seoDescription,
     blocks: stored.blocks?.length ? stored.blocks : fallback.blocks,
-    planTypes: stored.planTypes ?? fallback.planTypes,
+    // Yalnızca dolu olduğunda eklenir: `planTypes: undefined` anahtarı Firestore'a yazılamaz.
+    ...(planTypes ? { planTypes } : {}),
   };
 }
 
 export async function savePageCopy(page: PageCopy) {
   const { slug, label, ...rest } = page;
-  await setDoc(doc(firestore, PAGES, slug), { ...rest, label, updatedAt: serverTimestamp() });
+  // serverTimestamp() bir sentinel; temizlikten sonra eklenir.
+  await setDoc(doc(firestore, PAGES, slug), {
+    ...stripUndefined({ ...rest, label }),
+    updatedAt: serverTimestamp(),
+  });
 }
 
 export async function fetchAllPosts(): Promise<Post[]> {
@@ -74,7 +81,7 @@ export async function fetchAllPosts(): Promise<Post[]> {
 export async function savePost(post: Post) {
   const { id, ...rest } = post;
   await setDoc(doc(firestore, POSTS, id), {
-    ...rest,
+    ...stripUndefined(rest),
     publishedAt: Timestamp.fromDate(new Date(rest.publishedAt)),
     updatedAt: serverTimestamp(),
   });

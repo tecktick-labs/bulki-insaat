@@ -14,6 +14,17 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  // Proje konumu Pendik değil Sultanbeyli olarak düzeltildi; yayında olan eski
+  // blog adresi 308 ile yeni adrese taşınır.
+  async redirects() {
+    return [
+      {
+        source: "/blog/pendikte-yasam-ulasim-ve-gunluk-hayat",
+        destination: "/blog/sultanbeylide-yasam-ulasim-ve-gunluk-hayat",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

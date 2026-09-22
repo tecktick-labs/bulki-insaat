@@ -97,7 +97,8 @@ export default async function KonumPage() {
             url: absoluteUrl("/konum"),
             address: {
               "@type": "PostalAddress",
-              addressLocality: "Pendik",
+              streetAddress: "Akşemsettin Mah.",
+              addressLocality: "Sultanbeyli",
               addressRegion: "İstanbul",
               addressCountry: "TR",
             },

@@ -58,7 +58,7 @@ export function organizationSchema() {
     logo: absoluteUrl("/icon.svg"),
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Pendik",
+      addressLocality: "Sultanbeyli",
       addressRegion: "İstanbul",
       addressCountry: "TR",
     },
@@ -77,7 +77,8 @@ export function residenceSchema(content: ProjectContent) {
     numberOfAvailableAccommodationUnits: Math.max(0, general.totalUnits - general.unitsSold),
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Pendik",
+      streetAddress: "Akşemsettin Mah.",
+      addressLocality: "Sultanbeyli",
       addressRegion: "İstanbul",
       addressCountry: "TR",
     },

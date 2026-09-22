@@ -1,6 +1,7 @@
 "use client";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { firestore } from "./firebase";
+import { stripUndefined } from "./firestore-clean";
 import { revalidateSite } from "./content.client";
 import {
   CONTENT_DOCUMENT,
@@ -17,7 +18,7 @@ export async function fetchProjectContent(): Promise<ProjectContent> {
 /** Panelden kaydeder, ardından ISR sayfalarını tazelemesi için sunucuyu uyarır. */
 export async function saveProjectContent(content: ProjectContent) {
   await setDoc(doc(firestore, PROJECT_DATA_COLLECTION, CONTENT_DOCUMENT), {
-    ...content,
+    ...stripUndefined(content),
     updatedAt: serverTimestamp(),
   });
 

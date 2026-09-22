@@ -42,7 +42,7 @@ export const campaigns: Campaign[] = [
     lead: "Elys Prime lansman döneminde, daire bedelinin yalnızca %30'unu peşin ödeyerek sözleşmenizi başlatabilirsiniz.",
     seoTitle: "Lansmana Özel %30 Peşinat",
     seoDescription:
-      "Elys Prime lansman kampanyası: daire bedelinin %30'u peşin, kalanı 30 aya varan taksitlerle. Pendik'te 4 blok, 192 daire.",
+      "Elys Prime lansman kampanyası: daire bedelinin %30'u peşin, kalanı 30 aya varan taksitlerle. Sultanbeyli'de 4 blok, 192 daire.",
     poster: "/brosur/pesinat-30.svg",
     posterAlt: "Lansmana özel yüzde 30 peşinat kampanya broşürü",
     badge: "%30",
