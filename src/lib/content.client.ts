@@ -11,7 +11,7 @@ import {
   setDoc,
   Timestamp,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { defaultPages } from "@/data/copy";
 import { auth, firestore, storage } from "./firebase";
 import { stripUndefined } from "./firestore-clean";
@@ -104,6 +104,32 @@ export async function uploadFile(file: File, folder: "uploads" | "belgeler" = "u
 }
 
 export const uploadImage = (file: File) => uploadFile(file, "uploads");
+
+/**
+ * Hero videosunu Storage'ın `videos/` klasörüne yükler. Videolar büyük
+ * olabildiği için yükleme ilerlemesi (0–1) `onProgress` ile bildirilir.
+ */
+export async function uploadVideo(file: File, onProgress?: (ratio: number) => void): Promise<string> {
+  const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
+  const storageRef = ref(storage, `videos/${Date.now()}-${safeName}`);
+  const task = uploadBytesResumable(storageRef, file, {
+    contentType: file.type,
+    cacheControl: "public, max-age=31536000, immutable",
+  });
+  task.on("state_changed", (snapshot) => onProgress?.(snapshot.bytesTransferred / snapshot.totalBytes));
+  await task;
+  return getDownloadURL(storageRef);
+}
+
+/**
+ * Panelden yüklenmiş bir dosyayı URL'inden Storage'dan siler. Proje medyası
+ * (`media/`) Storage kurallarıyla korunduğu için atlanır.
+ */
+export async function deleteUploadedFile(url: string) {
+  const path = decodeURIComponent(new URL(url).pathname.split("/o/")[1] ?? "");
+  if (!path || path.startsWith("media/")) return;
+  await deleteObject(ref(storage, path));
+}
 
 /** Kaydettikten sonra ISR sayfalarını tazeler. */
 export async function revalidateSite(paths: string[] = []) {

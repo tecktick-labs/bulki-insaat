@@ -1,6 +1,6 @@
 import { campaigns as defaultCampaigns, type Campaign } from "./campaigns";
 import { projectDocuments as defaultDocuments, type ProjectDocument } from "./documents";
-import { getBuildImage } from "./media";
+import { getBuildImage, type HeroVideo } from "./media";
 import {
   blockNames,
   floorTypes,
@@ -42,17 +42,19 @@ export type SectionData = {
   gallery: GallerySlide[];
   documents: ProjectDocument[];
   "plan-rooms": PlanOverride[];
+  "hero-videos": HeroVideo[];
 };
 
 export type SectionId = keyof SectionData;
 
-export const sectionIds = ["campaigns", "gallery", "documents", "plan-rooms"] as const;
+export const sectionIds = ["campaigns", "gallery", "documents", "plan-rooms", "hero-videos"] as const;
 
 export const sectionLabels: Record<SectionId, string> = {
   campaigns: "Kampanyalar",
   gallery: "Galeri",
   documents: "Belgeler",
   "plan-rooms": "Daire Tipleri",
+  "hero-videos": "Hero Videoları",
 };
 
 const defaultGallery: GallerySlide[] = [
@@ -73,6 +75,8 @@ export const sectionDefaults: SectionData = {
   gallery: defaultGallery,
   documents: defaultDocuments,
   "plan-rooms": plans,
+  // Videoların kodda karşılığı yoktur; kayıt okunamazsa hero yalnızca kapak görselini gösterir.
+  "hero-videos": [],
 };
 
 /** Firestore'dan gelen `{ items: [...] }` dokümanını doğrular; boş/bozuksa varsayılana düşer. */
@@ -81,6 +85,13 @@ export function mergeSection<Id extends SectionId>(
   stored: { items?: unknown } | null | undefined,
 ): SectionData[Id] {
   const items = stored?.items;
+
+  // Videoların tümü panelden silinebilir; kayıtlı boş liste "video yok"
+  // demektir ve varsayılana düşülmez. Hero o zaman yalnızca kapak görselini gösterir.
+  if (id === "hero-videos") {
+    return (Array.isArray(items) ? items.filter(isHeroVideo) : sectionDefaults[id]) as SectionData[Id];
+  }
+
   if (!Array.isArray(items) || items.length === 0) return sectionDefaults[id];
 
   // Daire tipleri kodda sabit bir listedir; kayıtlı belgedeki eksik alanlar
@@ -88,6 +99,15 @@ export function mergeSection<Id extends SectionId>(
   if (id === "plan-rooms") return applyPlanOverrides(items as PlanOverride[]) as SectionData[Id];
 
   return items as SectionData[Id];
+}
+
+function isHeroVideo(value: unknown): value is HeroVideo {
+  if (!value || typeof value !== "object") return false;
+  const video = value as Partial<HeroVideo>;
+  return typeof video.key === "string"
+    && (video.variant === "mobile" || video.variant === "desktop")
+    && Array.isArray(video.sources)
+    && video.sources.every((source) => typeof source?.src === "string" && typeof source?.type === "string");
 }
 
 export function emptyCampaign(): Campaign {

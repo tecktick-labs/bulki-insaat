@@ -1,6 +1,6 @@
 "use client";
 import { getBuildImage } from "@/lib/media";
-import { Bus, ExternalLink, Home, Minus, Navigation, Plane, Plus, TrainFront, X } from "lucide-react";
+import { Bus, ExternalLink, Home, Navigation, Plane, TrainFront, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -12,10 +12,9 @@ type Metrics = {
 };
 
 export default function LocationSection({ description, metrics, latitude, longitude }: { description: string; metrics: Metrics; latitude: number; longitude: number }) {
-  const [zoom, setZoom] = useState(16);
   // `q=` Google'ın kendi kırmızı işaretçisini basar; `ll=` yalnızca haritayı
   // ortalar ve işaretçi çizmez — tek işaretçi bizim ev rozetimiz olur.
-  const mapEmbedUrl = `https://www.google.com/maps?ll=${latitude},${longitude}&z=${zoom}&output=embed`;
+  const mapEmbedUrl = `https://www.google.com/maps?ll=${latitude},${longitude}&z=16&output=embed`;
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
   const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
   const [open, setOpen] = useState(false);
@@ -40,7 +39,8 @@ export default function LocationSection({ description, metrics, latitude, longit
       Harita section'ın tamamını kaplar. Google embed'i kendi işaretçisini
       değiştirmeye izin vermediği için iframe etkileşime kapalı tutulur ve
       konum, üstüne bindirdiğimiz ev işaretçisiyle gösterilir; böylece
-      işaretçi her zaman doğru noktada durur. Gezinme için alttaki iki buton var.
+      işaretçi her zaman doğru noktada durur. Gezinme için alttaki iki buton var
+      ("Haritada aç", "Yol tarifi al").
     */}
     <div className="absolute inset-0 overflow-hidden">
       <iframe
@@ -54,25 +54,6 @@ export default function LocationSection({ description, metrics, latitude, longit
            boş alanın ortasına denk gelsin. Alt kenar yine bölümle hizalı kalır. */
         className="pointer-events-none absolute -top-[20%] left-0 h-[120%] w-full border-0 grayscale-[.25] sm:top-0 sm:h-full"
       />
-    </div>
-
-    {/* Mobilde dikey orta, alttaki mesafe kartlarının üstüne denk geliyordu;
-        telefonlarda haritanın üst çeyreğinde durur, sm'den itibaren ortada. */}
-    <div className="absolute right-5 top-[28%] z-10 flex flex-col gap-1.5 sm:right-9 sm:top-1/2 sm:-translate-y-1/2 lg:right-14">
-      <button
-        type="button"
-        onClick={() => setZoom((value) => Math.min(19, value + 1))}
-        disabled={zoom >= 19}
-        className="grid size-10 place-items-center rounded-full border border-white/25 bg-[#12140f]/80 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] disabled:opacity-35 disabled:hover:border-white/25 disabled:hover:bg-[#12140f]/80 disabled:hover:text-white"
-        aria-label="Haritayı yakınlaştır"
-      ><Plus size={17}/></button>
-      <button
-        type="button"
-        onClick={() => setZoom((value) => Math.max(12, value - 1))}
-        disabled={zoom <= 12}
-        className="grid size-10 place-items-center rounded-full border border-white/25 bg-[#12140f]/80 text-white backdrop-blur-md transition-colors hover:border-[#d8b792] hover:bg-[#d8b792] hover:text-[#181a18] disabled:opacity-35 disabled:hover:border-white/25 disabled:hover:bg-[#12140f]/80 disabled:hover:text-white"
-        aria-label="Haritayı uzaklaştır"
-      ><Minus size={17}/></button>
     </div>
 
     <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,rgba(16,18,16,.8)_0%,rgba(16,18,16,.45)_45%,transparent_100%)]" />

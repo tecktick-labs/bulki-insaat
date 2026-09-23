@@ -4,6 +4,7 @@ import ScrollSnapShell from "./ScrollSnapShell";
 import { homeSections } from "@/lib/nav";
 import type { Campaign } from "@/lib/campaigns";
 import type { ProjectDocument } from "@/lib/documents";
+import type { HeroVideo } from "@/lib/media";
 import type { Plan } from "@/lib/plans";
 import type { GallerySlide } from "@/lib/sections";
 import ApartmentsSection from "@/sections/ApartmentsSection";
@@ -18,6 +19,7 @@ export type SiteSections = {
   gallery: GallerySlide[];
   documents: ProjectDocument[];
   plans: Plan[];
+  heroVideos: HeroVideo[];
 };
 
 export default function SiteContent({ content, sections }: { content: ProjectContent; sections: SiteSections }) {
@@ -27,6 +29,7 @@ export default function SiteContent({ content, sections }: { content: ProjectCon
         projectName={content.general.projectName}
         title={content.hero.title}
         campaigns={sections.campaigns}
+        videos={sections.heroVideos}
       />
       <BrochureSection campaigns={sections.campaigns} />
       <ProjectGallerySection slides={sections.gallery} />

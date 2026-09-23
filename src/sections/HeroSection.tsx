@@ -1,6 +1,6 @@
 "use client";
 import { campaignUrl, type Campaign } from "@/lib/campaigns";
-import { getBuildImage, getPromotionVideos } from "@/lib/media";
+import { getBuildImage, pickHeroVideo, type HeroVideo } from "@/lib/media";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 
 const posterSrc = getBuildImage(1);
 
-export default function HeroSection({ projectName, title, campaigns }: { projectName: string; title: string; campaigns: Campaign[] }) {
-  const [variant, setVariant] = useState<"mobile" | "desktop" | null>(null);
+export default function HeroSection({ projectName, title, campaigns, videos }: { projectName: string; title: string; campaigns: Campaign[]; videos: HeroVideo[] }) {
+  const [video, setVideo] = useState<HeroVideo | null>(null);
 
   // Poster görsel LCP'yi taşır; video sayfa boşa düştükten sonra yüklenir.
-  // Mobilde dikey 480x848'lik (~1.6 MB) sürüm, masaüstünde tam kalite (~15 MB) oynar.
+  // Mobil ve masaüstü havuzundan (panel → Hero Videoları) oturum başına
+  // rastgele bir video seçilir; yalnızca seçilen video indirilir.
   // "Hareketi azalt" tercihi veya veri tasarrufu açıksa video hiç indirilmez.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -22,16 +23,16 @@ export default function HeroSection({ projectName, title, campaigns }: { project
 
     const next = window.matchMedia("(max-width: 767px)").matches ? "mobile" : "desktop";
     const idle = window.requestIdleCallback ?? ((callback: () => void) => window.setTimeout(callback, 1200));
-    const handle = idle(() => setVariant(next));
+    const handle = idle(() => setVideo(pickHeroVideo(videos, next)));
     return () => window.clearTimeout(handle as number);
-  }, []);
+  }, [videos]);
 
   const discover = () => document.getElementById("brosurler")?.scrollIntoView({ behavior: "smooth" });
 
   return <section id="giris" className="relative h-dvh snap-start snap-always overflow-hidden bg-[#121412] text-white">
     <Image src={posterSrc} alt="Elys Prime projesinin genel görünümü" fill priority sizes="100vw" className="object-cover" />
-    {variant && <video autoPlay muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover" aria-label="Elys Prime proje tanıtım videosu">
-      {getPromotionVideos(variant).map((video) => <source key={video.type} src={video.src} type={video.type}/>) }
+    {video && <video key={video.key} autoPlay muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover" aria-label="Elys Prime proje tanıtım videosu">
+      {video.sources.map((source) => <source key={source.type} src={source.src} type={source.type}/>) }
     </video>}
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,12,10,.82)_0%,rgba(10,12,10,.45)_45%,rgba(10,12,10,.12)_78%),linear-gradient(0deg,rgba(10,12,10,.78)_0%,transparent_52%)]" />
     <div className="ambient-grid absolute inset-0 opacity-30" />

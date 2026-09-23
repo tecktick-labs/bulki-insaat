@@ -7,6 +7,7 @@ import CampaignsEditor from "./panel/CampaignsEditor";
 import DocumentsEditor from "./panel/DocumentsEditor";
 import GalleryEditor from "./panel/GalleryEditor";
 import GeneralEditor from "./panel/GeneralEditor";
+import HeroVideosEditor from "./panel/HeroVideosEditor";
 import PagesEditor from "./panel/PagesEditor";
 import PlanRoomsEditor from "./panel/PlanRoomsEditor";
 import PostsEditor from "./panel/PostsEditor";
@@ -27,6 +28,7 @@ type PanelSection = {
 
 const sections: PanelSection[] = [
   { id: "genel", label: "Proje Verileri", hint: "Daire sayıları, bloklar, iletişim", group: "İçerik" },
+  { id: "hero-videolari", label: "Hero Videoları", hint: "Giriş bölümünün mobil ve web videoları", group: "İçerik" },
   { id: "kampanyalar", label: "Kampanyalar", hint: "Broşür şeridi ve kampanya sayfaları", group: "İçerik" },
   { id: "galeri", label: "Galeri", hint: "Ana sayfa görselleri ve başlıkları", group: "İçerik" },
   { id: "belgeler", label: "Belgeler", hint: "Ruhsat, iskân, imar, tapu", group: "İçerik" },
@@ -66,17 +68,21 @@ export default function PanelClient() {
 
   const loadBadges = useCallback(async () => {
     try {
-      const [campaigns, gallery, documents, posts] = await Promise.all([
+      const [campaigns, gallery, documents, posts, heroVideos] = await Promise.all([
         fetchSection("campaigns"),
         fetchSection("gallery"),
         fetchSection("documents"),
         fetchAllPosts(),
+        fetchSection("hero-videos"),
       ]);
 
       const missingPdf = documents.filter((document) => !document.file).length;
       const published = posts.filter((post) => post.published).length;
 
+      const mobileVideos = heroVideos.filter((video) => video.variant === "mobile").length;
+
       setBadges({
+        "hero-videolari": `${mobileVideos} mobil · ${heroVideos.length - mobileVideos} web`,
         kampanyalar: String(campaigns.length),
         galeri: String(gallery.length),
         belgeler: missingPdf > 0 ? `${documents.length} · ${missingPdf} eksik` : String(documents.length),
@@ -275,6 +281,7 @@ export default function PanelClient() {
         {dataError && <p role="alert" className="mb-6 border border-red-300/25 bg-red-300/10 px-5 py-4 text-sm text-red-200">{dataError}</p>}
 
         {active === "genel" && <GeneralEditor content={content} setContent={setContent} />}
+        {active === "hero-videolari" && <HeroVideosEditor />}
         {active === "kampanyalar" && <CampaignsEditor />}
         {active === "galeri" && <GalleryEditor />}
         {active === "belgeler" && <DocumentsEditor />}
