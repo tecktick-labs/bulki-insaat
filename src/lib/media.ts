@@ -15,21 +15,21 @@ export function getFloorPlan(file: string) {
 }
 
 /**
- * Tanıtım videosu iki boyutta servis edilir:
- *   mobil     640x360, ~3 MB   — hücresel bağlantıda LCP'yi bozmaz
- *   masaüstü  1280x720, ~15 MB — tam kalite
+ * Tanıtım videosu iki sürümde servis edilir:
+ *   mobil     480x848 dikey, ~1.6 MB H.264 MP4 — telefon ekranına göre çekilmiş,
+ *             hücresel bağlantıda LCP'yi bozmaz
+ *   masaüstü  1280x720, ~15 MB — tam kalite; önce WebM (daha küçük), ardından
+ *             WebM desteklemeyen Safari sürümleri için H.264 MP4
  *
- * Her boyutta önce WebM (daha küçük), ardından WebM desteklemeyen Safari
- * sürümleri için H.264 MP4 verilir. Tarayıcı oynatabildiği ilk kaynağı seçer.
- * Kaynak videoda ses akışı yoktur; tüm sürümler sessizdir.
+ * Tarayıcı oynatabildiği ilk kaynağı seçer. Video her zaman sessiz oynatılır.
  *
- * Yeni sürüm üretmek için: npm run transcode-video
+ * Masaüstü sürümünü yeniden üretmek için: npm run transcode-video
  */
 export function getPromotionVideos(variant: "mobile" | "desktop" = "desktop") {
-  const name = variant === "mobile" ? "tanitim-mobile" : "tanitim";
+  if (variant === "mobile") return [{ src: storageUrl("videos/mobil-bulki.mp4"), type: "video/mp4" }];
   return [
-    { src: storageUrl(`videos/${name}.webm`), type: "video/webm" },
-    { src: storageUrl(`videos/${name}.mp4`), type: "video/mp4" },
+    { src: storageUrl("videos/tanitim.webm"), type: "video/webm" },
+    { src: storageUrl("videos/tanitim.mp4"), type: "video/mp4" },
   ];
 }
 

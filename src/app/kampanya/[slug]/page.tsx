@@ -62,18 +62,20 @@ export default async function KampanyaPage({ params }: { params: Promise<{ slug:
           </div>
 
           <div>
-            <dl className="grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
+            {/* Dar ekranda üç kolon "Tanımlanabilir" gibi uzun değerleri kesiyordu;
+                mobilde her satır etiket–değer çifti olarak alt alta dizilir. */}
+            <dl className="grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
               {campaign.highlights.map((item) => (
-                <div key={item.label} className="bg-[#1f221f] px-4 py-5">
-                  <dt className="text-[9px] font-bold uppercase tracking-[.16em] text-white/40">{item.label}</dt>
-                  <dd className="display-font mt-2 text-lg font-semibold text-[#d8b792]">{item.value}</dd>
+                <div key={item.label} className="flex min-w-0 items-baseline justify-between gap-4 bg-[#1f221f] px-4 py-4 sm:block sm:py-5">
+                  <dt className="shrink-0 text-[9px] font-bold uppercase tracking-[.16em] text-white/40">{item.label}</dt>
+                  <dd className="display-font min-w-0 text-right text-lg font-semibold break-words hyphens-auto text-[#d8b792] sm:mt-2 sm:text-left">{item.value}</dd>
                 </div>
               ))}
             </dl>
 
             <div className="mt-8 space-y-5">
               {campaign.paragraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 40)} className="text-[15px] leading-8 text-white/60">{paragraph}</p>
+                <p key={paragraph.slice(0, 40)} className="text-[15px] leading-8 break-words hyphens-auto text-white/60">{paragraph}</p>
               ))}
               <p className="text-[13px] leading-7 text-white/35">
                 Kampanya koşulları lansman dönemiyle sınırlıdır ve önceden haber verilmeksizin değiştirilebilir.
@@ -92,13 +94,13 @@ export default async function KampanyaPage({ params }: { params: Promise<{ slug:
         <h2 className="display-font text-2xl font-semibold tracking-[-.03em] sm:text-3xl">Diğer kampanyalar</h2>
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           {others.map((other) => (
-            <Link key={other.slug} href={campaignUrl(other)} className="group flex items-center gap-5 border border-white/10 bg-[#1f221f] p-5 transition-colors hover:border-[#d8b792]/45">
+            <Link key={other.slug} href={campaignUrl(other)} className="group flex items-center gap-4 border border-white/10 bg-[#1f221f] p-4 sm:gap-5 sm:p-5 transition-colors hover:border-[#d8b792]/45">
               <span className="relative aspect-[3/4] w-20 shrink-0 overflow-hidden bg-[#0f110f]">
                 <Image src={other.poster} alt={other.posterAlt} fill unoptimized sizes="80px" className="object-cover" />
               </span>
               <span className="min-w-0">
                 <span className="block text-[9px] font-bold uppercase tracking-[.18em] text-[#d8b792]">{other.hint}</span>
-                <span className="mt-1 block text-lg font-semibold">{other.title}</span>
+                <span className="mt-1 block text-lg font-semibold break-words hyphens-auto">{other.title}</span>
               </span>
               <ArrowRight size={16} className="ml-auto shrink-0 text-white/40 transition-transform group-hover:translate-x-1" />
             </Link>

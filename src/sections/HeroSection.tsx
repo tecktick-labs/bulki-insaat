@@ -12,7 +12,7 @@ export default function HeroSection({ projectName, title, campaigns }: { project
   const [variant, setVariant] = useState<"mobile" | "desktop" | null>(null);
 
   // Poster görsel LCP'yi taşır; video sayfa boşa düştükten sonra yüklenir.
-  // Mobilde 640x360'lık (~3 MB) sürüm, masaüstünde tam kalite (~15 MB) oynar.
+  // Mobilde dikey 480x848'lik (~1.6 MB) sürüm, masaüstünde tam kalite (~15 MB) oynar.
   // "Hareketi azalt" tercihi veya veri tasarrufu açıksa video hiç indirilmez.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

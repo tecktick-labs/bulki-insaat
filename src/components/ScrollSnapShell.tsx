@@ -66,7 +66,7 @@ export default function ScrollSnapShell({ navItems, children }: { navItems: NavI
       <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-9 lg:px-14">
         <button onClick={() => go("giris")} className="group flex items-center gap-3 text-left" aria-label="Ana sayfa">
           <Image src="/elysprime-logo.png" alt="Elys Prime logosu" width={1040} height={812} priority className="h-10 w-auto shrink-0 sm:h-11" />
-          <span><span className="display-font block text-xl font-semibold leading-none tracking-wide">ELYS PRIME</span><span className="mt-1 block text-[8px] font-bold tracking-[.25em] opacity-60">BULKİ YAPI</span></span>
+          <span className="display-font block text-xl font-semibold leading-none tracking-wide">ELYS PRIME</span>
         </button>
         <nav className="hidden items-center gap-6 lg:flex xl:gap-7">
           {navItems.map((item) => <button key={item.id} onClick={() => go(item.id)} aria-current={activeId === item.id ? "page" : undefined} className={`relative py-2 text-[11px] font-bold uppercase tracking-[.15em] transition-opacity hover:opacity-100 ${activeId === item.id ? "opacity-100" : "opacity-75"}`}>{item.label}<span aria-hidden="true" className={`absolute inset-x-0 bottom-0 h-px origin-center bg-[#d8b792] transition-transform duration-500 ease-out ${activeId === item.id ? "scale-x-100" : "scale-x-0"}`}/></button>)}

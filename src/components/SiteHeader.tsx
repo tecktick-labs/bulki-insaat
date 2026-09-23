@@ -16,10 +16,7 @@ export default function SiteHeader({ whatsappLink }: { whatsappLink: string }) {
       <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-9 lg:px-14">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Elys Prime ana sayfa">
           <Image src="/elysprime-logo.png" alt="Elys Prime logosu" width={1040} height={812} priority className="h-10 w-auto shrink-0 sm:h-11" />
-          <span className="hidden sm:block">
-            <span className="display-font block text-xl font-semibold leading-none tracking-wide">ELYS PRIME</span>
-            <span className="mt-1 block text-[8px] font-bold tracking-[.25em] opacity-60">BULKİ YAPI</span>
-          </span>
+          <span className="display-font hidden text-xl font-semibold leading-none tracking-wide sm:block">ELYS PRIME</span>
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex xl:gap-6">

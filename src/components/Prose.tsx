@@ -6,8 +6,8 @@ export function PageHeader({ eyebrow, title, lead, children }: { eyebrow: string
       <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-12 sm:px-9 lg:px-14 lg:pb-16 lg:pt-16">
         {children}
         <p className="eyebrow mt-6 text-[#d8b792]">{eyebrow}</p>
-        <h1 className="mt-4 max-w-4xl text-4xl font-medium leading-[.95] tracking-[-.045em] sm:text-6xl lg:text-7xl">{title}</h1>
-        <p className="mt-6 max-w-2xl text-base leading-8 text-white/60 sm:text-lg">{lead}</p>
+        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,9vw,2.25rem)] font-medium leading-[.95] tracking-[-.045em] break-words hyphens-auto sm:text-6xl lg:text-7xl">{title}</h1>
+        <p className="mt-6 max-w-2xl text-base leading-8 break-words text-white/60 sm:text-lg">{lead}</p>
       </div>
     </div>
   );
