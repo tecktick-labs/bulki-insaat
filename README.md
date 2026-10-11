@@ -49,8 +49,10 @@ src/
 | `/` | Scroll-snap ana sayfa |
 | `/proje` | Proje künyesi ve mimari yaklaşım |
 | `/proje-durumu` | Güncel inşaat durumu, blok bazlı tablo, galeri |
-| `/daire-planlari` | 16 daire tipinin listesi |
-| `/daire-planlari/[slug]` | Her tipin kendi sayfası |
+| `/daire-planlari` | Yeni satış sayfasına kalıcı yönlendirme |
+| `/sultanbeyli-satilik-daire` | Satılık daire seçenekleri |
+| `/sultanbeyli-satilik-daire/2-1`, `/3-1`, `/dubleks` | Oda tipine göre satış sayfaları (aynı kök altında) |
+| `/daireler/[slug]` | Özelliklerine göre adlandırılmış 16 daire detayı |
 | `/konum` | Konum, ulaşım süreleri, harita |
 | `/tanitimlar` | Tanıtım ve broşür içerikleri |
 | `/tanitimlar/[slug]` | Her tanıtımın kendi sayfası |

@@ -34,7 +34,7 @@ export default function BrochureSection({ campaigns }: { campaigns: Campaign[] }
       href: campaignUrl(campaign),
     })),
     { key: "kunye", image: getBuildImage(3), vector: false, badge: "PROJE", title: "Proje Künyesi", note: "4 blok · 192 daire", href: "/proje" },
-    { key: "planlar", image: getBuildImage(7), vector: false, badge: "PLAN", title: "Daire Planları", note: "16 daire tipi", href: "/daire-planlari" },
+    { key: "planlar", image: getBuildImage(7), vector: false, badge: "PLAN", title: "Daire Planları", note: "16 daire tipi", href: "/sultanbeyli-satilik-daire" },
   ];
 
   return <section id="brosurler" className="h-dvh snap-start snap-always overflow-hidden bg-[#141614] text-white">

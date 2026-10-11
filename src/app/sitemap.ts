@@ -4,6 +4,7 @@ import { postUrl } from "@/lib/content-types";
 import { campaignUrl } from "@/lib/campaigns";
 import { getSection } from "@/lib/sections.server";
 import { plans } from "@/lib/plans";
+import { planUrl, salesPath, salesCategories } from "@/lib/plan-routes";
 import { absoluteUrl } from "@/lib/site";
 import { getUpdatedAtMap, latestOf, type DocKey } from "@/lib/updated-at.server";
 
@@ -47,7 +48,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }[] = [
     { path: "/", priority: 1, changeFrequency: "weekly", lastModified: latest("projectData/website", "sections/campaigns", "sections/gallery", "sections/plan-rooms") },
     { path: "/proje", priority: 0.9, changeFrequency: "monthly", lastModified: latest("pages/proje") },
-    { path: "/daire-planlari", priority: 0.9, changeFrequency: "monthly", lastModified: planDate },
+    { path: salesPath, priority: 0.9, changeFrequency: "monthly", lastModified: planDate },
+    ...salesCategories.map((category) => ({ path: `${salesPath}/${category.slug}`, priority: 0.9, changeFrequency: "monthly" as const, lastModified: planDate })),
     { path: "/tanitimlar", priority: 0.8, changeFrequency: "weekly", lastModified: maxDate(latest("pages/tanitimlar"), newestPost("tanitim")) },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly", lastModified: maxDate(latest("pages/blog"), newestPost("blog")) },
     { path: "/konum", priority: 0.7, changeFrequency: "yearly", lastModified: latest("pages/konum") },
@@ -68,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
     ...plans.map((plan) => ({
-      url: absoluteUrl(`/daire-planlari/${plan.slug}`),
+      url: absoluteUrl(planUrl(plan)),
       lastModified: planDate,
       changeFrequency: "yearly" as const,
       priority: 0.6,

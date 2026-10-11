@@ -1,4 +1,5 @@
 "use client";
+import { planUrl } from "@/lib/plan-routes";
 import { Plus, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import SectionEditor from "./SectionEditor";
@@ -265,7 +266,7 @@ export default function PlanRoomsEditor() {
                 <input className={inputClass} value={item.roomLayout} onChange={(event) => update({ ...item, roomLayout: event.target.value })} />
               </label>
               <p className="mt-4 text-[11px] leading-5 text-white/30">
-                Sayfa adresi: <span className="text-white/45">/daire-planlari/{item.slug}</span>
+                Sayfa adresi: <span className="text-white/45">{planUrl(item)}</span>
               </p>
             </Fieldset>
 
@@ -302,7 +303,7 @@ export default function PlanRoomsEditor() {
               <RoomTable rooms={item.roomList} onChange={(roomList) => update({ ...item, roomList })} />
             </Fieldset>
 
-            <Fieldset title="Sayfa metni" note="Bu alanlar /daire-planlari/... sayfasının başlığını ve gövdesini oluşturur.">
+            <Fieldset title="Sayfa metni" note="Bu alanlar /daireler/... sayfasının başlığını ve gövdesini oluşturur.">
               <div className="grid gap-5 lg:grid-cols-2">
                 <label className={labelClass}>
                   Sayfa başlığı (H1)

@@ -28,7 +28,7 @@ export type PlanAreas = {
 };
 
 export type Plan = {
-  /** URL slug — /daire-planlari/[slug]. Yapısaldır: rota ve sitemap buna bağlı, panelden değişmez. */
+  /** Panel kayıt kimliği. Yayın adresi plan-routes.ts ile belirlenir; panelden değişmez. */
   slug: string;
   /** Plan çiziminin tam görsel URL'i — panelden yüklenebilir ya da değiştirilebilir. */
   image: string;

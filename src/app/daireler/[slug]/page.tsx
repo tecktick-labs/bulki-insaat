@@ -5,7 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell, { Breadcrumbs } from "@/components/PageShell";
 import { CallToAction, Container, PageHeader } from "@/components/Prose";
-import { formatArea, planFloorAreas, planHeading, planImage, planImageAlt, planTitle } from "@/lib/plans";
+import { formatArea, planFloorAreas, planImage, planImageAlt, planTitle } from "@/lib/plans";
+import { planRoute, planRoutes, planUrl, planSalesName, planCategoryPath, salesPath } from "@/lib/plan-routes";
 import { getSection } from "@/lib/sections.server";
 import { getPageCopy } from "@/lib/content.server";
 import { getProjectContent } from "@/lib/project-content.server";
@@ -16,15 +17,17 @@ export const revalidate = 86400;
 
 export async function generateStaticParams() {
   const plans = await getSection("plan-rooms");
-  return plans.map((plan) => ({ slug: plan.slug }));
+  return plans.map((plan) => ({ slug: planRoute(plan).slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const plan = (await getSection("plan-rooms")).find((item) => item.slug === slug);
+  const plan = (await getSection("plan-rooms")).find((item) => item.slug === planRoutes.find((route) => route.slug === slug)?.id);
   if (!plan) return {};
 
-  const title = plan.seoTitle.trim() || planHeading(plan);
+  const title = /^Sultanbeyli [A-D] Blok/.test(plan.seoTitle) || !plan.seoTitle.trim()
+    ? `Sultanbeyli Satılık ${planSalesName(plan)}${plan.areas.netArea !== null ? ` | ${formatArea(plan.areas.netArea)} Net` : ""}`
+    : plan.seoTitle.trim();
   const description =
     plan.seoDescription.trim() ||
     plan.lead.trim() ||
@@ -33,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return pageMetadata({
     title,
     description,
-    path: `/daire-planlari/${plan.slug}`,
+    path: planUrl(plan),
     image: planImage(plan),
     imageAlt: planImageAlt(plan),
   });
@@ -47,7 +50,7 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
     getSection("plan-rooms"),
   ]);
 
-  const plan = plans.find((item) => item.slug === slug);
+  const plan = plans.find((item) => item.slug === planRoutes.find((route) => route.slug === slug)?.id);
   if (!plan) notFound();
   // Panelden bu tipe özel paragraf girilmişse o kullanılır; yoksa kat/konum
   // grubunun ortak metnine (`copy.planTypes`) düşülür.
@@ -68,13 +71,14 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
     <PageShell content={content}>
       <PageHeader
         eyebrow={`${plan.block} Blok`}
-        title={plan.title.trim() || `${plan.floor} · ${plan.position}`}
+        title={/^[A-D] Blok/.test(plan.title) || !plan.title.trim() ? planSalesName(plan) : plan.title}
         lead={plan.lead.trim() || `Elys Prime ${plan.block} Blok ${plan.floor.toLowerCase()} ${plan.position.toLowerCase()} daire planı.`}
       >
         <Breadcrumbs
           trail={[
-            { name: "Daire Planları", path: "/daire-planlari" },
-            { name: planTitle(plan), path: `/daire-planlari/${plan.slug}` },
+            { name: "Satılık Daireler", path: salesPath },
+            { name: `${plan.rooms} Daireler`, path: planCategoryPath(plan) },
+            { name: planSalesName(plan), path: planUrl(plan) },
           ]}
         />
       </PageHeader>
@@ -183,7 +187,7 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
           <h2 className="display-font text-2xl font-medium tracking-[-.03em] sm:text-3xl">{plan.block} Blok&apos;taki diğer tipler</h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-3">
             {siblings.map((sibling) => (
-              <Link key={sibling.slug} href={`/daire-planlari/${sibling.slug}`} className="group flex flex-col overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#252825] transition-colors hover:border-[#d8b792]/45">
+              <Link key={sibling.slug} href={planUrl(sibling)} className="group flex flex-col overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#252825] transition-colors hover:border-[#d8b792]/45">
                 <div className="relative aspect-[4/3] bg-[#eeece7]">
                   <Image src={planImage(sibling)} alt={planImageAlt(sibling)} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-4" />
                 </div>
@@ -199,11 +203,11 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
 
       <Container className="border-t border-white/[.07] py-8">
         <nav aria-label="Diğer daire planları" className="flex flex-wrap items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[.14em]">
-          <Link href={`/daire-planlari/${previous.slug}`} className="inline-flex items-center gap-2 text-white/55 transition-colors hover:text-[#d8b792]">
+          <Link href={planUrl(previous)} className="inline-flex items-center gap-2 text-white/55 transition-colors hover:text-[#d8b792]">
             <ArrowLeft size={14} /> {planTitle(previous)}
           </Link>
-          <Link href="/daire-planlari" className="text-white/40 transition-colors hover:text-white">Tüm planlar</Link>
-          <Link href={`/daire-planlari/${next.slug}`} className="inline-flex items-center gap-2 text-white/55 transition-colors hover:text-[#d8b792]">
+          <Link href={salesPath} className="text-white/40 transition-colors hover:text-white">Tüm planlar</Link>
+          <Link href={planUrl(next)} className="inline-flex items-center gap-2 text-white/55 transition-colors hover:text-[#d8b792]">
             {planTitle(next)} <ArrowRight size={14} />
           </Link>
         </nav>
@@ -215,14 +219,15 @@ export default async function PlanDetayPage({ params }: { params: Promise<{ slug
         schema={[
           breadcrumbSchema([
             { name: "Ana Sayfa", path: "/" },
-            { name: "Daire Planları", path: "/daire-planlari" },
-            { name: planTitle(plan), path: `/daire-planlari/${plan.slug}` },
+            { name: "Satılık Daireler", path: salesPath },
+            { name: `${plan.rooms} Daireler`, path: planCategoryPath(plan) },
+            { name: planSalesName(plan), path: planUrl(plan) },
           ]),
           {
             "@context": "https://schema.org",
             "@type": "Accommodation",
             name: `Elys Prime ${planTitle(plan)}`,
-            url: absoluteUrl(`/daire-planlari/${plan.slug}`),
+            url: absoluteUrl(planUrl(plan)),
             image: planImage(plan),
             floorLevel: plan.floor,
             // Ölçü bilinmiyorsa alan hiç yazılmaz; uydurma değer zengin sonuçta yanlış bilgi olur.

@@ -2,11 +2,15 @@ import { getAuth } from "firebase-admin/auth";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { getAdminApp } from "@/lib/firebase-admin";
+import { planRoutes, salesCategories, salesPath } from "@/lib/plan-routes";
 
 const BASE_PATHS = [
   "/",
   "/proje",
   "/daire-planlari",
+  salesPath,
+  ...salesCategories.map((category) => `${salesPath}/${category.slug}`),
+  ...planRoutes.map((route) => `/daireler/${route.slug}`),
   "/konum",
   "/iletisim",
   "/blog",

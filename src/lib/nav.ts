@@ -14,7 +14,7 @@ export const pageNav: NavLink[] = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/kampanya/lansmana-ozel-30-pesinat", label: "Kampanyalar" },
   { href: "/proje", label: "Proje" },
-  { href: "/daire-planlari", label: "Daire Planları" },
+  { href: "/sultanbeyli-satilik-daire", label: "Daire Planları" },
   { href: "/konum", label: "Konum" },
   { href: "/tanitimlar", label: "Tanıtımlar" },
   { href: "/blog", label: "Blog" },

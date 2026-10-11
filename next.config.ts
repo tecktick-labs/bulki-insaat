@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import planRoutes from "./src/data/plan-routes.json";
 
 const nextConfig: NextConfig = {
   images: {
@@ -18,6 +19,12 @@ const nextConfig: NextConfig = {
   // blog adresi 308 ile yeni adrese taşınır.
   async redirects() {
     return [
+      ...planRoutes.map((route) => ({
+        source: `/daire-planlari/${route.id}`,
+        destination: `/daireler/${route.slug}`,
+        permanent: true,
+      })),
+      { source: "/daire-planlari", destination: "/sultanbeyli-satilik-daire", permanent: true },
       {
         source: "/blog/pendikte-yasam-ulasim-ve-gunluk-hayat",
         destination: "/blog/sultanbeylide-yasam-ulasim-ve-gunluk-hayat",

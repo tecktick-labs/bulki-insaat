@@ -1,0 +1,18 @@
+[
+  { "id": "a-blok-normal-kat-kose", "slug": "3-1-kapali-mutfak-87-96-m2", "name": "3+1 Kapalı Mutfaklı Daire" },
+  { "id": "a-blok-normal-kat-orta", "slug": "3-1-giyinme-odali", "name": "3+1 Giyinme Odalı Daire" },
+  { "id": "a-blok-cati-kati-kose", "slug": "2-1-terasli-64-39-m2", "name": "2+1 Teraslı Daire" },
+  { "id": "a-blok-cati-kati-orta", "slug": "2-1-terasli-65-82-m2", "name": "2+1 Teraslı Daire" },
+  { "id": "b-blok-normal-kat-kose", "slug": "3-1-kapali-mutfak-81-94-m2", "name": "3+1 Kapalı Mutfaklı Daire" },
+  { "id": "b-blok-normal-kat-orta", "slug": "3-1-acik-mutfak", "name": "3+1 Açık Mutfaklı Daire" },
+  { "id": "b-blok-dubleks-kose", "slug": "terasli-dubleks-137-70-m2", "name": "Teraslı Dubleks Daire" },
+  { "id": "b-blok-dubleks-orta", "slug": "terasli-dubleks-139-47-m2", "name": "Teraslı Dubleks Daire" },
+  { "id": "c-blok-normal-kat-kose", "slug": "2-1-balkonlu", "name": "2+1 Balkonlu Daire" },
+  { "id": "c-blok-normal-kat-orta", "slug": "2-1-acik-mutfak-69-85-m2", "name": "2+1 Açık Mutfaklı Daire" },
+  { "id": "c-blok-cati-kati-kose", "slug": "2-1-terasli-52-79-m2", "name": "2+1 Teraslı Daire" },
+  { "id": "c-blok-cati-kati-orta", "slug": "2-1-terasli-51-05-m2", "name": "2+1 Teraslı Daire" },
+  { "id": "d-blok-normal-kat-kose", "slug": "2-1-camasir-odali", "name": "2+1 Çamaşır Odalı Daire" },
+  { "id": "d-blok-normal-kat-orta", "slug": "2-1-acik-mutfak-63-19-m2", "name": "2+1 Açık Mutfaklı Daire" },
+  { "id": "d-blok-dubleks-kose", "slug": "terasli-dubleks-105-32-m2", "name": "Teraslı Dubleks Daire" },
+  { "id": "d-blok-dubleks-orta", "slug": "terasli-dubleks-103-73-m2", "name": "Teraslı Dubleks Daire" }
+]

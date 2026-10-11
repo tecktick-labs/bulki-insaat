@@ -65,7 +65,7 @@ export default function ContactSection({ projectName, companyName, email, contac
               {campaigns.map((campaign) => (
                 <li key={campaign.slug}><Link href={campaignUrl(campaign)} className="text-xs text-white/60 transition-colors hover:text-[#d8b792]">{campaign.label}</Link></li>
               ))}
-              <li><Link href="/daire-planlari" className="text-xs text-white/60 transition-colors hover:text-[#d8b792]">Daire Planları</Link></li>
+              <li><Link href="/sultanbeyli-satilik-daire" className="text-xs text-white/60 transition-colors hover:text-[#d8b792]">Daire Planları</Link></li>
               <li><Link href="/tanitimlar" className="inline-flex items-center gap-2 text-xs text-white/60 transition-colors hover:text-[#d8b792]"><FileText size={13}/> Tanıtımlar</Link></li>
               <li><Link href="/blog" className="inline-flex items-center gap-2 text-xs text-white/60 transition-colors hover:text-[#d8b792]"><Newspaper size={13}/> Blog</Link></li>
             </ul>

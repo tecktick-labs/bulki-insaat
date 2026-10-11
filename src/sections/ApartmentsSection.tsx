@@ -1,4 +1,5 @@
 "use client";
+import { planUrl } from "@/lib/plan-routes";
 import { blockNames, formatArea, planImage, planImageAlt, planTitle, type Plan, type RoomType } from "@/lib/plans";
 import { roomTypesForBlock } from "@/lib/sections";
 import { ArrowRight, Expand } from "lucide-react";
@@ -37,7 +38,7 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
         <div>
           <p className="eyebrow text-[#d8b792]">Daire Planları</p>
           <h2 className="mt-2 text-[1.75rem] font-semibold leading-[.95] tracking-[-.04em] sm:mt-3 sm:text-4xl lg:text-5xl">Size uyan yaşamı <em className="font-light">inceleyin.</em></h2>
-          <Link href="/daire-planlari" className="mt-2 inline-flex sm:mt-3 items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-[#d8b792] underline-offset-4 hover:underline">16 daire tipinin tamamı <ArrowRight size={13}/></Link>
+          <Link href="/sultanbeyli-satilik-daire" className="mt-2 inline-flex sm:mt-3 items-center gap-2 text-[10px] font-bold uppercase tracking-[.16em] text-[#d8b792] underline-offset-4 hover:underline">16 daire tipinin tamamı <ArrowRight size={13}/></Link>
         </div>
 
         <div className="flex flex-col gap-2 lg:items-end">
@@ -84,7 +85,7 @@ export default function ApartmentsSection({ plans }: { plans: Plan[] }) {
             </button>
 
             <Link
-              href={`/daire-planlari/${plan.slug}`}
+              href={planUrl(plan)}
               className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d8b792] sm:p-5"
             >
               <div className="min-w-0">
